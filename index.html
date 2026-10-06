@@ -15,7 +15,7 @@
   --bg:#fbfafd; --fg:#1d1a24; --muted:#6a6474; --faint:#9a94a5; --rule:#e6e2ec; --rb:#6a3fa8;
   --serif:"Newsreader","Iowan Old Style",Georgia,serif;
   --ui:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
-  --gutter:24px; --ease:cubic-bezier(.2,.75,.15,1);
+  --gutter:24px; --ease:cubic-bezier(.2,.75,.15,1); --pen:cubic-bezier(.65,0,.3,1);
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
@@ -38,7 +38,6 @@ button,input{font:inherit;color:inherit}
 
 /* masthead */
 .mast{position:relative;display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-top:40px;padding-bottom:12px}
-.mast::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--rule);transform-origin:left;animation:draw 1.1s .15s var(--ease) both}
 .mast a.name{text-decoration:none;font-weight:500;font-size:21px;letter-spacing:-.005em}
 .mast a.name i{font-weight:400}
 .mast button{background:none;border:0;padding:0;cursor:pointer}
@@ -51,8 +50,9 @@ button,input{font:inherit;color:inherit}
 .month{margin:44px 0 0;font-style:italic;font-weight:400;font-size:18px;color:var(--muted)}
 .entries{list-style:none;margin:10px 0 0;padding:0}
 .entry{position:relative}
-.entry::before,.entry:last-child::after{content:"";position:absolute;left:0;right:0;height:1px;background:var(--rule);transform-origin:left}
-.entry::before{top:0}.entry:last-child::after{bottom:0}
+.entry .rule{--at:calc(var(--i,0)*90ms)}
+.entry .rule.b{--at:calc(var(--i,0)*90ms + 250ms)}
+.entry:not(:last-child) .rule.b{display:none}
 .entry a{display:grid;grid-template-columns:7.5rem 1fr;gap:0 24px;padding:20px 0 22px;text-decoration:none}
 .entry .meta{display:flex;flex-direction:column;gap:2px;padding-top:7px}
 .entry h2{font-weight:500;font-size:25px;line-height:1.2;margin:0 0 6px;text-wrap:balance}
@@ -76,8 +76,6 @@ button,input{font:inherit;color:inherit}
 .frame{display:block;width:100%;border:0;min-height:60vh;background:var(--bg);opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .9s var(--ease)}
 .frame.ready{opacity:1;transform:none}
 .pager{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:24px;padding-top:16px;padding-bottom:64px;margin-top:8px}
-.pager::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--rule);transform-origin:left;transform:scaleX(0)}
-.pager.in::before{animation:draw 1s var(--ease) both}
 .pager a{opacity:0}.pager.in a{animation:rise .7s .25s var(--ease) both}
 .pager a .a{display:inline-block;transition:transform .35s var(--ease)}
 .pager a:hover .a{transform:translateX(-4px)}.pager .next:hover .a{transform:translateX(4px)}
@@ -91,8 +89,8 @@ button,input{font:inherit;color:inherit}
 .gate h1{font-weight:500;font-size:clamp(32px,7vw,44px);line-height:1.1;margin:0 0 10px}
 .gate p{margin:0 0 30px;font-size:19px}
 .field{position:relative;display:flex;align-items:baseline;gap:14px;padding-bottom:6px}
-.field::before,.field::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--fg);transform-origin:left;animation:draw 1.1s .45s var(--ease) both}
-.field::after{background:var(--rb);height:2px;bottom:-1px;transform:scaleX(0);animation:none;transition:transform .55s var(--ease)}
+.field .rule::before{background:var(--fg)}
+.field::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--rb);transform-origin:left;transform:scaleX(0);transition:transform .55s var(--ease)}
 .field:focus-within::after{transform:scaleX(1)}
 .field.bad{animation:shake .45s}
 .field input{flex:1;min-width:0;border:0;background:none;font-size:20px;padding:2px 0;outline:none}
@@ -118,14 +116,20 @@ button,input{font:inherit;color:inherit}
 .rise{animation:rise .8s var(--ease) both;animation-delay:var(--d,0ms)}
 .rv{opacity:0}
 .rv.in{animation:rise .75s var(--ease) both;animation-delay:calc(var(--i)*90ms)}
-.entry.rv::before,.entry.rv:last-child::after{transform:scaleX(0)}
-.entry.rv.in::before,.entry.rv.in:last-child::after{animation:draw 1s var(--ease) both;animation-delay:calc(var(--i)*90ms)}
+/* rules are drawn like a pen stroke: the hairline grows behind a small ink tip that travels with it */
+.rule{position:absolute;left:0;right:0;height:1px;pointer-events:none}
+.rule::before{content:"";position:absolute;inset:0;background:var(--rule);transform-origin:left;transform:scaleX(0)}
+.rule::after{content:"";position:absolute;top:-1.5px;left:0;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--fg);opacity:0}
+.rule.go::before,.in .rule::before{animation:draw var(--dur,1.3s) var(--at,0s) var(--pen) both}
+.rule.go::after,.in .rule::after{animation:pen var(--dur,1.3s) var(--at,0s) var(--pen) both,ink var(--dur,1.3s) var(--at,0s) linear both}
+@keyframes pen{from{left:0}to{left:100%}}
+@keyframes ink{0%{opacity:0}6%{opacity:.8}85%{opacity:.8}100%{opacity:0}}
 ::view-transition-old(root){animation:.25s ease both leave}
 ::view-transition-new(root){animation:.45s .1s var(--ease) both rise}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after,::view-transition-old(root),::view-transition-new(root){animation:none!important;transition:none!important}
   .rv,.frame,.pager a{opacity:1!important;transform:none!important}
-  .pager::before,.entry.rv::before,.entry.rv:last-child::after{transform:none!important}
+  .rule::before{transform:none!important}.rule::after{display:none}
 }
 </style>
 </head>
@@ -133,10 +137,11 @@ button,input{font:inherit;color:inherit}
 
 <form class="gate" id="gate" autocomplete="off">
   <h1 data-words>Piffle Posts</h1>
-  <p class="rise" style="--d:300ms">Guild newsletters for Royal Bunny, Luna 1.</p>
+  <p class="rise" style="--d:300ms">Guild newsletters for Royal Guilds, Luna 1.</p>
   <div class="field">
     <input id="pw" type="password" placeholder="Password" aria-label="Password" autofocus>
     <button id="go" type="submit">Enter <span class="a">→</span></button>
+    <span class="rule go" style="bottom:0;--at:.45s"></span>
   </div>
   <div class="opts sc rise" style="--d:650ms"><label><input id="remember" type="checkbox" checked> Remember this device</label></div>
   <div class="err" id="err" role="alert"></div>
@@ -146,12 +151,90 @@ button,input{font:inherit;color:inherit}
   <header class="col pad"><div class="mast">
     <a class="name" href="#/">Piffle Posts</a>
     <button type="button" class="sc" id="lock" title="Forget the password on this device">Lock</button>
+    <span class="rule go" style="bottom:0;--at:.15s;--dur:1.6s"></span>
   </div></header>
   <main id="view"></main>
 </div>
 
+<!-- Added to every post: its charts draw themselves like a pen, the first time each one scrolls into view.
+     Grid lines are ruled first, then each data line is inked with a small tip riding its end, and dots and
+     labels appear as the pen passes. Posts need nothing special for this. -->
+<script type="text/plain" id="pen-src">
+(()=>{
+if(matchMedia("(prefers-reduced-motion: reduce)").matches||!window.IntersectionObserver) return;
+const NS="http://www.w3.org/2000/svg";
+const st=document.createElement("style"); st.textContent=".pen-wait>svg{visibility:hidden}"; document.head.appendChild(st);
+const ease=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+const inked=e=>{ const c=getComputedStyle(e); return c.stroke!=="none"&&c.visibility!=="hidden"&&parseFloat(c.strokeWidth)>0&&(c.strokeDasharray==="none"||!c.strokeDasharray); };
+
+function draw(box){
+  const svg=box.querySelector(":scope>svg"); if(!svg) return 0;
+  box.classList.remove("pen-wait");
+  const R=svg.getBoundingClientRect(), W=R.width||1;
+  const relX=e=>{ const r=e.getBoundingClientRect(); return Math.min(1,Math.max(0,(r.left+r.width/2-R.left)/W)); };
+  const lines=[...svg.querySelectorAll("path,line,polyline")].filter(e=>!e.closest("defs,clipPath")&&inked(e));
+  const ruled=e=>{ if(e.tagName!=="line") return false; const b=e.getBBox(); return b.width<.5||(b.height<.5&&b.width>W*.5); };
+  const grid=lines.filter(ruled), data=lines.filter(e=>!ruled(e));
+  const tasks=[];
+  grid.forEach((e,i)=>tasks.push({e,start:i*30,dur:600}));
+  const g0=grid.length?Math.min(420,grid.length*30)+180:0;
+  const step=data.length>1?Math.min(240,1300/data.length):0;
+  data.forEach((e,i)=>{ const len=e.getTotalLength(); tasks.push({e,start:g0+i*step,dur:Math.min(1600,550+len*1.1),tip:len>90}); });
+  const end=Math.max(g0+600,...tasks.map(k=>k.start+k.dur));
+  for(const k of tasks){
+    k.len=k.e.getTotalLength()+1;
+    k.e.style.strokeDasharray=k.len; k.e.style.strokeDashoffset=k.len;
+    if(k.tip){
+      k.dot=document.createElementNS(NS,"circle");
+      k.dot.setAttribute("r",2.3); k.dot.setAttribute("fill",getComputedStyle(k.e).stroke);
+      if(k.e.getAttribute("clip-path")) k.dot.setAttribute("clip-path",k.e.getAttribute("clip-path"));
+      k.dot.style.cssText="opacity:0;pointer-events:none";
+      k.e.parentNode.appendChild(k.dot);
+    }
+  }
+  // dots and labels appear as the pen sweeps across
+  svg.querySelectorAll("circle,text").forEach(e=>{
+    if(e.closest("defs")||tasks.some(k=>k.dot===e)||getComputedStyle(e).visibility==="hidden") return;
+    e.animate([{opacity:0},{opacity:1}],{duration:e.tagName==="text"?500:320,delay:g0+relX(e)*(end-g0)*.85,fill:"backwards",easing:"ease-out"});
+  });
+  const t0=performance.now();
+  (function frame(now){
+    let live=false;
+    for(const k of tasks){
+      if(k.done||!k.e.isConnected) continue;
+      const p=Math.min(1,Math.max(0,(now-t0-k.start)/k.dur)), q=ease(p);
+      k.e.style.strokeDashoffset=k.len*(1-q);
+      if(k.dot){
+        if(p>0&&p<1){ const pt=k.e.getPointAtLength(Math.min(k.len-1,k.len*q)); k.dot.setAttribute("cx",pt.x); k.dot.setAttribute("cy",pt.y); k.dot.style.opacity=.9; }
+        else k.dot.style.opacity=0;
+      }
+      if(p<1) live=true;
+      else{ k.done=true; k.e.style.strokeDasharray=""; k.e.style.strokeDashoffset=""; if(k.dot) k.dot.remove(); }
+    }
+    if(live) requestAnimationFrame(frame);
+  })(t0);
+  return end;
+}
+
+const boxes=[...new Set([...document.querySelectorAll("svg")]
+  .filter(s=>!s.closest("td,th,button,a,label")&&s.getBoundingClientRect().width>=200)
+  .map(s=>s.parentElement))];
+const state=new Map();
+const io=new IntersectionObserver(es=>{
+  for(const e of es){ if(!e.isIntersecting) continue; io.unobserve(e.target);
+    state.set(e.target,performance.now()+draw(e.target)+80); }
+},{threshold:.25});
+boxes.forEach(b=>{
+  b.classList.add("pen-wait"); io.observe(b);
+  // posts redraw charts on resize or when fonts load; if that happens mid-stroke, start the stroke again
+  new MutationObserver(()=>{ const until=state.get(b); if(until&&performance.now()<until) state.set(b,performance.now()+draw(b)+80); })
+    .observe(b,{childList:true});
+});
+})();
+</script>
+
 <script>
-const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"adQlOPDK3NLVfyGl","ct":"Q+MC3Xm7/kGm6hgXehFuojG7+3f530lrcoFYBvyAa9OifP1IMOXKUr0rVEdNDpCWXt6Svt9NWnB3XhHjinxoKAWRLR1BOu70iO2TXzuwrXHNmWbPxYVNW45uPuRmNpX6Vxb+98ux+hYzeu0qWb302KNpet8CR9p3xaM3y3eHqMlzY0ah2eZvTOjYT52k3U+d2ch7O+KYN+ZwHbXgRLPPCA61sJWSm/lCx/GiakBZCrtqQv+p8aESZUrP8BCfuVtFRcgB/ZfBl/qk2RIPVgpbUCS6DWS3fO4VWmi7gYJndCaQFuN+NflaStFjQ/tPLn+jmFneGej7fwTJsDRpBpeUVOY="};
+const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"NjDeufjXIcYPhwgJ","ct":"GZ5d+jP/YlUL1T+pEMRRFyG4yluRNZ/XAneLQs2FRc+qqbk7CoAk753ot0ig676K4EIwMabs8bDRyCeC4C5pVvUX408QFpA0hmvw7Kfs3opu1BfqXfH1smCmnpoZHOOLsM4Q6yp80JSA9TDQMzOjyX68j9Hecb9Np8L+JeB4M6Ii8emhQ45mrDrWa7yySm1mL/l2SEGtUglOsIslIjq0OZli6lxj2ZVutZ5HFtdGgwYplfpkFb9cI8bw7yjZn44Ky2rEVj49uQap5pZCmU03jWIHmglYoI4Prujo3tQXK3Jl5YG8FLjEbUqPUYrLJP9NbJcdnm4++nGWQ8d2SFVK3QI="};
 const SAVED="pp-key";
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const dec=new TextDecoder(), enc=new TextEncoder();
@@ -210,7 +293,7 @@ const href=p=>"#/"+encodeURIComponent(p.slug);
 const view=document.getElementById("view");
 
 function entry(p){
-  return `<li class="entry rv"><a href="${href(p)}">
+  return `<li class="entry rv"><span class="rule" style="top:0"></span><span class="rule b" style="bottom:0"></span><a href="${href(p)}">
     <div class="meta sc"><span>${fmtDate(p.date)}</span>${p.tag?`<span>${esc(p.tag)}</span>`:""}${isNew(p.date)?`<span class="new">New</span>`:""}</div>
     <div><h2><span class="t">${esc(p.title)}</span><span class="arr" aria-hidden="true">→</span></h2><p>${esc(p.summary)}</p></div>
   </a></li>`;
@@ -222,7 +305,7 @@ function listView(){
   for(const p of POSTS){ const m=fmtMonth(p.date); if(!months.length||months.at(-1).m!==m) months.push({m,ps:[]}); months.at(-1).ps.push(p); }
   view.className="col pad";
   view.innerHTML=`<section class="intro"><h1 data-words>Notes from the guild</h1>
-    <p class="rise" style="--d:380ms">Weekly newsletters and data breakdowns for Royal Bunny, Luna 1.</p></section>
+    <p class="rise" style="--d:380ms">Weekly newsletters and data breakdowns for Royal Guilds, Luna 1.</p></section>
     ${months.length?months.map(g=>`<h2 class="month rise" style="--d:560ms">${g.m}</h2><ul class="entries">${g.ps.map(entry).join("")}</ul>`).join(""):`<p class="empty">Nothing posted yet.</p>`}
     <div style="height:64px"></div>`;
   words(view.querySelector("[data-words]"),150);
@@ -251,7 +334,7 @@ async function postView(slug){
   view.className="col";
   view.innerHTML=`<div class="crumbs pad sc rise"><a class="back" href="#/"><span class="a">←</span> All posts</a><span>${fmtDate(p.date)}</span></div>
     <iframe class="frame" title="${esc(p.title)}" scrolling="no"></iframe>
-    <nav class="pad"><div class="pager sc">
+    <nav class="pad"><div class="pager sc"><span class="rule" style="top:0"></span>
       ${older?`<a href="${href(older)}"><span><span class="a">←</span> Older</span><span>${esc(older.title)}</span></a>`:""}
       ${newer?`<a class="next" href="${href(newer)}"><span>Newer <span class="a">→</span></span><span>${esc(newer.title)}</span></a>`:""}
       ${!older&&!newer?`<a href="#/"><span>That's the latest</span><span>Back to all posts</span></a>`:""}
@@ -270,7 +353,8 @@ async function postView(slug){
       const pager=view.querySelector(".pager");
       if(pager){ const po=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ pager.classList.add("in"); po.disconnect(); } }); po.observe(pager); }
     },{once:true});
-    frame.srcdoc=html;
+    const pen=`<script>${document.getElementById("pen-src").textContent}<\/script>`;
+    frame.srcdoc=/<\/body>/i.test(html)?html.replace(/<\/body>(?![\s\S]*<\/body>)/i,()=>pen+"</body>"):html+pen;
   }catch(e){ frame.replaceWith(Object.assign(document.createElement("p"),{className:"empty pad",textContent:"Couldn't load this post. Try refreshing."})); }
 }
 
