@@ -5,10 +5,11 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Piffle Posts</title>
+<script>try{const t=localStorage.getItem("pp-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2.5' y='2.5' width='27' height='27' rx='3' fill='%23fbfafd' stroke='%231d1a24' stroke-width='1.5'/><polyline points='7,22 13,16 18,19 25,9' fill='none' stroke='%236a3fa8' stroke-width='2' stroke-linejoin='round' stroke-linecap='round'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans+Condensed:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans+Condensed:wght@400;500&family=IBM+Plex+Mono&display=swap">
 <style>
 /* Same palette and type as the posts, so the site and a post read as one page. */
 :root{
@@ -42,6 +43,20 @@ button,input{font:inherit;color:inherit}
 .mast a.name i{font-weight:400}
 .mast button{background:none;border:0;padding:7px 0 7px 12px;margin:-7px 0;cursor:pointer}
 .mast button:hover,.back:hover{color:var(--fg)}
+.mast-r{display:flex;align-items:center;gap:6px}
+
+/* theme toggle: an orange cat by day, a black cat by night */
+.cat{background:none;border:0;cursor:pointer;font-size:17px;line-height:1;padding:7px;margin:-7px 0;transition:transform .35s var(--ease)}
+.cat span{display:inline-block;transition:filter .5s}
+.cat:hover{transform:translateY(-1px) rotate(-10deg)}
+.cat.spin span{animation:catflip .55s var(--ease)}
+:root[data-theme="dark"] .cat span{filter:grayscale(1) brightness(.85) contrast(1.15) drop-shadow(0 0 1.5px rgba(255,255,255,.35))}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cat span{filter:grayscale(1) brightness(.85) contrast(1.15) drop-shadow(0 0 1.5px rgba(255,255,255,.35))}}
+.gate-cat{position:absolute;top:22px;right:max(16px,calc(50% - 404px))}
+.theming,.theming *,.theming *::before,.theming *::after{transition:background-color .45s ease,color .45s ease,border-color .45s ease!important}
+
+/* signature */
+.sig{font-family:"IBM Plex Mono",ui-monospace,Consolas,monospace;font-size:13px;color:var(--muted);padding-top:8px;padding-bottom:44px}
 
 /* index */
 .intro{padding-top:44px;padding-bottom:8px}
@@ -75,7 +90,7 @@ button,input{font:inherit;color:inherit}
 .back:hover .a{transform:translateX(-4px)}
 .frame{display:block;width:100%;border:0;min-height:60vh;background:var(--bg);opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .9s var(--ease)}
 .frame.ready{opacity:1;transform:none}
-.pager{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:24px;padding-top:16px;padding-bottom:64px;margin-top:8px}
+.pager{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:24px;padding-top:16px;padding-bottom:40px;margin-top:8px}
 .pager a{opacity:0}.pager.in a{animation:rise .7s .25s var(--ease) both}
 .pager a .a{display:inline-block;transition:transform .35s var(--ease)}
 .pager a:hover .a{transform:translateX(-4px)}.pager .next:hover .a{transform:translateX(4px)}
@@ -112,6 +127,7 @@ button,input{font:inherit;color:inherit}
 @keyframes leave{to{opacity:0;transform:translateY(-16px)}}
 @keyframes shake{20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
 @keyframes pulse{50%{opacity:.25}}
+@keyframes catflip{45%{transform:scale(.55) rotate(-25deg)}}
 .w{display:inline-block;animation:rise .8s var(--ease) both;animation-delay:calc(var(--d,0ms) + var(--i)*65ms)}
 .rise{animation:rise .8s var(--ease) both;animation-delay:var(--d,0ms)}
 .rv{opacity:0}
@@ -136,6 +152,7 @@ button,input{font:inherit;color:inherit}
 <body>
 
 <form class="gate" id="gate" autocomplete="off">
+  <button type="button" class="cat gate-cat"><span aria-hidden="true">🐱</span></button>
   <h1 data-words>Piffle Posts</h1>
   <p class="rise" style="--d:300ms">Guild newsletters for Royal Guilds, Luna 1.</p>
   <div class="field">
@@ -145,15 +162,20 @@ button,input{font:inherit;color:inherit}
   </div>
   <div class="opts sc rise" style="--d:650ms"><label><input id="remember" type="checkbox" checked> Remember this device</label></div>
   <div class="err" id="err" role="alert"></div>
+  <div class="sig rise" style="--d:900ms;margin-top:40px">Made possible by Luna 1 piffles 😺</div>
 </form>
 
 <div id="app" hidden>
   <header class="col pad"><div class="mast">
     <a class="name" href="#/">Piffle Posts</a>
-    <button type="button" class="sc" id="lock" title="Forget the password on this device">Lock</button>
+    <div class="mast-r">
+      <button type="button" class="cat"><span aria-hidden="true">🐱</span></button>
+      <button type="button" class="sc" id="lock" title="Forget the password on this device">Lock</button>
+    </div>
     <span class="rule go" style="bottom:0;--at:.15s;--dur:1.6s"></span>
   </div></header>
   <main id="view"></main>
+  <footer class="sig col pad">Made possible by Luna 1 piffles 😺</footer>
 </div>
 
 <!-- Added to every post: its charts draw themselves like a pen, the first time each one scrolls into view.
@@ -234,7 +256,7 @@ boxes.forEach(b=>{
 </script>
 
 <script>
-const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"qM+u61s5JURUSXv3","ct":"P1rq6Kkj+HNS6qGsuUuLEgep8g+xwr+alspz0ER75wbsZufRwOWtZeNJhSoHg/wkV+8PjXyNno1zZlGRT+/lb9yYP/PNR58HVdKe96KR9/GMREfuuj2ttc2Gnvbh8WGpBSLOCreJ9Jjn7F4vEz9LWCdopQ44qHDZOnTDqR8E6MNr+hW8wpVHXxbsFPEMn9qWzABVO2ApEHtsyJrfsSf56Tq6NGjt8wAsIrR9fctgYKHs4BARK1U28IqZeBHeM7V+xxLws3Y+x+koKygFmXlhKYbMraD4antPQ0y8Z3YFb+9KgNwkOonUUG1st9fXjXbL3ueGdYqXRNWE9oqTigZpYB8="};
+const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"DcyNCPNHJDdglGq9","ct":"QqSWQA0uBOYIlGM84Fyc+HpdqgWFS6L9t0w2aC4u+lDcwvFz+Mv9B8+4Ex5eybE6kM5axbfgd4C7mCwpGWJE/vspjP88ngsoM/ECZA7aSGi80QLHtcELvgUxVy3G9BO3IuyMdb51ubsjJWtKYJOg0InzGWi+7DtNPEe5X9m6WMbyxN5lFJngWXSg04zLaOOi47FP5TsmqdFLkfAgyqyyEWQI8HAvAcR2L518Z6QGZHCvQlxbjpsKSL4BcpdAptdhea1mu7fHx3uA79EK55PY562NhnMDwRWMkPQ4gVqgJeT8+PGPlN0x2AffKc0nf0rz/WJkRa5wBF5ZAV89TaXHZF4="};
 const SAVED="pp-key";
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const dec=new TextDecoder(), enc=new TextEncoder();
@@ -307,7 +329,7 @@ function listView(){
   view.innerHTML=`<section class="intro"><h1 data-words>Notes from the guild</h1>
     <p class="rise" style="--d:380ms">Weekly newsletters and data breakdowns for Royal Guilds, Luna 1.</p></section>
     ${months.length?months.map(g=>`<h2 class="month rise" style="--d:560ms">${g.m}</h2><ul class="entries">${g.ps.map(entry).join("")}</ul>`).join(""):`<p class="empty">Nothing posted yet.</p>`}
-    <div style="height:64px"></div>`;
+    <div style="height:48px"></div>`;
   words(view.querySelector("[data-words]"),150);
   reveal(view.querySelectorAll(".rv"),650);
 }
@@ -343,7 +365,7 @@ async function postView(slug){
   const frame=view.querySelector("iframe");
   try{
     const box=await (await fetch(`p/${encodeURIComponent(slug)}.json`,{cache:"no-cache"})).json();
-    const html=await open(box,KEY);
+    let html=await open(box,KEY);
     frame.addEventListener("load",()=>{
       const d=frame.contentDocument; if(!d) return;
       d.querySelectorAll("a[href^='http']").forEach(a=>a.target="_blank");
@@ -353,10 +375,31 @@ async function postView(slug){
       const pager=view.querySelector(".pager");
       if(pager){ const po=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ pager.classList.add("in"); po.disconnect(); } }); po.observe(pager); }
     },{once:true});
+    const th=document.documentElement.dataset.theme;
+    if(th) html=html.replace(/<html([^>]*)>/i,(m,a)=>`<html${a} data-theme="${th}">`);
     const pen=`<script>${document.getElementById("pen-src").textContent}<\/script>`;
     frame.srcdoc=/<\/body>/i.test(html)?html.replace(/<\/body>(?![\s\S]*<\/body>)/i,()=>pen+"</body>"):html+pen;
   }catch(e){ frame.replaceWith(Object.assign(document.createElement("p"),{className:"empty pad",textContent:"Couldn't load this post. Try refreshing."})); }
 }
+
+// ---------- theme ----------
+const root=document.documentElement;
+const isDark=()=>root.dataset.theme?root.dataset.theme==="dark":matchMedia("(prefers-color-scheme: dark)").matches;
+function syncCats(){
+  const dk=isDark();
+  document.querySelectorAll(".cat").forEach(b=>{ b.title=dk?"Switch to light mode":"Switch to dark mode"; b.setAttribute("aria-label",b.title); });
+}
+function setTheme(t){
+  root.classList.add("theming"); root.dataset.theme=t; store.set("pp-theme",t); syncCats();
+  const f=document.querySelector(".frame"); if(f&&f.contentDocument&&f.contentDocument.documentElement) f.contentDocument.documentElement.dataset.theme=t;
+  clearTimeout(setTheme.t); setTheme.t=setTimeout(()=>root.classList.remove("theming"),500);
+}
+document.querySelectorAll(".cat").forEach(b=>b.addEventListener("click",()=>{
+  b.classList.remove("spin"); void b.offsetWidth; b.classList.add("spin");
+  setTheme(isDark()?"light":"dark");
+}));
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",syncCats);
+syncCats();
 
 function render(){
   const slug=decodeURIComponent(location.hash.replace(/^#\/?/,""));
