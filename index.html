@@ -40,7 +40,7 @@ button,input{font:inherit;color:inherit}
 .mast{position:relative;display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding-top:40px;padding-bottom:12px}
 .mast a.name{text-decoration:none;font-weight:500;font-size:21px;letter-spacing:-.005em}
 .mast a.name i{font-weight:400}
-.mast button{background:none;border:0;padding:0;cursor:pointer}
+.mast button{background:none;border:0;padding:7px 0 7px 12px;margin:-7px 0;cursor:pointer}
 .mast button:hover,.back:hover{color:var(--fg)}
 
 /* index */
@@ -70,7 +70,7 @@ button,input{font:inherit;color:inherit}
 
 /* single post: the post brings its own title, so the shell stays out of the way */
 .crumbs{display:flex;justify-content:space-between;gap:16px;padding-top:18px}
-.back{text-decoration:none}
+.back{text-decoration:none;display:inline-block;padding:5px 12px 5px 0;margin:-5px 0}
 .back .a{display:inline-block;transition:transform .35s var(--ease)}
 .back:hover .a{transform:translateX(-4px)}
 .frame{display:block;width:100%;border:0;min-height:60vh;background:var(--bg);opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .9s var(--ease)}
@@ -234,7 +234,7 @@ boxes.forEach(b=>{
 </script>
 
 <script>
-const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"O6BOS+mX0dJ7uzxd","ct":"OVHsoF/eINKwxaAtgNbNdzSQlGsznczFkvks+FbkqggIm+UZpqX8LInfHIMLvV9iQBbC/L78v+7H7N+P2Uu0OiygtxgfCWpadRbNi8r613f7b1tImue4MJ+krjWJfokEZajCar6Zty6VCB8IIWrFiyWZ0x7SaxnGoxVvywoN5sRQJjZnO8juVu5dqE7YbAJ2duaDcuiAyNdycNQjoEPXCrERFXM3DZkWR56VAj6atLnMfPIPoyagKNNifnHwLzHT6ctvEYXT6bXYI5/YJvPe+eGgqDiAJdIjLlzvQYR1f96ag5XvOq0Hc1F9MVMYFlXcxP1Sg8OkbJYhf0LeBq4Viv8="};
+const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"qM+u61s5JURUSXv3","ct":"P1rq6Kkj+HNS6qGsuUuLEgep8g+xwr+alspz0ER75wbsZufRwOWtZeNJhSoHg/wkV+8PjXyNno1zZlGRT+/lb9yYP/PNR58HVdKe96KR9/GMREfuuj2ttc2Gnvbh8WGpBSLOCreJ9Jjn7F4vEz9LWCdopQ44qHDZOnTDqR8E6MNr+hW8wpVHXxbsFPEMn9qWzABVO2ApEHtsyJrfsSf56Tq6NGjt8wAsIrR9fctgYKHs4BARK1U28IqZeBHeM7V+xxLws3Y+x+koKygFmXlhKYbMraD4antPQ0y8Z3YFb+9KgNwkOonUUG1st9fXjXbL3ueGdYqXRNWE9oqTigZpYB8="};
 const SAVED="pp-key";
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const dec=new TextDecoder(), enc=new TextEncoder();
