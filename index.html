@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Piffle Posts</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐰</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=DM+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#0b0a10; --panel:#14121b; --panel2:#1b1824; --line:#2a2633; --fg:#eeeaf4; --muted:#a29bb0; --faint:#6f6880;
+  --gold:#f2a93b; --gold-bg:#3a2a12; --link:#8fb4ff; --chip:#221f2b;
+  --head:"Lexend",system-ui,sans-serif; --body:"DM Sans",system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--fg)}
+body{font:15px/1.5 var(--body);min-height:100vh}
+a{color:inherit}
+button,input{font:inherit}
+[hidden]{display:none!important}
+
+/* top bar */
+.bar{border-bottom:1px solid var(--line)}
+.bar-in{max-width:920px;margin:0 auto;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;font:700 21px var(--head);letter-spacing:-.01em}
+.logo .ic{font-size:24px}
+.logo b{color:var(--gold);font-weight:700}
+.logo span{color:var(--muted);font-weight:500;font-size:15px;align-self:flex-end;margin-bottom:2px}
+.nav{display:flex;gap:4px;padding:4px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.nav a,.nav button{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;border:1px solid transparent;background:none;color:var(--muted);text-decoration:none;font-size:14px;font-weight:500;cursor:pointer}
+.nav a:hover,.nav button:hover{color:var(--fg)}
+.nav .on{background:var(--gold-bg);border-color:color-mix(in srgb,var(--gold) 45%,transparent);color:var(--gold)}
+
+main{max-width:920px;margin:0 auto;padding:28px 16px 64px}
+h1.page{font:700 24px var(--head);margin:0}
+.sub{color:var(--link);font-size:13.5px;margin:4px 0 20px}
+
+/* post cards */
+.list{display:flex;flex-direction:column;gap:14px}
+.card{position:relative;display:block;overflow:hidden;text-decoration:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px 20px 18px;min-height:118px;transition:border-color .15s,transform .15s}
+.card:hover{border-color:color-mix(in srgb,var(--gold) 55%,var(--line));transform:translateY(-1px)}
+.card:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.cover{position:absolute;inset:0 0 0 auto;width:46%;pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 70%);mask-image:linear-gradient(90deg,transparent,#000 70%)}
+.cover i{position:absolute;right:28px;top:50%;transform:translateY(-50%) rotate(-8deg);font-style:normal;font-size:76px;line-height:1;filter:drop-shadow(0 6px 14px rgba(0,0,0,.35))}
+.card-in{position:relative;max-width:66%}
+.card h2{font:600 19px/1.3 var(--head);margin:0 0 6px}
+.card p{margin:0 0 14px;color:var(--muted);font-size:14px}
+.date{display:inline-flex;align-items:center;gap:6px;background:var(--chip);border-radius:7px;padding:4px 10px;font-size:13px;font-weight:500}
+.tag{position:absolute;right:16px;bottom:14px;background:#0d0c12;color:#fff;border-radius:7px;padding:4px 10px;font-size:12px;font-weight:600}
+.new{display:inline-block;margin-left:8px;color:var(--gold);font:600 11px var(--body);letter-spacing:.06em;text-transform:uppercase;vertical-align:3px}
+@media (max-width:600px){.card-in{max-width:100%}.cover{width:60%;opacity:.45}.tag{position:static;display:inline-block;margin-left:8px}.logo span{display:none}}
+
+/* single post */
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:14px;margin-bottom:14px}
+.back:hover{color:var(--fg)}
+.post-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.post-meta .tag{position:static}
+.frame{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.frame iframe{display:block;width:100%;border:0;min-height:300px}
+.more{margin-top:28px}
+.more h3{font:600 15px var(--head);color:var(--muted);margin:0 0 10px}
+
+/* gate */
+.gate{min-height:100vh;display:grid;place-items:center;padding:16px}
+.gate form{width:100%;max-width:360px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:28px 24px;text-align:center}
+.gate .ic{font-size:44px;line-height:1}
+.gate h1{font:700 22px var(--head);margin:10px 0 4px}
+.gate h1 b{color:var(--gold)}
+.gate p{color:var(--muted);margin:0 0 18px;font-size:14px}
+.gate input{width:100%;padding:10px 12px;border-radius:9px;border:1px solid var(--line);background:var(--panel2);color:var(--fg);margin-bottom:10px}
+.gate input:focus{outline:2px solid var(--gold);outline-offset:0;border-color:transparent}
+.gate button{width:100%;padding:10px;border-radius:9px;border:0;background:var(--gold);color:#1a1206;font-weight:600;cursor:pointer}
+.gate button:disabled{opacity:.6;cursor:wait}
+.gate label{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;color:var(--muted);font-size:13px}
+.err{color:#ff7b8a;font-size:13.5px;min-height:20px;margin-top:8px}
+.empty{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate">
+  <form id="gate-form" autocomplete="off">
+    <div class="ic" aria-hidden="true">🐰</div>
+    <h1><b>Piffle</b> Posts</h1>
+    <p>Guild newsletters for Royal Bunny. Enter the password to read.</p>
+    <input id="pw" type="password" placeholder="Password" aria-label="Password" autofocus>
+    <button id="go" type="submit">Unlock</button>
+    <label><input id="remember" type="checkbox" checked style="width:auto;margin:0"> Remember me on this device</label>
+    <div class="err" id="err" role="alert"></div>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <header class="bar"><div class="bar-in">
+    <a class="logo" href="#/"><span class="ic" aria-hidden="true">🐰</span><b>Piffle</b>Posts<span>.luna1</span></a>
+    <nav class="nav">
+      <a href="#/" class="on" id="nav-posts">📰 Posts</a>
+      <button type="button" id="lock" title="Forget the password on this device">🔒 Lock</button>
+    </nav>
+  </div></header>
+  <main id="view"></main>
+</div>
+
+<script>
+const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"XtpDn1Jb7BAhYboP","ct":"VF+CelNdvECiywGjZ7phDGNb8NXSVelXLvkRBPMbJZdF98OelHi2FvpmZ3f60XbPTPh5YeyUehh0n01rbbfK3QB3tIRCwPp7Bk5eqao71zxPBCC559mFj/HWw5po71yhEa99iv0MlmUuOfdLoY5juM9YR/nFYvxqhaC+R9bRFUV5E0oEtIcYpV83qhRMvokyvsD7IK9L/h7U9HjgasVbHc8p+CRxfpzRw9uDXVrTggxlbPkuSB7gMWEKN7ogd+XvOT6KHTKVuP6Jd3I/KfqCdXWbh/4b+JTPl7wBnoBq9jIg76lzosWNe2YtLk+pcrHQ3uYRD/zblTGJc7AkwU3m0QA+2XrDVsaHI3ONdnCBN3n+Zhgrjn8aQh8OudLEhw20tT69kF6FK4x9GCfUg3RO8v0Lxs146JsiqCM="};
+const SAVED="pp-key";
+const dec=new TextDecoder(), enc=new TextEncoder();
+const unb64=s=>Uint8Array.from(atob(s),c=>c.charCodeAt(0));
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+let KEY=null, POSTS=[];
+
+async function deriveRaw(pw){
+  const base=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveBits"]);
+  return new Uint8Array(await crypto.subtle.deriveBits({name:"PBKDF2",salt:enc.encode(BOX.salt),iterations:BOX.iter,hash:"SHA-256"},base,256));
+}
+const toKey=raw=>crypto.subtle.importKey("raw",raw,"AES-GCM",false,["decrypt"]);
+async function open(box,key){ return dec.decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:unb64(box.iv)},key,unb64(box.ct))); }
+
+async function unlock(raw,remember){
+  const key=await toKey(raw);
+  POSTS=JSON.parse(await open(BOX,key));   // throws on a wrong password
+  KEY=key;
+  if(remember) store.set(SAVED,btoa(String.fromCharCode(...raw)));
+  document.getElementById("gate").hidden=true;
+  document.getElementById("app").hidden=false;
+  route();
+}
+
+document.getElementById("gate-form").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const btn=document.getElementById("go"), err=document.getElementById("err");
+  btn.disabled=true; err.textContent="";
+  try{ await unlock(await deriveRaw(document.getElementById("pw").value),document.getElementById("remember").checked); }
+  catch(x){ err.textContent="That's not it. Ask in guild chat 🐰"; }
+  btn.disabled=false;
+});
+document.getElementById("lock").onclick=()=>{ store.del(SAVED); location.hash=""; location.reload(); };
+
+// ---------- views ----------
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmtDate=d=>new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"});
+const cal=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>`;
+const isNew=d=>(Date.now()-new Date(d+"T12:00:00"))/864e5<7;
+
+function card(p){
+  const c=p.cover||{};
+  return `<a class="card" href="#/${encodeURIComponent(p.slug)}">
+    <div class="cover" style="background:radial-gradient(circle at 75% 40%,${c.to||"#e0679b"}cc,transparent 60%),linear-gradient(120deg,${c.from||"#6a3fa8"},${c.to||"#e0679b"})"><i>${esc(c.emoji||"🐰")}</i></div>
+    <div class="card-in">
+      <h2>${esc(p.title)}${isNew(p.date)?`<span class="new">New</span>`:""}</h2>
+      <p>${esc(p.summary)}</p>
+      <span class="date">${cal}${fmtDate(p.date)}</span>
+    </div>
+    ${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}
+  </a>`;
+}
+
+function listView(){
+  document.title="Piffle Posts";
+  view.innerHTML=`<h1 class="page">Posts</h1>
+    <p class="sub">Weekly newsletters, data breakdowns and guild news for Royal Bunny on Luna 1.</p>
+    <div class="list">${POSTS.length?POSTS.map(card).join(""):`<p class="empty">No posts yet.</p>`}</div>`;
+}
+
+async function postView(slug){
+  const p=POSTS.find(x=>x.slug===slug);
+  if(!p){ location.hash="#/"; return; }
+  document.title=p.title+" · Piffle Posts";
+  const others=POSTS.filter(x=>x!==p).slice(0,3);
+  view.innerHTML=`<a class="back" href="#/">← All posts</a>
+    <div class="post-meta"><span class="date">${cal}${fmtDate(p.date)}</span>${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}</div>
+    <div class="frame"><iframe title="${esc(p.title)}" scrolling="no"></iframe></div>
+    ${others.length?`<div class="more"><h3>More posts</h3><div class="list">${others.map(card).join("")}</div></div>`:""}`;
+  window.scrollTo(0,0);
+  const frame=view.querySelector("iframe");
+  try{
+    const box=await (await fetch(`p/${encodeURIComponent(slug)}.json`,{cache:"no-cache"})).json();
+    const html=await open(box,KEY);
+    frame.addEventListener("load",()=>{
+      const d=frame.contentDocument; if(!d) return;
+      d.documentElement.setAttribute("data-theme","dark");
+      d.querySelectorAll("a[href^='http']").forEach(a=>a.target="_blank");
+      const fit=()=>{ frame.style.height=d.documentElement.scrollHeight+"px"; };
+      fit(); new ResizeObserver(fit).observe(d.body); setTimeout(fit,600);
+    },{once:true});
+    frame.srcdoc=html;
+  }catch(e){ frame.replaceWith(Object.assign(document.createElement("p"),{className:"empty",textContent:"Couldn't load this post. Try refreshing."})); }
+}
+
+const view=document.getElementById("view");
+function route(){
+  if(!KEY) return;
+  const slug=decodeURIComponent(location.hash.replace(/^#\/?/,""));
+  slug?postView(slug):listView();
+}
+addEventListener("hashchange",route);
+
+// remembered login
+(async()=>{
+  const s=store.get(SAVED);
+  if(s){ try{ await unlock(unb64(s),false); return; }catch(e){ store.del(SAVED); } }
+})();
+</script>
+</body>
+</html>
