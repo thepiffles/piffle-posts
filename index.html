@@ -273,7 +273,7 @@ const track=(()=>{
   document.head.appendChild(s);
   return path=>{ const v={path,title:path}; window.goatcounter&&window.goatcounter.count?window.goatcounter.count(v):q.push(v); };
 })();
-const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"S0UrzcRKEjr8S5qk","ct":"joW7wwQo2qG3XxQyGMJURP3HHrTCMTk1FdE83KBhr8QYXmMxwAPse2Up5YppQy26EsIMK3L7T4IOwHBfjGyFzbaiQhGzy/EvH9HccdTjf7MV+OapG09/GVA3n9gslcND52sZTsuI8ewVycGFcmIx2xQ+Hvj8eiekA3OtNlcUcQjJfmPajdf6Yp20hN1WrD/gy67WxWPTZH9PHUEMFU2zy6kifS+vEmcqfcBW+JxghO3pRw10tnCXyYfPVeSDaJNJmM4E0P1GLm8s2BkEyzy7Ezx7oMXzJJqcHzgreFEy7FhPsXQtlx5vtjrykmpJN9qqggvsL+cJCxTeT4uzkgNqfQv/XnsNw/7xm/nGAP3ZNRI1rqgqQZtRIMHrWVAc1Z4bcpJOUJOdpigOS6W0J9pvo34HEuJ4HUe4+ObwzUCNHQOyP8UYSnDn4TqyIOqnijZrDIfB2C22wgfqpM6NiKTrzcWiw85Wh7a2zASn1grDbjf2Qxwy/d1WoLS30XINBlYuTNMmlPmr93Da3/0vj6IEh5fi25vI2BgJQ4NmWvTkgZE2XKafoXFl/VhmPBUi+Nt8ueYgGxb+fz5i3WU7sIGtgo52mj35MAdz1r2oF0FmiXl5Mb93ZVA9GsKkhteo/ETW6w8ZIIWfIqzb2u1lp4nT3us8vjwKbVCqLjL51Z6ZZXM3gelWgrNzUO+GjWJPNLS44hlZyeaGf1phZ4vqeNYPhn4="};
+const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"Ti9TugczuEadaQPs","ct":"zd/GTF4CzPwKGpnnRm40yMLKIA4iT2IctixRA1V+A9VGHLjwwly+u1slrYaRnUiWWXKLhp1kcIBFw4COONKbE6JAC7veeVGvuncR0SAX+RcepzEKskAdSS5uJgSE4WY3AFNmtxLtMV99uRVWf5k/Vl7CQ3EPAjk74akvg6CJm1owZjgXuH6Qpr9JeqlstPJ7NAd6MKgf9lGB8UdtZrmswC3FwxebQ3pDdhgizpIGR8P0n6W6Ewkjq4iKDaRFswpxhLbnezmlnZ9rvkN9dBqv37QR6npF3CcR1YRdyfV40RwgOfOgNO8UWnb8c+LN4+S2KpvqG8lTur5yzFCY00zYL0fDWmJ5Uul5ta26L+q8XOi+sPeiflxVPUGTKSprAMl7V0BJpoUcm532GGKdvUul17HxivxRLaByK6o/vbxHnMjLxc7qKszT/bKqiZc0Q8Zx5A+wfUyntaK29AyAP8rx3IlkNclOSWAhc1luPBukOOp14GZknY/uyu45wSiUE3mYfXg+ZzKE5pM7MHWyMR+riSNkxh70WEdaHgzAsVxe2wf0aqF+Sf+F0gPyTiSuXlK2didsXGOzyZ1ubWp1zq4vOUcxdugokieEa7QvEx1GI5SJV3n2ovvWtpvX/S5oX4nlTgOfId9OXpqUel1/IItcfGhTnft1nv9ez5LDAdicfvoFP1mONhRVgrpAxWe6PqVeclNVfTU8DPjOdnOMNq2uUxo=","key":"BXyT8HDApZQnhenAeCk5rB4hTGlLlQW5aKKtgB2RaAE="};
 const SAVED="pp-key";
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const dec=new TextDecoder(), enc=new TextEncoder();
@@ -288,7 +288,8 @@ function words(el,delay=0){
   el.innerHTML=el.textContent.trim().split(/\s+/).map((w,i)=>`<span class="w" style="--i:${i}">${esc(w)}</span>`).join(" ");
 }
 document.querySelectorAll("[data-words]").forEach(el=>words(el));
-if(store.get("pp-key")) document.getElementById("gate").hidden=true;   // remembered: skip the gate
+if(BOX.key||store.get("pp-key")) document.getElementById("gate").hidden=true;   // gate off or remembered: skip it
+if(BOX.key) document.getElementById("lock").hidden=true;   // nothing to lock when the gate is off
 
 async function deriveRaw(pw){
   const base=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveBits"]);
@@ -434,8 +435,9 @@ function route(){
 }
 addEventListener("hashchange",route);
 
-// remembered login
+// gate off (key shipped in the page), else a remembered login
 (async()=>{
+  if(BOX.key) return unlock(unb64(BOX.key),false);
   const s=store.get(SAVED);
   if(s){ try{ await unlock(unb64(s),false); }catch(e){ store.del(SAVED); } }
 })();
