@@ -261,7 +261,19 @@ boxes.forEach(b=>{
 </script>
 
 <script>
-const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"46tmZEcUiKg5dRdW","ct":"nVj2q2w3nn2uW3BtN53GhLPUaMr4vQcMyxeQtZPhMubjSCnt0IzXeeSQwlinfLpK4Gkw1zSqv2haMp4hPmiohga6y7FlWz13qnxzMT3muMOJ+dBGwPF2LJd0T9u/8U/F08QdWGPeIAquQMlfYzI8osyPoQtAt6KmkqrtKHMXhjojo/iDVs7A09b95mdn3eaV5pQQWBq1hTKn++5k3VEbN+LK7vAUqeM2wpRJmUIPrVUMHBjpth+eXVCmOlC742QpQ9v42kdZ9huEFIM6YVFGI+9D48KSUzjfXvsxhFIb3dq+JGGpkwURr7jSgEJ3TOPn6xY/LiVHqyFwzsB8qS1K/VX+xv43TLTpIQxKQ8TU3DyIIwafm8YZ+jQvSpo1C1UkTJnfBm6eVCn0WQD+t7xFu7IwFVYEevZZjagXLOgNYuwRrABg2zEwXYtMMaRLHhUjxnHIxQkRemZFiHU3vGSnrWN15919WCeXa6xJSrr0HWguNazGOQeaSg4VXQnJbD2EFI0NfXDe/pPSKynzzMmNFOz00C3boo2dXyXqu9vTAD0jtmtAyeiWlhsRiHy+pP6+nDIassAIOX34bUvR74LTPeuhJKR8G/8hs9anSbAz0/Yj/GhPANNN4NQK/rX89cEuurhjm1wtD4Ebgodpp7+WfPtCput2FeNTsI+fLTl/JNoToAxdHZXyZRrVoc4PWvEgjb5k0JRr6GbwgcykuxZQDSY="};
+// GoatCounter page views. Set this to the site code (the "piffles" in https://piffles.goatcounter.com) to turn it on;
+// empty means nothing is loaded. Only unlocked views are counted, by path alone (/ or /<slug>), never the post title.
+const GOATCOUNTER="piffle-post";
+const track=(()=>{
+  if(!GOATCOUNTER) return ()=>{};
+  window.goatcounter={no_onload:true};   // posts are hash routes, so each view is counted by hand below
+  const q=[], s=document.createElement("script");
+  s.async=true; s.src="https://gc.zgo.at/count.js"; s.dataset.goatcounter=`https://${GOATCOUNTER}.goatcounter.com/count`;
+  s.onload=()=>{ while(q.length) window.goatcounter.count(q.shift()); };
+  document.head.appendChild(s);
+  return path=>{ const v={path,title:path}; window.goatcounter&&window.goatcounter.count?window.goatcounter.count(v):q.push(v); };
+})();
+const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"yYfTudFbPXitXjGI","ct":"RMJodd/fS18azER4OB6KyUHI8eDKuegYmCDHUl8QFCW86BA//Z4cspbezvqK9x63tdZAvZhzd6+pCuofVSfhnbe+94mIrnBhqYu/lK3IxXONgTV4emTbNL8mhUqjNFzKymIr+N5CmR2FoZQ1tTKVzIIqajmmi4R303KQf8S2ibWjprkAbGcDL4c+yi8JcrTiLtfOE431gBj2/OwLlso3MLnznTROvTSuDmmpu5kOjebqIIDJ4jG9hEvYVM+A9OOTEfI/2VR3MZbsKBYsrVDGwhWvoaxdGGqBh1jEzqyJnb34UGg9N3s0ZUu1KGoeSIgJTBt0I6uVmG9JtIIBR3PfzwHbP6ngttVZFdDdauoeLZpq5gjONA1XlIhO6GTpSlON3m62UGJF+3dPEtwsD3mpVnGBtXXHq5juVmIhIZhinjFlGSpcD+71fYk8rXVN4NWhUK72DXeg/Fg1mUgDaopYnFvQVQlohQAtLVkzzB23KOZfrp2hmmREH5Qzi47fjvuLIsphUVnwgJUPgeKYNb+15W/4LHE5zL52tvBGHNVSkRtcXdrbdtiG4CdwgOnV1b/EVQ5ZS0aTW2KliczMnwa8ncFlW8AT91AHykSdIcQRNRl3pQ6nEYUjeht8qeeJLhdRwFOo2vs+4nyeaGibwVcV06XMh3rIxXFnOAHYbF8n0HxsYgP9TqmG0ysPTxeaBSZN37ND3XBKKH+6SEWGcHFnejg="};
 const SAVED="pp-key";
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const dec=new TextDecoder(), enc=new TextEncoder();
@@ -409,6 +421,7 @@ syncCats();
 
 function render(){
   const slug=decodeURIComponent(location.hash.replace(/^#\/?/,""));
+  if(!slug||POSTS.some(p=>p.slug===slug)) track("/"+slug);   // an unknown slug redirects to / and is counted there
   return slug?postView(slug):listView();
 }
 let shown=false;
