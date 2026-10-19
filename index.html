@@ -273,7 +273,7 @@ const track=(()=>{
   document.head.appendChild(s);
   return path=>{ const v={path,title:path}; window.goatcounter&&window.goatcounter.count?window.goatcounter.count(v):q.push(v); };
 })();
-const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"NXe35d2ONWJ1ognp","ct":"DOvNpqVZAP7rvF9EUg5Y+Ad05IPC8hqKXojrbycW3JVqgRRf1PNsPI3MpfaISEH/qouQsQu/sGiOI3fIBxRDiyep5LfsPOLir8AgDW20VDGU6tN6QfQlkOwew5FqcLNwZ6dzckrZu9lz46vWLrrks+nEbDd1+BQc89LIE5dXwP2TY+e03wU05SO4Lp9yy1J43ZGT9t7KYDF6txVXBlw3yFoCg8JeSXSJ+ZppLvCDY6CR4ajwMvUK1odF7zyy7RrQz5+9pdXYZa/EN6zXpEtwdkH6OvXq7mE6bhRKsJZUaHSTAbGTX/PHcz//t5/t7UwLqqRxO41Di1ol7I571TcBWzKZ+SOPNkfziZdk5BJx7hxTEi0U1DHqeI8rgkH6yMG7Y4iHzO6wY/tFL0V1B+r2PkHPCrf4UjanPoZKSpuQZjJznP5atvHJluAHBO4L8NsDTj1vHvgNooVDu8QGYAI7rjavadSkEglLTEGj/aV4/rZJ1AWwCO650UVU903EzFcJWL6iTE8RzhYjmfDpc3qFN84U40geg6MaZLwrB4nnN0gT04R9WBKXKu1M3n1EDlTLMB5TtamaMtYJSyWpL/DepowQEVMa/e5wy4tzgFA5wuVKwC34oJPMcrqsSUbawB+ZBZxwOJGHsq7ed51TObp32QdGsLt909Xh+ogAHheD18hAhq55OfEcZN23ZR9jAuBza5GIpSSGdZ0tXhc8HXswQdc=","key":"BXyT8HDApZQnhenAeCk5rB4hTGlLlQW5aKKtgB2RaAE="};
+const BOX={"salt":"piffle-posts-v1","iter":250000,"iv":"3CHPTimzQfOJXSvB","ct":"N7FHGdjACRrnvfuhU6+/u9+BKs8quvlnroOPr+lbdpr03rXQgKv+U5dQr0qp2e9a+h5qhR8iFr7mTx7a2SR8SOqPVZBzqk5cAl51BL/pewza2OU37HDYAHX+brrDbmoAIicRWWm5WW1bTVQ7mXIVQ1xgKbAyxWq4/4W3hgX3ve5qi6HB1mn9LBIeqZsApr/+rV5qSSLYl6LI1ul5KETtytAdJZdZLEoUbPc6MYl/+FLVTRxTyQASALCeNzKc7xFR7nouG5B0381n8j4S2LdP5RDnIApBIt4MOYNDnIIFazvxDZ8SkDVW2xr3VaNXRKjUMdclGtU4xOxPqPsRB+bB4YBqUX4KX46P2aAzpDaQkpe4e5AeTAnuxUw17Mp6KNGC58OGmENn4YgfQOwKsht+Vv9WsP/C8tm253L2JYA9Uhl//Ke39VftpQioU30tbBtIWY/kmZTup58uoegiw6hhU4eQqba0OrSVir+19C32p/kXQrIvDrihg+3bMMCaNjQghpyeSBDbffMzhoFJm9vObuAI5aC/MvDEZktxKBUZDVG3e/BGXQpkYxm4757JLEa8pkycLrTx4M7F6IBkaVHOT2ChDRP18mgN2WvZBNRg30XfQIWyhKtoQERN9FXFWhHSDU6bkIXBZa1RvPdOJ8TBFTb4+cf3IZmLJ96CyG78lS5JlgPtMfuas50nZCLhWGoWQip4CCtTWQ4mlJCJ9QIPO44/E+oPQJJo2tQ5jTgEHo20+MdxiuUMvO0zRKtZsts84GoDx6W2lEJ06VzXmVRi00y5BIgs49fTh2ukmCDQ1LXXSfkIO8wxVhAaLsf6b8K7FfSmG0AMJsDeMCvNg4+36r07D+aI++x3rLMTXAQJl+zgZABidGb4qtgWSsVKrRQ5zdFRx51dq2KrIosDNmXssPR1BCEr1bkUlGBnU3p9I++h27aevghiMKN+4J9AuC7xowkQIcN4QH6mjcpo1M8kNEfwtw0r5AOtwQ1iPLXMDxCcBkIdmNGwHfjn1G0wZEPUz1nzDZ1yLvfHwKaj7Ox8BD3cm7BU7mmsmYqk/vnCliUwQZDJP+I/QgWicd2mMzYd/0105w=="};
 const SAVED="pp-key";
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const dec=new TextDecoder(), enc=new TextEncoder();
@@ -288,8 +288,7 @@ function words(el,delay=0){
   el.innerHTML=el.textContent.trim().split(/\s+/).map((w,i)=>`<span class="w" style="--i:${i}">${esc(w)}</span>`).join(" ");
 }
 document.querySelectorAll("[data-words]").forEach(el=>words(el));
-if(BOX.key||store.get("pp-key")) document.getElementById("gate").hidden=true;   // gate off or remembered: skip it
-if(BOX.key) document.getElementById("lock").hidden=true;   // nothing to lock when the gate is off
+if(store.get("pp-key")) document.getElementById("gate").hidden=true;   // remembered: skip the gate
 
 async function deriveRaw(pw){
   const base=await crypto.subtle.importKey("raw",enc.encode(pw),"PBKDF2",false,["deriveBits"]);
@@ -435,9 +434,8 @@ function route(){
 }
 addEventListener("hashchange",route);
 
-// gate off (key shipped in the page), else a remembered login
+// remembered login
 (async()=>{
-  if(BOX.key) return unlock(unb64(BOX.key),false);
   const s=store.get(SAVED);
   if(s){ try{ await unlock(unb64(s),false); }catch(e){ store.del(SAVED); } }
 })();
