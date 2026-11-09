@@ -1,0 +1,77 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin: Bunny vs Greywolf Conquest</title><style>
+:root{--bg:#15161c;--fg:#ecebe6;--mut:#8b8d96;--line:#2c2e38;--band:#1f2029;--b:#f0b400;--w:#7fb0ff;--pos:#6fcf97;--neg:#ee7c7c}
+@media(prefers-color-scheme:light){:root{--bg:#f6f4ee;--fg:#1d1d22;--mut:#6b6d76;--line:#d9d6cc;--band:#ebe8de;--b:#c98a00;--w:#2f6fd6;--pos:#1f8a4c;--neg:#c23b3b}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.35 system-ui,Arial,sans-serif}
+.wrap{max-width:760px;margin:0 auto;padding:20px 16px 40px}
+h1{margin:0 0 4px;font:600 24px Georgia,serif}h2{font:italic 400 22px Georgia,serif;margin:30px 0 8px}
+.sub{color:var(--mut);font-size:13px;margin:0 0 14px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.tabs button{background:none;color:var(--fg);border:1px solid var(--line);border-radius:18px;padding:6px 14px;font:inherit;cursor:pointer}
+.tabs button[aria-pressed=true]{border-color:var(--b);color:var(--b)}
+.sum{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 4px}.sum b{font-size:20px}.sum span{color:var(--mut);font-size:12px;display:block}
+.k1{color:var(--b)}.k2{color:var(--w)}
+svg{width:100%;height:auto;display:block}text{fill:var(--fg);font-family:system-ui,Arial,sans-serif}
+.note{color:var(--mut);font-size:12px;margin-top:8px}
+</style></head><body><div class="wrap">
+<h1>RoyalBunny vs Greywolf</h1>
+<p class="sub">Luna 1 Guild Conquest, every tracked member of both guilds. Tier points from the cutoffs for each week.</p>
+<div class="tabs" id="tabs"></div>
+<div class="sum" id="sum"></div>
+<h2>The tier ledger</h2><div id="ledger"></div>
+<h2>Every player, placed by score</h2><div id="swarm"></div>
+<p class="note" id="note"></p>
+</div><script>
+const D={"cuts":[1750.0,898.0,550.6,427.3,335.4,246.7,174.2,137.9,104.9,44.85],"tiers":[500,450,400,350,300,250,225,200,175,150],"sets":{"2026-10-05":{"RoyalBunny":[["Haval",6403.0],["3EaglE3",1882.0],["Qiro",1641.0],["Sossie04",1246.0],["Empty",1771.0],["MrsTang",1085.0],["Azntjai",885.3],["TaikaPappi",747.9],["Macies",907.3],["Ruru",480.8],["whhatever",427.8],["Loved",489.0],["Fius",416.2],["Matseefut",898.0],["D3M0NBAN3",266.8],["WindSpirit",534.4],["MrJackie",451.5],["roll12",444.7],["Ettery",353.9],["AlanGor",361.1],["Alyssaur",301.6],["Immaturity",381.6],["Lillis",354.0],["CHOKO",427.3],["swings",286.5],["Jimpling",277.4],["Eunbi",392.7],["Xaurest",339.2],["piffles",324.7],["cindae",274.5]],"Greywolf":[["Leetxz",1125.0],["ShadowDash",1150.0],["GioDoubleG",727.2],["Forhus",985.0],["Nagi",754.5],["MrNekti",573.3],["Ztiruam",672.7],["Erotic",462.6],["Croikz",635.5],["Trungiebunie",330.1],["LosOrroz",456.3],["ELTE",365.9],["OnsJoke",611.0],["Elven",492.4],["Dijsy",329.2],["ThePlug",534.8],["Bitcoin",615.4],["Blaexe",542.7],["Carthager",382.1],["redname",416.7],["Ivanek",480.5],["ItzFreddy",251.9],["Eowinia",406.8],["Anastari",306.1],["Patatzak",409.7],["Aweora",412.5],["racunii",193.8],["Kimoxus",187.5],["Hated",125.7]]},"2026-10-12":{"RoyalBunny":[["Haval",7326.0],["3EaglE3",1882.0],["Qiro",2017.0],["Sossie04",1300.0],["Empty",1771.0],["MrsTang",1097.0],["Macies",1157.0],["Azntjai",885.3],["TaikaPappi",844.1],["Ruru",549.5],["whhatever",510.8],["Loved",518.1],["Fius",609.4],["Matseefut",976.4],["D3M0NBAN3",286.8],["WindSpirit",574.5],["MrJackie",624.7],["roll12",460.5],["Ettery",382.0],["Alyssaur",319.8],["AlanGor",361.1],["CHOKO",464.0],["Lillis",412.7],["Immaturity",422.8],["swings",286.5],["Eunbi",511.3],["piffles",396.7],["Jimpling",352.0],["Xaurest",341.7],["cindae",279.2]],"Greywolf":[["Leetxz",1218.0],["ShadowDash",1253.0],["GioDoubleG",869.3],["Forhus",985.0],["Nagi",798.2],["ThePlug",651.2],["Erotic",544.5],["Ztiruam",781.0],["MrNekti",664.6],["Trungiebunie",397.6],["Croikz",635.5],["OnsJoke",650.9],["LosOrroz",487.4],["Carthager",416.7],["Blaexe",640.4],["Ivanek",482.9],["Elven",565.1],["redname",500.3],["ELTE",463.5],["Dijsy",330.5],["Bitcoin",769.5],["ItzFreddy",323.0],["Patatzak",463.7],["Anastari",325.1],["Eowinia",429.9],["Aweora",412.5],["racunii",218.1],["Mistletein",300.0],["Kimoxus",190.4],["Hated",140.3]]},"2026-11-08":{"RoyalBunny":[["Haval",9089.83],["Macies",4026.76],["Sossie04",2587.84],["3EaglE3",2405.67],["Qiro",2370.47],["Empty",2287.69],["TaikaPappi",1369.32],["Matseefut",1348],["whhatever",1101.47],["MrJackie",1041.81],["piffles",1023.27],["Immaturity",937.33],["Eunbi",930],["roll12",882.1],["Ettery",849.65],["Fius",798.37],["Lillis",729.06],["Ruru",709.16],["SurelyNotBot",704.42],["Alyssaur",686.55],["Xaurest",669.18],["WindSpirit",668.13],["Jimpling",665.15],["Loved",665.06],["CHOKO",660.57],["AlanGor",514.64],["Gabimaru",457.85],["D3M0NBAN3",438.23],["swings",419.24],["cindae",396.55]],"Greywolf":[["Leetxz",1941.78],["ShadowDash",1936.54],["Forhus",1346.44],["MrNekti",1179.6],["Ztiruam",1164.35],["Bitcoin",1127.58],["GioDoubleG",1118.74],["ThePlug",1117.23],["KingsCross",1105.68],["Nagi",1089.69],["Croikz",1081.19],["Ivanek",1001.04],["redname",984.33],["OnsJoke",926.59],["Blaexe",922.15],["Elven",886.28],["ELTE",790.24],["Patatzak",747.04],["Carthager",733.41],["Eowinia",720.12],["Erotic",705.11],["Aweora",611.43],["Dijsy",601.01],["ItzFreddy",529.35],["Trungiebunie",498.7],["Mistletein",487.8],["BramF",401.92],["Anastari",347.66],["racunii",293.16],["Kimoxus",283.81]]}},"cutsBy":{"2026-10-05":[1750.0,898.0,550.6,427.3,335.4,246.7,174.2,137.9,104.9,44.85],"2026-10-12":[1750.0,898.0,550.6,427.3,335.4,246.7,174.2,137.9,104.9,44.85],"2026-11-08":[2484.24,1334.78,1041.81,882.1,632.12,399.89,268.96,170.63,null,null]}};
+const NAMES={RoyalBunny:'RoyalBunny',Greywolf:'Greywolf'},COL={RoyalBunny:'var(--b)',Greywolf:'var(--w)'};
+const LBL={'2026-10-05':'5 Oct','2026-10-12':'12 Oct','2026-11-08':'8 Nov'};
+let cur='2026-11-08';
+const T=D.tiers;let C=D.cuts;
+const tierOf=s=>{let last=0;for(let i=0;i<C.length;i++){if(C[i]==null)continue;last=i;if(s>=C[i]*(1-5e-4))return i}return last};
+const fmtB=b=>b>=1000?(b/1000).toFixed(b>=10000?1:2)+'T':Math.round(b)+'B';
+const ns=(t,x)=>document.createElementNS('http://www.w3.org/2000/svg',t);
+function tabs(){const el=document.getElementById('tabs');el.innerHTML='';Object.keys(D.sets).forEach(k=>{const b=document.createElement('button');b.textContent=LBL[k];b.setAttribute('aria-pressed',k===cur);b.onclick=()=>{cur=k;draw()};el.appendChild(b)})}
+function ledger(){
+ const S=D.sets[cur],box=document.getElementById('ledger');
+ const n={};for(const g in S){n[g]=T.map(()=>0);n[g].push(0);S[g].forEach(p=>n[g][tierOf(p[1])]++)}
+ const W=720,rowH=34,top=34,H=top+rowH*(T.length)+44,sz=12,gap=4,mid=360;
+ const s=ns('svg');s.setAttribute('viewBox',`0 0 ${W} ${H}`);
+ const txt=(x,y,t,o={})=>{const e=ns('text');e.setAttribute('x',x);e.setAttribute('y',y);e.textContent=t;for(const k in o)e.setAttribute(k,o[k]);s.appendChild(e);return e};
+ txt(mid-12,20,'RoyalBunny',{'text-anchor':'end',fill:COL.RoyalBunny,'font-size':15,style:'fill:var(--b)'});
+ txt(mid+12,20,'Greywolf',{'font-size':15,style:'fill:var(--w)'});txt(W,20,'Net',{'text-anchor':'end','font-size':13,style:'fill:var(--mut)'});
+ let tb=0,tw=0;
+ T.forEach((t,i)=>{const y=top+i*rowH+rowH/2;txt(0,y+5,t+'k',{'font-style':'italic','font-size':17,'font-family':'Georgia,serif'});
+  const a=n.RoyalBunny[i],b=n.Greywolf[i];tb+=a*t;tw+=b*t;
+  for(let k=0;k<a;k++){const r=ns('rect');r.setAttribute('x',mid-12-(k+1)*(sz+gap)+gap);r.setAttribute('y',y-sz/2);r.setAttribute('width',sz);r.setAttribute('height',sz);r.setAttribute('rx',2);r.style.fill='var(--b)';s.appendChild(r)}
+  for(let k=0;k<b;k++){const r=ns('rect');r.setAttribute('x',mid+12+k*(sz+gap));r.setAttribute('y',y-sz/2);r.setAttribute('width',sz);r.setAttribute('height',sz);r.setAttribute('rx',2);r.style.fill='var(--w)';s.appendChild(r)}
+  const net=(a-b)*t/1000;const e=txt(W,y+5,(net>0?'+':'')+net.toFixed(2)+'M',{'text-anchor':'end','font-size':15});e.style.fill=net>0?'var(--pos)':net<0?'var(--neg)':'var(--mut)';
+  const l=ns('line');l.setAttribute('x1',mid);l.setAttribute('x2',mid);l.setAttribute('y1',y-rowH/2+4);l.setAttribute('y2',y+rowH/2-4);l.style.stroke='var(--line)';s.appendChild(l)});
+ const y=top+T.length*rowH+26;
+ txt(0,y,'Total',{'font-style':'italic','font-size':17,'font-family':'Georgia,serif'});
+ txt(mid-12,y,(tb/1000).toFixed(2)+'M',{'text-anchor':'end','font-size':16,style:'fill:var(--b)'});txt(mid+12,y,(tw/1000).toFixed(2)+'M',{'font-size':16,style:'fill:var(--w)'});
+ const d=(tb-tw)/1000,e=txt(W,y,(d>0?'+':'')+d.toFixed(2)+'M',{'text-anchor':'end','font-size':16,'font-weight':600});e.style.fill=d>0?'var(--pos)':'var(--neg)';
+ box.innerHTML='';box.appendChild(s);
+ document.getElementById('sum').innerHTML=`<div><b class="k1">${(tb/1000).toFixed(2)}M</b><span>RoyalBunny tier points</span></div><div><b class="k2">${(tw/1000).toFixed(2)}M</b><span>Greywolf tier points</span></div><div><b style="color:var(--${d>0?'pos':'neg'})">${d>0?'+':''}${d.toFixed(2)}M</b><span>Bunny margin</span></div>`;
+}
+function swarm(){
+ const S=D.sets[cur],box=document.getElementById('swarm'),W=720,H=460,L=24,R=W-24,lo=Math.log10(60),hi=Math.log10(20000);
+ const X=v=>L+(Math.log10(v)-lo)/(hi-lo)*(R-L),mid=H/2-10;
+ const s=ns('svg');s.setAttribute('viewBox',`0 0 ${W} ${H}`);
+ const add=(t,a,tx)=>{const e=ns(t);for(const k in a)e.setAttribute(k,a[k]);if(tx)e.textContent=tx;s.appendChild(e);return e};
+ C.forEach((c,i)=>{if(c==null)return;const x=X(c);add('line',{x1:x,x2:x,y1:40,y2:H-40,style:'stroke:var(--line);stroke-dasharray:3 4'});add('text',{x,y:i%2?18:32,'text-anchor':'middle','font-size':12,style:'fill:var(--mut);font-style:italic'},T[i]+'k')});
+ [100,200,500,1000,2000,5000,10000].forEach(v=>{const x=X(v);add('line',{x1:x,x2:x,y1:H-40,y2:H-34,style:'stroke:var(--mut)'});add('text',{x,y:H-18,'text-anchor':'middle','font-size':12,style:'fill:var(--mut)'},fmtB(v))});
+ add('line',{x1:L,x2:R,y1:mid,y2:mid,style:'stroke:var(--mut)'});
+ add('text',{x:L,y:mid-150,'font-size':15,style:'fill:var(--b)'},'RoyalBunny');add('text',{x:L,y:mid+160,'font-size':15,style:'fill:var(--w)'},'Greywolf');
+ const rad=6.5,lab=[];
+ ['RoyalBunny','Greywolf'].forEach((g,gi)=>{const dir=gi?1:-1,placed=[];
+  [...S[g]].sort((a,b)=>a[1]-b[1]).forEach(p=>{const x=X(p[1]);let k=0,y;for(;;k++){const off=(k%2?1:-1)*Math.ceil(k/2)*0;y=mid+dir*(12+k*(rad*1.9));if(!placed.some(q=>Math.hypot(q[0]-x,q[1]-y)<rad*2.05))break}
+   placed.push([x,y]);add('circle',{cx:x,cy:y,r:rad,style:`fill:var(${gi?'--w':'--b'});stroke:var(--bg);stroke-width:1.5`}).appendChild(Object.assign(ns('title'),{textContent:`${p[0]}: ${p[1].toLocaleString()}B`}));p.push(x,y)});
+  [...S[g]].sort((a,b)=>b[1]-a[1]).slice(0,2).forEach(p=>add('text',{x:Math.min(p[2],R-30),y:p[3]+(dir*(rad+13)),'text-anchor':'middle','font-size':12},p[0]))});
+ box.innerHTML='';box.appendChild(s);
+}
+function draw(){C=D.cutsBy[cur];tabs();ledger();swarm();
+ const m={'2026-10-05':'Guild Watch snapshot of 5 Oct (the numbers on the live site view).','2026-10-12':'Guild Watch snapshot of 12 Oct.','2026-11-08':'Conquest top 300 of 8 Nov, matched to both guilds by guild name.'};
+ document.getElementById('note').textContent=m[cur]+' Hover or tap a dot for the name and score. Tier points run from 500k down to 150k.'+(cur==='2026-11-08'?' Cutoffs are the scores at ranks 10, 30, 50, 70, 100, 150, 200 and 300 on that week\'s board; every member of both guilds is inside the top 300.':' Cutoffs are the guild\'s, set 5 Oct.')+'';
+}
+draw();
+</script></body></html>
