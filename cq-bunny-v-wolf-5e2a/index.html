@@ -1,140 +1,187 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Admin: Bunny vs Greywolf Conquest</title><style>
-:root{--bg:#15161c;--fg:#ecebe6;--mut:#8b8d96;--line:#2c2e38;--b:#f0b400;--w:#7fb0ff;--pos:#6fcf97;--neg:#ee7c7c}
-@media(prefers-color-scheme:light){:root{--bg:#f6f4ee;--fg:#1d1d22;--mut:#6b6d76;--line:#d9d6cc;--b:#c98a00;--w:#2f6fd6;--pos:#1f8a4c;--neg:#c23b3b}}
-body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.4 system-ui,Arial,sans-serif}
-.wrap{max-width:760px;margin:0 auto;padding:20px 16px 48px}
-h1{margin:0 0 4px;font:600 24px Georgia,serif}h2{font:italic 400 21px Georgia,serif;margin:34px 0 6px}
-.sub,.cap{color:var(--mut);font-size:13px;margin:0 0 12px}.cap{color:var(--fg);font-size:14px}
-.big{font:600 30px Georgia,serif;margin:14px 0 0}.big small{display:block;font:400 14px system-ui,Arial,sans-serif;color:var(--mut);margin-top:2px}
-button.play{min-height:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;background:none;color:var(--fg);border:1px solid var(--line);border-radius:22px;padding:8px 18px;font:inherit;cursor:pointer;margin-top:8px}
-svg{width:100%;display:block;touch-action:manipulation;-webkit-tap-highlight-color:transparent;overflow:visible}
-text{fill:var(--fg);font-family:system-ui,Arial,sans-serif}
-.info{min-height:44px;margin-top:8px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px}.info i{color:var(--mut);font-style:normal}
-.k1{color:var(--b)}.k2{color:var(--w)}.up{color:var(--pos)}.dn{color:var(--neg)}
-.leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mut);margin:0 0 8px}.leg span{display:inline-flex;align-items:center;gap:5px}
-.leg b{display:inline-block;width:10px;height:10px;border-radius:2px;box-sizing:border-box;background:var(--mut)}
-.dot{transition:transform .9s cubic-bezier(.3,.7,.2,1),opacity .6s}.cut{transition:transform .9s cubic-bezier(.3,.7,.2,1)}
-.fade{animation:fd .5s .75s both}@keyframes fd{from{opacity:0}to{opacity:1}}
-.grow{transform-box:fill-box;transform-origin:left center;animation:gr .7s both}@keyframes gr{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.pop{animation:fd .35s both}
-.note{color:var(--mut);font-size:12px;margin-top:10px}
-@media(prefers-reduced-motion:reduce){.dot,.cut{transition:none}.fade,.grow,.pop{animation:none}}
+:root{color-scheme:light;--bg:#fffff8;--ink:#111;--mut:#6a6a62;--rule:#d8d6c8;--faint:#ecebdf;--b:#b07d00;--w:#3b6fb5;--neg:#b3261e;--pos:#1d7a46}
+@media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#1a1a19;--ink:#f0efec;--mut:#a3a298;--rule:#3a3a36;--faint:#262624;--b:#c98500;--w:#3987e5;--neg:#ef8079;--pos:#5fc48d}}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 Georgia,'Iowan Old Style','Palatino Linotype',serif}
+.wrap{max-width:640px;margin:0 auto;padding:28px 18px 64px}
+h1{font-weight:400;font-size:30px;line-height:1.15;margin:0 0 6px}h2{font-weight:400;font-style:italic;font-size:22px;margin:44px 0 6px}
+.dek{color:var(--mut);font-size:15px;margin:0 0 18px}p{margin:0 0 12px}
+.fig{margin:14px 0 6px}.capn{color:var(--mut);font-size:13px;line-height:1.4;margin:6px 0 0}
+svg{display:block;width:100%;overflow:visible}svg text{fill:var(--ink);font-family:Georgia,serif}
+.num{font-variant-numeric:tabular-nums}
+table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+td,th{padding:3px 4px;text-align:right;vertical-align:middle;white-space:nowrap}th{font-weight:400;font-style:italic;color:var(--mut);font-size:12px;border-bottom:1px solid var(--rule)}
+td:first-child,th:first-child{text-align:left;padding-left:0}td:last-child,th:last-child{padding-right:0}
+tr.grp td{padding-top:14px;font-style:italic;border-bottom:1px solid var(--rule);text-align:left;white-space:normal}tr.grp td b{font-style:normal}
+.neg{color:var(--neg)}.pos{color:var(--pos)}.mut{color:var(--mut)}
+.sq{display:inline-block;width:5px;height:9px;margin-right:1.5px}.sqb{background:var(--b)}.sqw{background:var(--w)}
+.key{display:inline-block;width:9px;height:9px;border-radius:50%;margin:0 4px 0 10px;vertical-align:baseline}
+.sowhat{border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);margin-top:52px;padding:6px 0 18px}
+.sowhat h2{margin-top:14px}.sowhat ol{padding-left:22px;margin:10px 0 0}.sowhat li{margin-bottom:10px}
+.tip{min-height:22px;font-size:13px;color:var(--mut);margin-top:4px}
+.small{font-size:13px;color:var(--mut)}
+@media(max-width:420px){body{font-size:16px}table{font-size:12px}}
 </style></head><body><div class="wrap">
-<h1>RoyalBunny vs Greywolf</h1>
-<p class="sub">Luna 1 Guild Conquest tier points, week by week. Tiers by rank on each week's top-300 board.</p>
-<p class="big" id="big"></p>
-<div id="lead"></div>
-<button class="play" id="play">&#9654; Play the five weeks</button>
-<h2>Where the lead went</h2><p class="cap" id="wfcap"></p><div id="wf"></div>
-<h2>The tier ledger</h2>
-<div class="leg"><span><b></b>held tier</span><span><b style="outline:2px solid var(--pos)"></b>climbed</span><span><b style="background:none;border:2px solid var(--neg)"></b>dropped</span><span><b style="outline:2px solid var(--fg)"></b>new recruit</span><span>(vs 11 Oct)</span></div>
-<div id="ledger"></div><div class="info" id="info1"></div>
-<h2>Every player, placed by score</h2>
-<div class="leg"><span>Same marks as above.</span><span><b style="background:none;border:2px dashed var(--mut);border-radius:50%"></b>left the guild</span></div>
-<div id="swarm"></div><div class="info" id="info2"></div>
-<p class="note">Tier points: top 10 = 500k, 30 = 450k, 50 = 400k, 70 = 350k, 100 = 300k, 150 = 250k, 200 = 225k, 300 = 200k. Dashed lines are each tier's cutoff score that week. Source: mapleidle.gg Conquest ranking.</p>
+<h1>The lead held. It is thinner, and it left through the front door.</h1>
+<p class="dek">RoyalBunny against Greywolf in Luna 1 Guild Conquest, 11 Oct to 8 Nov. Tier points by rank on each week's top-300 board.</p>
+<p id="p1"></p>
+<div class="fig" id="f1"></div><p class="capn" id="c1"></p>
+
+<h2>The arithmetic of 0.20M</h2>
+<p id="p2"></p>
+<div class="fig" id="f2"></div>
+
+<h2>The trade</h2>
+<p id="p3"></p>
+<div class="fig" id="f3"></div><p class="capn">Rank on a log scale, so the top of the board gets the room it deserves. Hollow marks left; solid marks arrived. Leavers are placed at their last rank in the guild, arrivals at their rank on 8 Nov.</p>
+
+<h2>Who grew, who stalled</h2>
+<p id="p4"></p>
+<div class="fig" id="f4"></div><p class="capn">Sparkline: rank over the five weeks, up is better; the dot is 8 Nov. Growth is score growth since 11 Oct; the tick marks the server median.</p>
+
+<h2>Both guilds against the server</h2>
+<p id="p5"></p>
+<div class="fig" id="f5"></div><div class="tip" id="t5">Tap a dot for the name.</div>
+<div class="fig" id="f6"></div><p class="capn">Median weekly score growth of members on both boards. The week of 8 Nov is the patch week.</p>
+
+<h2>The ledger, then and now</h2>
+<p id="p7"></p>
+<div class="fig" id="f7"></div>
+
+<div class="sowhat"><h2>So what: the week after 8 Nov</h2>
+<p id="p8"></p>
+<div class="fig" id="f8"></div><p class="capn" id="c8"></p>
+<ol id="recs"></ol>
+<p class="small" id="cav"></p></div>
+<p class="small" style="margin-top:28px">Source: mapleidle.gg Conquest ranking, top 300 each Sunday. Tier points: top 10 = 500k, 30 = 450k, 50 = 400k, 70 = 350k, 100 = 300k, 150 = 250k, 200 = 225k, 300 = 200k. Scores are each character's best on record.</p>
 </div><script>
-const D={"weeks":["2026-10-11","2026-10-18","2026-10-25","2026-11-01","2026-11-08"],"cuts":[[1770.98,976.42,651.2,492.79,380.03,279.23,188.8,134.55],[1881.51,1027.45,715.68,581.7,422.4,300.93,212.12,141.32],[1892.21,1057.89,796.74,625.61,463.66,321.15,220.58,148.37],[2076.1,1160.57,836.55,719.87,534.07,348.37,236.49,156.58],[2484.24,1334.78,1041.81,882.1,632.12,399.89,268.96,170.63]],"p":[{"RoyalBunny":[["Haval",5,7326.45],["Qiro",7,2016.64],["3EaglE3",8,1881.51],["Empty",10,1770.98],["Sossie04",16,1300.48],["Macies",19,1157.08],["MrsTang",24,1097.05],["Matseefut",30,976.42],["Azntjai",32,885.34],["TaikaPappi",36,844.13],["MrJackie",55,624.74],["Fius",56,609.42],["WindSpirit",58,574.46],["Ruru",61,549.48],["Loved",65,518.14],["Eunbi",66,511.29],["whhatever",67,510.81],["CHOKO",76,463.98],["roll12",79,460.47],["Immaturity",87,422.84],["Lillis",90,412.72],["piffles",95,396.65],["Ettery",98,381.96],["AlanGor",107,361.14],["Jimpling",109,352.02],["Xaurest",112,341.67],["Alyssaur",129,319.81],["D3M0NBAN3",145,286.78],["swings",146,286.46],["cindae",150,279.23]],"Greywolf":[["ShadowDash",17,1252.79],["Leetxz",18,1218.23],["Forhus",29,984.97],["GioDoubleG",34,869.28],["Nagi",38,798.18],["Ztiruam",39,780.98],["Bitcoin",40,769.49],["MrNekti",49,664.65],["ThePlug",50,651.2],["OnsJoke",51,650.87],["Blaexe",53,640.35],["Croikz",54,635.47],["Elven",59,565.12],["Erotic",62,544.49],["redname",68,500.25],["LosOrroz",71,487.41],["Ivanek",73,482.87],["Patatzak",77,463.66],["ELTE",78,463.45],["Eowinia",85,429.92],["Carthager",89,416.67],["Aweora",91,412.52],["Trungiebunie",94,397.64],["Dijsy",117,330.48],["Anastari",123,325.06],["ItzFreddy",126,322.97],["Mistletein",136,300],["racunii",184,218.1],["Kimoxus",199,190.35],["Hated",285,140.26]]},{"RoyalBunny":[["Haval",5,7385.17],["Qiro",8,2280.61],["Empty",9,2049.9],["3EaglE3",10,1881.51],["Sossie04",12,1586.2],["Macies",15,1480.92],["MrsTang",25,1138.53],["Azntjai",28,1033.51],["Matseefut",30,1027.45],["TaikaPappi",32,1010.23],["MrJackie",53,694.22],["Immaturity",58,654.68],["WindSpirit",62,632.77],["whhatever",64,625],["Fius",67,609.42],["Ruru",68,607.93],["Eunbi",69,600.52],["Lillis",73,577.06],["piffles",80,530.99],["Loved",83,518.14],["CHOKO",85,504.73],["roll12",90,488.58],["Ettery",93,464.87],["Xaurest",101,416.41],["Jimpling",109,386.59],["Alyssaur",116,363.17],["AlanGor",117,361.14],["cindae",150,300.93],["D3M0NBAN3",155,293.81],["swings",157,290.7]],"Greywolf":[["Leetxz",17,1380.37],["ShadowDash",20,1327.7],["Forhus",33,992.71],["GioDoubleG",36,928.73],["Bitcoin",39,833],["Croikz",40,829.02],["Nagi",41,827.7],["Ztiruam",42,820.2],["ThePlug",52,711.58],["OnsJoke",54,692.01],["MrNekti",55,674.5],["Blaexe",56,671.16],["KingsCross",60,645.51],["Erotic",63,626.51],["redname",70,581.7],["Carthager",71,581.24],["Elven",74,571.04],["Ivanek",75,568.76],["Eowinia",77,549.2],["ELTE",79,532.69],["Patatzak",84,509.92],["Aweora",103,412.52],["Trungiebunie",108,397.64],["Dijsy",128,344.63],["Mistletein",133,333.03],["Anastari",137,325.06],["ItzFreddy",138,322.97],["BramF",140,318.57],["racunii",183,236.51],["Kimoxus",194,216.63]]},{"RoyalBunny":[["Haval",5,7632.16],["Qiro",8,2280.61],["Empty",9,2152.19],["3EaglE3",10,1892.21],["Sossie04",13,1586.2],["Macies",17,1485.44],["MrsTang",26,1178.76],["TaikaPappi",29,1063.75],["Azntjai",30,1057.89],["Matseefut",32,1053.43],["whhatever",42,885.72],["MrJackie",57,725.9],["Eunbi",62,677.96],["Immaturity",65,655.49],["WindSpirit",69,632.77],["piffles",71,618.93],["Fius",73,609.42],["Ruru",74,607.93],["Lillis",77,589.19],["Loved",78,582.17],["CHOKO",82,558.51],["Ettery",83,554.57],["roll12",84,554.24],["Jimpling",110,435.65],["Xaurest",111,427.5],["Alyssaur",115,403.71],["D3M0NBAN3",127,380.35],["AlanGor",135,364.58],["swings",146,334.55],["cindae",156,311.52]],"Greywolf":[["ShadowDash",14,1533],["Leetxz",18,1454.44],["Forhus",28,1085.56],["Nagi",35,1008.87],["GioDoubleG",38,963.68],["Ztiruam",39,951.4],["Bitcoin",44,833],["Croikz",45,829.02],["KingsCross",49,802.33],["ThePlug",53,775.1],["OnsJoke",56,725.96],["Blaexe",58,724.36],["MrNekti",60,717.57],["Elven",67,647.67],["Erotic",68,634.04],["Carthager",72,618.56],["ELTE",76,594.33],["redname",79,581.7],["Ivanek",80,579.41],["Eowinia",81,559.98],["Patatzak",89,530.62],["Aweora",97,479.71],["Trungiebunie",98,465.83],["Dijsy",116,400.07],["ItzFreddy",118,398.53],["Mistletein",126,381.01],["Anastari",149,325.06],["BramF",152,319.6],["racunii",178,262.08],["Kimoxus",195,225.84]]},{"RoyalBunny":[["Haval",5,8177.57],["Qiro",8,2370.47],["Empty",9,2287.69],["Macies",10,2076.1],["3EaglE3",12,1950.79],["Sossie04",13,1906.73],["Azntjai",24,1272.36],["TaikaPappi",29,1175.13],["Matseefut",30,1160.57],["whhatever",45,959.92],["MrJackie",54,812.32],["piffles",65,747.22],["Immaturity",70,719.87],["Eunbi",71,707.53],["Lillis",72,699.06],["Ettery",78,651.09],["roll12",80,646.3],["Loved",82,641.51],["Fius",83,638.95],["WindSpirit",84,632.77],["CHOKO",88,607.94],["Ruru",89,607.93],["Xaurest",102,520.07],["Alyssaur",116,443.23],["Jimpling",117,440.98],["AlanGor",125,412.56],["D3M0NBAN3",135,382.22],["swings",150,348.37],["cindae",157,318.28]],"Greywolf":[["ShadowDash",19,1533],["Leetxz",20,1458.33],["Forhus",31,1114.75],["Nagi",32,1084.31],["Ztiruam",36,1039.71],["KingsCross",40,1001.02],["Bitcoin",41,975.02],["ThePlug",42,968.69],["GioDoubleG",44,963.68],["Croikz",52,829.21],["OnsJoke",57,803.41],["Blaexe",58,789.27],["MrNekti",59,788.91],["redname",61,775.1],["Ivanek",63,755.03],["Elven",69,727.71],["Erotic",76,657.28],["Carthager",81,644.12],["ELTE",85,632.15],["Eowinia",91,582.09],["Aweora",92,580.98],["Patatzak",93,569.2],["Dijsy",106,486.58],["Trungiebunie",107,465.83],["ItzFreddy",114,445.57],["Mistletein",130,399.48],["BramF",147,356.14],["Anastari",154,325.06],["racunii",178,280.01],["Kimoxus",209,225.84]]},{"RoyalBunny":[["Haval",5,9089.83],["Macies",6,4026.76],["Sossie04",9,2587.84],["3EaglE3",11,2405.67],["Qiro",12,2370.47],["Empty",13,2287.69],["TaikaPappi",26,1369.32],["Matseefut",28,1348],["whhatever",44,1101.47],["MrJackie",50,1041.81],["piffles",54,1023.27],["Immaturity",62,937.33],["Eunbi",64,930],["roll12",70,882.1],["Ettery",71,849.65],["Fius",80,798.37],["Lillis",85,729.06],["Ruru",87,709.16],["SurelyNotBot",89,704.42],["Alyssaur",90,686.55],["Xaurest",92,669.18],["WindSpirit",93,668.13],["Jimpling",94,665.15],["Loved",95,665.06],["CHOKO",96,660.57],["AlanGor",119,514.64],["Gabimaru",130,457.85],["D3M0NBAN3",135,438.23],["swings",143,419.24],["cindae",153,396.55]],"Greywolf":[["Leetxz",16,1941.78],["ShadowDash",17,1936.54],["Forhus",29,1346.44],["MrNekti",34,1179.6],["Ztiruam",35,1164.35],["Bitcoin",38,1127.58],["GioDoubleG",39,1118.74],["ThePlug",40,1117.23],["KingsCross",43,1105.68],["Nagi",46,1089.69],["Croikz",49,1081.19],["Ivanek",58,1001.04],["redname",59,984.33],["OnsJoke",65,926.59],["Blaexe",67,922.15],["Elven",69,886.28],["ELTE",82,790.24],["Patatzak",83,747.04],["Carthager",84,733.41],["Eowinia",86,720.12],["Erotic",88,705.11],["Aweora",103,611.43],["Dijsy",106,601.01],["ItzFreddy",116,529.35],["Trungiebunie",121,498.7],["Mistletein",122,487.8],["BramF",149,401.92],["Anastari",167,347.66],["racunii",185,293.16],["Kimoxus",190,283.81]]}],"ex":[{"RoyalBunny":[],"Greywolf":[]},{"RoyalBunny":[],"Greywolf":[["LosOrroz",78,534.07,"Trekronor"],["Hated",277,149.58,"Dusk"]]},{"RoyalBunny":[],"Greywolf":[["LosOrroz",87,534.07,"Trekronor"],["Hated",293,151.61,"Dusk"]]},{"RoyalBunny":[["MrsTang",23,1300.82,"Hyrox"]],"Greywolf":[["LosOrroz",100,534.07,"Trekronor"]]},{"RoyalBunny":[["MrsTang",25,1389.87,"Hyrox"],["Azntjai",27,1366.01,"Hyrox"]],"Greywolf":[["LosOrroz",102,623.71,"Trekronor"]]}]};
-const G=['RoyalBunny','Greywolf'],CV={RoyalBunny:'var(--b)',Greywolf:'var(--w)'},KC={RoyalBunny:'k1',Greywolf:'k2'};
+const D={"weeks":["2026-10-11","2026-10-18","2026-10-25","2026-11-01","2026-11-08"],"h":{"3EaglE3":[[8,1881.51,"RoyalBunny"],[10,1881.51,"RoyalBunny"],[10,1892.21,"RoyalBunny"],[12,1950.79,"RoyalBunny"],[11,2405.67,"RoyalBunny"]],"AlanGor":[[107,361.14,"RoyalBunny"],[117,361.14,"RoyalBunny"],[135,364.58,"RoyalBunny"],[125,412.56,"RoyalBunny"],[119,514.64,"RoyalBunny"]],"Alyssaur":[[129,319.81,"RoyalBunny"],[116,363.17,"RoyalBunny"],[115,403.71,"RoyalBunny"],[116,443.23,"RoyalBunny"],[90,686.55,"RoyalBunny"]],"Anastari":[[123,325.06,"Greywolf"],[137,325.06,"Greywolf"],[149,325.06,"Greywolf"],[154,325.06,"Greywolf"],[167,347.66,"Greywolf"]],"Aweora":[[91,412.52,"Greywolf"],[103,412.52,"Greywolf"],[97,479.71,"Greywolf"],[92,580.98,"Greywolf"],[103,611.43,"Greywolf"]],"Azntjai":[[32,885.34,"RoyalBunny"],[28,1033.51,"RoyalBunny"],[30,1057.89,"RoyalBunny"],[24,1272.36,"RoyalBunny"],[27,1366.01,"Hyrox"]],"Bitcoin":[[40,769.49,"Greywolf"],[39,833,"Greywolf"],[44,833,"Greywolf"],[41,975.02,"Greywolf"],[38,1127.58,"Greywolf"]],"Blaexe":[[53,640.35,"Greywolf"],[56,671.16,"Greywolf"],[58,724.36,"Greywolf"],[58,789.27,"Greywolf"],[67,922.15,"Greywolf"]],"BramF":[[141,291.72,"Dusk"],[140,318.57,"Greywolf"],[152,319.6,"Greywolf"],[147,356.14,"Greywolf"],[149,401.92,"Greywolf"]],"CHOKO":[[76,463.98,"RoyalBunny"],[85,504.73,"RoyalBunny"],[82,558.51,"RoyalBunny"],[88,607.94,"RoyalBunny"],[96,660.57,"RoyalBunny"]],"Carthager":[[89,416.67,"Greywolf"],[71,581.24,"Greywolf"],[72,618.56,"Greywolf"],[81,644.12,"Greywolf"],[84,733.41,"Greywolf"]],"Croikz":[[54,635.47,"Greywolf"],[40,829.02,"Greywolf"],[45,829.02,"Greywolf"],[52,829.21,"Greywolf"],[49,1081.19,"Greywolf"]],"D3M0NBAN3":[[145,286.78,"RoyalBunny"],[155,293.81,"RoyalBunny"],[127,380.35,"RoyalBunny"],[135,382.22,"RoyalBunny"],[135,438.23,"RoyalBunny"]],"Dijsy":[[117,330.48,"Greywolf"],[128,344.63,"Greywolf"],[116,400.07,"Greywolf"],[106,486.58,"Greywolf"],[106,601.01,"Greywolf"]],"ELTE":[[78,463.45,"Greywolf"],[79,532.69,"Greywolf"],[76,594.33,"Greywolf"],[85,632.15,"Greywolf"],[82,790.24,"Greywolf"]],"Elven":[[59,565.12,"Greywolf"],[74,571.04,"Greywolf"],[67,647.67,"Greywolf"],[69,727.71,"Greywolf"],[69,886.28,"Greywolf"]],"Empty":[[10,1770.98,"RoyalBunny"],[9,2049.9,"RoyalBunny"],[9,2152.19,"RoyalBunny"],[9,2287.69,"RoyalBunny"],[13,2287.69,"RoyalBunny"]],"Eowinia":[[85,429.92,"Greywolf"],[77,549.2,"Greywolf"],[81,559.98,"Greywolf"],[91,582.09,"Greywolf"],[86,720.12,"Greywolf"]],"Erotic":[[62,544.49,"Greywolf"],[63,626.51,"Greywolf"],[68,634.04,"Greywolf"],[76,657.28,"Greywolf"],[88,705.11,"Greywolf"]],"Ettery":[[98,381.96,"RoyalBunny"],[93,464.87,"RoyalBunny"],[83,554.57,"RoyalBunny"],[78,651.09,"RoyalBunny"],[71,849.65,"RoyalBunny"]],"Eunbi":[[66,511.29,"RoyalBunny"],[69,600.52,"RoyalBunny"],[62,677.96,"RoyalBunny"],[71,707.53,"RoyalBunny"],[64,930,"RoyalBunny"]],"Fius":[[56,609.42,"RoyalBunny"],[67,609.42,"RoyalBunny"],[73,609.42,"RoyalBunny"],[83,638.95,"RoyalBunny"],[80,798.37,"RoyalBunny"]],"Forhus":[[29,984.97,"Greywolf"],[33,992.71,"Greywolf"],[28,1085.56,"Greywolf"],[31,1114.75,"Greywolf"],[29,1346.44,"Greywolf"]],"Gabimaru":[[134,302.03,"FuryTale"],[119,359.13,"FuryTale"],[122,387.36,"FuryTale"],[129,402.17,"FuryTale"],[130,457.85,"RoyalBunny"]],"GioDoubleG":[[34,869.28,"Greywolf"],[36,928.73,"Greywolf"],[38,963.68,"Greywolf"],[44,963.68,"Greywolf"],[39,1118.74,"Greywolf"]],"Hated":[[285,140.26,"Greywolf"],[277,149.58,"Dusk"],[293,151.61,"Dusk"],null,null],"Haval":[[5,7326.45,"RoyalBunny"],[5,7385.17,"RoyalBunny"],[5,7632.16,"RoyalBunny"],[5,8177.57,"RoyalBunny"],[5,9089.83,"RoyalBunny"]],"Immaturity":[[87,422.84,"RoyalBunny"],[58,654.68,"RoyalBunny"],[65,655.49,"RoyalBunny"],[70,719.87,"RoyalBunny"],[62,937.33,"RoyalBunny"]],"ItzFreddy":[[126,322.97,"Greywolf"],[138,322.97,"Greywolf"],[118,398.53,"Greywolf"],[114,445.57,"Greywolf"],[116,529.35,"Greywolf"]],"Ivanek":[[73,482.87,"Greywolf"],[75,568.76,"Greywolf"],[80,579.41,"Greywolf"],[63,755.03,"Greywolf"],[58,1001.04,"Greywolf"]],"Jimpling":[[109,352.02,"RoyalBunny"],[109,386.59,"RoyalBunny"],[110,435.65,"RoyalBunny"],[117,440.98,"RoyalBunny"],[94,665.15,"RoyalBunny"]],"Kimoxus":[[199,190.35,"Greywolf"],[194,216.63,"Greywolf"],[195,225.84,"Greywolf"],[209,225.84,"Greywolf"],[190,283.81,"Greywolf"]],"KingsCross":[[74,479.73,"Dusk"],[60,645.51,"Greywolf"],[49,802.33,"Greywolf"],[40,1001.02,"Greywolf"],[43,1105.68,"Greywolf"]],"Leetxz":[[18,1218.23,"Greywolf"],[17,1380.37,"Greywolf"],[18,1454.44,"Greywolf"],[20,1458.33,"Greywolf"],[16,1941.78,"Greywolf"]],"Lillis":[[90,412.72,"RoyalBunny"],[73,577.06,"RoyalBunny"],[77,589.19,"RoyalBunny"],[72,699.06,"RoyalBunny"],[85,729.06,"RoyalBunny"]],"LosOrroz":[[71,487.41,"Greywolf"],[78,534.07,"Trekronor"],[87,534.07,"Trekronor"],[100,534.07,"Trekronor"],[102,623.71,"Trekronor"]],"Loved":[[65,518.14,"RoyalBunny"],[83,518.14,"RoyalBunny"],[78,582.17,"RoyalBunny"],[82,641.51,"RoyalBunny"],[95,665.06,"RoyalBunny"]],"Macies":[[19,1157.08,"RoyalBunny"],[15,1480.92,"RoyalBunny"],[17,1485.44,"RoyalBunny"],[10,2076.1,"RoyalBunny"],[6,4026.76,"RoyalBunny"]],"Matseefut":[[30,976.42,"RoyalBunny"],[30,1027.45,"RoyalBunny"],[32,1053.43,"RoyalBunny"],[30,1160.57,"RoyalBunny"],[28,1348,"RoyalBunny"]],"Mistletein":[[136,300,"Greywolf"],[133,333.03,"Greywolf"],[126,381.01,"Greywolf"],[130,399.48,"Greywolf"],[122,487.8,"Greywolf"]],"MrJackie":[[55,624.74,"RoyalBunny"],[53,694.22,"RoyalBunny"],[57,725.9,"RoyalBunny"],[54,812.32,"RoyalBunny"],[50,1041.81,"RoyalBunny"]],"MrNekti":[[49,664.65,"Greywolf"],[55,674.5,"Greywolf"],[60,717.57,"Greywolf"],[59,788.91,"Greywolf"],[34,1179.6,"Greywolf"]],"MrsTang":[[24,1097.05,"RoyalBunny"],[25,1138.53,"RoyalBunny"],[26,1178.76,"RoyalBunny"],[23,1300.82,"Hyrox"],[25,1389.87,"Hyrox"]],"Nagi":[[38,798.18,"Greywolf"],[41,827.7,"Greywolf"],[35,1008.87,"Greywolf"],[32,1084.31,"Greywolf"],[46,1089.69,"Greywolf"]],"OnsJoke":[[51,650.87,"Greywolf"],[54,692.01,"Greywolf"],[56,725.96,"Greywolf"],[57,803.41,"Greywolf"],[65,926.59,"Greywolf"]],"Patatzak":[[77,463.66,"Greywolf"],[84,509.92,"Greywolf"],[89,530.62,"Greywolf"],[93,569.2,"Greywolf"],[83,747.04,"Greywolf"]],"Qiro":[[7,2016.64,"RoyalBunny"],[8,2280.61,"RoyalBunny"],[8,2280.61,"RoyalBunny"],[8,2370.47,"RoyalBunny"],[12,2370.47,"RoyalBunny"]],"Ruru":[[61,549.48,"RoyalBunny"],[68,607.93,"RoyalBunny"],[74,607.93,"RoyalBunny"],[89,607.93,"RoyalBunny"],[87,709.16,"RoyalBunny"]],"ShadowDash":[[17,1252.79,"Greywolf"],[20,1327.7,"Greywolf"],[14,1533,"Greywolf"],[19,1533,"Greywolf"],[17,1936.54,"Greywolf"]],"Sossie04":[[16,1300.48,"RoyalBunny"],[12,1586.2,"RoyalBunny"],[13,1586.2,"RoyalBunny"],[13,1906.73,"RoyalBunny"],[9,2587.84,"RoyalBunny"]],"SurelyNotBot":[[105,364.81,"Elysium"],[92,468.03,"Elysium"],[88,533.01,"Elysium"],[75,659.35,"Elysium"],[89,704.42,"RoyalBunny"]],"TaikaPappi":[[36,844.13,"RoyalBunny"],[32,1010.23,"RoyalBunny"],[29,1063.75,"RoyalBunny"],[29,1175.13,"RoyalBunny"],[26,1369.32,"RoyalBunny"]],"ThePlug":[[50,651.2,"Greywolf"],[52,711.58,"Greywolf"],[53,775.1,"Greywolf"],[42,968.69,"Greywolf"],[40,1117.23,"Greywolf"]],"Trungiebunie":[[94,397.64,"Greywolf"],[108,397.64,"Greywolf"],[98,465.83,"Greywolf"],[107,465.83,"Greywolf"],[121,498.7,"Greywolf"]],"WindSpirit":[[58,574.46,"RoyalBunny"],[62,632.77,"RoyalBunny"],[69,632.77,"RoyalBunny"],[84,632.77,"RoyalBunny"],[93,668.13,"RoyalBunny"]],"Xaurest":[[112,341.67,"RoyalBunny"],[101,416.41,"RoyalBunny"],[111,427.5,"RoyalBunny"],[102,520.07,"RoyalBunny"],[92,669.18,"RoyalBunny"]],"Ztiruam":[[39,780.98,"Greywolf"],[42,820.2,"Greywolf"],[39,951.4,"Greywolf"],[36,1039.71,"Greywolf"],[35,1164.35,"Greywolf"]],"cindae":[[150,279.23,"RoyalBunny"],[150,300.93,"RoyalBunny"],[156,311.52,"RoyalBunny"],[157,318.28,"RoyalBunny"],[153,396.55,"RoyalBunny"]],"piffles":[[95,396.65,"RoyalBunny"],[80,530.99,"RoyalBunny"],[71,618.93,"RoyalBunny"],[65,747.22,"RoyalBunny"],[54,1023.27,"RoyalBunny"]],"racunii":[[184,218.1,"Greywolf"],[183,236.51,"Greywolf"],[178,262.08,"Greywolf"],[178,280.01,"Greywolf"],[185,293.16,"Greywolf"]],"redname":[[68,500.25,"Greywolf"],[70,581.7,"Greywolf"],[79,581.7,"Greywolf"],[61,775.1,"Greywolf"],[59,984.33,"Greywolf"]],"roll12":[[79,460.47,"RoyalBunny"],[90,488.58,"RoyalBunny"],[84,554.24,"RoyalBunny"],[80,646.3,"RoyalBunny"],[70,882.1,"RoyalBunny"]],"swings":[[146,286.46,"RoyalBunny"],[157,290.7,"RoyalBunny"],[146,334.55,"RoyalBunny"],[150,348.37,"RoyalBunny"],[143,419.24,"RoyalBunny"]],"whhatever":[[67,510.81,"RoyalBunny"],[64,625,"RoyalBunny"],[42,885.72,"RoyalBunny"],[45,959.92,"RoyalBunny"],[44,1101.47,"RoyalBunny"]]},"cuts":[[1770.98,976.42,651.2,492.79,380.03,279.23,188.8,134.55],[1881.51,1027.45,715.68,581.7,422.4,300.93,212.12,141.32],[1892.21,1057.89,796.74,625.61,463.66,321.15,220.58,148.37],[2076.1,1160.57,836.55,719.87,534.07,348.37,236.49,156.58],[2484.24,1334.78,1041.81,882.1,632.12,399.89,268.96,170.63]],"targets":[[10,2484.24,3008.56,21.11],[30,1334.78,1550.51,16.16],[50,1041.81,1184.32,13.68],[70,882.1,1090.37,23.61],[100,632.12,749.85,18.62],[150,399.89,480.63,20.19],[200,268.96,305.46,13.57]],"srvWeek":[6.6,5.4,4.8,13.0],"srvSince":43.7};
+const B='RoyalBunny',GW='Greywolf',L=D.weeks.length-1;
 const T=[500,450,400,350,300,250,225,200],RK=[10,30,50,70,100,150,200,300];
-const pts=r=>{for(let i=0;i<RK.length;i++)if(r<=RK[i])return T[i];return 175};
+const ti=r=>{for(let i=0;i<RK.length;i++)if(r<=RK[i])return i;return 8},pts=r=>ti(r)<8?T[ti(r)]:175;
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const lbl=i=>{const a=D.weeks[i].split('-');return (+a[2])+' '+MON[a[1]-1]};
-const fmtB=b=>b>=1000?(b/1000).toFixed(b>=10000?1:2)+'T':Math.round(b)+'B';
-const fM=(v,s)=>{const m=Math.round(v*1000);return (s&&m>0?'+':'')+(m/1000).toFixed(m%10?3:2).replace('-','\u2212')+'M'};
+const fB=b=>b>=1000?(b/1000).toFixed(2)+'T':Math.round(b)+'B';
+const fM=(k,s)=>{const m=Math.round(k);return (s&&m>0?'+':'')+(m/1000).toFixed(m%10?3:2).replace('-','−')+'M'};
+const fK=(k,s)=>(s&&k>0?'+':'')+String(k).replace('-','−')+'k';
+const pc=(v,s)=>(s&&v>0?'+':'')+Math.round(v)+'%';
 const $=id=>document.getElementById(id);
 const el=(t,a,tx)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a||{})e.setAttribute(k,a[k]);if(tx!=null)e.textContent=tx;return e};
-const svg=(W,H)=>el('svg',{viewBox:`0 0 ${W} ${H}`,height:H});
-let cur=D.weeks.length-1,timer=null;
-const base={};G.forEach(g=>{base[g]={};D.p[0][g].forEach(p=>base[g][p[0]]=p)});
-const tot=(w,g)=>D.p[w][g].reduce((a,p)=>a+pts(p[1]),0);
-const lead=w=>(tot(w,G[0])-tot(w,G[1]))/1000;
-function status(g,p,w){if(w===0)return 'same';const b=base[g][p[0]];if(!b)return 'new';const d=pts(p[1])-pts(b[1]);return d>0?'up':d<0?'down':'same'}
-function decomp(w){const r={};G.forEach(g=>{const now={};D.p[w][g].forEach(p=>now[p[0]]=p);
- const leave=Object.values(base[g]).filter(p=>!now[p[0]]),join=D.p[w][g].filter(p=>!base[g][p[0]]),stay=D.p[w][g].filter(p=>base[g][p[0]]);
- const s=a=>a.reduce((x,p)=>x+pts(p[1]),0);
- r[g]={leave,join,roster:(s(join)-s(leave))/1000,stay:stay.reduce((a,p)=>a+pts(p[1])-pts(base[g][p[0]][1]),0)/1000}});return r}
-function setWeek(i){cur=i;draw()}
-function drawLead(){const box=$('lead');box.innerHTML='';const W=box.clientWidth||340,H=150,n=D.weeks.length,cw=W/n,mx=Math.max(...D.weeks.map((_,i)=>lead(i)))*1.15,y0=H-26,s=svg(W,H);
- D.weeks.forEach((_,i)=>{const v=lead(i),h=Math.max(2,v/mx*(y0-26)),x=i*cw+cw*.18,on=i===cur;
-  s.appendChild(el('rect',{x,y:y0-h,width:cw*.64,height:h,rx:3,style:`fill:${on?'var(--b)':'var(--line)'}`}));
-  s.appendChild(el('text',{x:i*cw+cw/2,y:y0-h-6,'text-anchor':'middle','font-size':13,'font-weight':on?700:400,style:on?'':'fill:var(--mut)'},fM(v,1)));
-  s.appendChild(el('text',{x:i*cw+cw/2,y:H-8,'text-anchor':'middle','font-size':12,'font-weight':on?700:400,style:on?'':'fill:var(--mut)'},lbl(i)));
-  const hit=el('rect',{x:i*cw,y:0,width:cw,height:H,style:'fill:transparent;cursor:pointer'});hit.onclick=()=>{stop();setWeek(i)};s.appendChild(hit)});
- box.appendChild(s);
- $('big').innerHTML=`Bunny leads by ${fM(lead(cur))}<small>${lbl(cur)}${cur?', from '+fM(lead(0))+' on '+lbl(0):''}</small>`}
-function drawWf(){const box=$('wf');box.innerHTML='';const cap=$('wfcap');
- if(!cur){cap.textContent='This is the starting week. Tap a later week above to see what changed since.';return}
- const r=decomp(cur),B=r.RoyalBunny,Gw=r.Greywolf,nm=a=>a.map(p=>p[0]).join(', ')||'nobody';
- const steps=[['Lead on '+lbl(0),lead(0),0,''],['Bunny: players in and out',B.roster,1,`out: ${nm(B.leave)} · in: ${nm(B.join)}`],['Bunny: members who stayed',B.stay,1,'tiers climbed minus tiers dropped'],
-  ['Greywolf: players in and out',-Gw.roster,1,`out: ${nm(Gw.leave)} · in: ${nm(Gw.join)}`],['Greywolf: members who stayed',-Gw.stay,1,'their tier moves, flipped to Bunny’s view'],['Lead on '+lbl(cur),lead(cur),0,'']];
- const W=box.clientWidth||340,rh=50,H=steps.length*rh+6,s=svg(W,H);let run=0,lo=0,hi=0;
- steps.forEach(t=>{if(t[2]){run+=t[1]}else run=t[1];lo=Math.min(lo,run);hi=Math.max(hi,run)});
- const PR=64,X=v=>(v-lo)/(hi-lo||1)*(W-PR);run=0;
- steps.forEach((t,i)=>{const y=i*rh,a=t[2]?run:0,b=t[2]?run+t[1]:t[1];run=b;const x1=X(Math.min(a,b)),x2=X(Math.max(a,b));
-  s.appendChild(el('text',{x:0,y:y+14,'font-size':13,'font-weight':t[2]?400:700},t[0]));
-  if(t[3])s.appendChild(el('text',{x:0,y:y+44,'font-size':11,style:'fill:var(--mut)'},t[3].length>W/5.6?t[3].slice(0,Math.floor(W/5.6)-1)+'…':t[3]));
-  const col=!t[2]?'var(--b)':t[1]>0?'var(--pos)':t[1]<0?'var(--neg)':'var(--mut)';
-  const rc=el('rect',{x:x1,y:y+19,width:Math.max(2,x2-x1),height:13,rx:2,class:'grow',style:`fill:${col};animation-delay:${i*.12}s`});s.appendChild(rc);
-  s.appendChild(el('text',{x:x2+6,y:y+30,'font-size':13,'font-weight':600,class:'pop',style:`fill:${col};animation-delay:${i*.12+.4}s`},t[2]?fM(t[1],1):fM(t[1])))});
- box.appendChild(s);
- const d=lead(cur)-lead(0);
- cap.innerHTML=`Since ${lbl(0)} the lead moved <b class="${d<0?'dn':'up'}">${fM(d,1)}</b>. Roster moves cost Bunny <b class="${B.roster<0?'dn':'up'}">${fM(B.roster,1)}</b> and gave Greywolf <b>${fM(Gw.roster,1)}</b>; the members who stayed made <b class="${B.stay<0?'dn':'up'}">${fM(B.stay,1)}</b> for Bunny against <b>${fM(Gw.stay,1)}</b> for Greywolf.`}
-function sqStyle(g,st){const c=CV[g];return st==='down'?`fill:var(--bg);stroke:var(--neg);stroke-width:2`:st==='up'?`fill:${c};stroke:var(--pos);stroke-width:2`:st==='new'?`fill:${c};stroke:var(--fg);stroke-width:2`:`fill:${c}`}
-const ORD={same:0,up:1,down:2,new:3};
-function byTier(g){const a=T.map(()=>[]);D.p[cur][g].forEach(p=>{const i=T.indexOf(pts(p[1]));if(i>=0)a[i].push({p,st:status(g,p,cur)})});a.forEach(x=>x.sort((u,v)=>ORD[u.st]-ORD[v.st]||u.p[1]-v.p[1]));return a}
-function drawLedger(){const box=$('ledger');box.innerHTML='';const W=box.clientWidth||340,rowH=32,top=26,H=top+rowH*T.length+34,LW=46,NW=64,mid=LW+(W-LW-NW)/2,s=svg(W,H);
- const A=byTier(G[0]),B=byTier(G[1]),mxn=Math.max(...A.map(x=>x.length),...B.map(x=>x.length)),side=(W-LW-NW)/2-10,step=Math.min(17,side/mxn),sz=Math.min(12,step-3);
- s.appendChild(el('text',{x:mid-8,y:14,'text-anchor':'end','font-size':13,style:'fill:var(--b)'},'RoyalBunny'));s.appendChild(el('text',{x:mid+8,y:14,'font-size':13,style:'fill:var(--w)'},'Greywolf'));s.appendChild(el('text',{x:W,y:14,'text-anchor':'end','font-size':12,style:'fill:var(--mut)'},'Net'));
- let k=0;T.forEach((t,i)=>{const y=top+i*rowH+rowH/2;
-  s.appendChild(el('text',{x:0,y:y+5,'font-size':15,'font-style':'italic','font-family':'Georgia,serif'},t+'k'));
-  s.appendChild(el('line',{x1:mid,x2:mid,y1:y-rowH/2+4,y2:y+rowH/2-4,style:'stroke:var(--line)'}));
-  A[i].forEach((o,j)=>s.appendChild(el('rect',{x:mid-8-(j+1)*step+(step-sz),y:y-sz/2,width:sz,height:sz,rx:2,class:'pop',style:sqStyle(G[0],o.st)+`;animation-delay:${(k++)*.008}s`})));
-  B[i].forEach((o,j)=>s.appendChild(el('rect',{x:mid+8+j*step,y:y-sz/2,width:sz,height:sz,rx:2,class:'pop',style:sqStyle(G[1],o.st)+`;animation-delay:${(k++)*.008}s`})));
-  const net=(A[i].length-B[i].length)*t/1000;s.appendChild(el('text',{x:W,y:y+5,'text-anchor':'end','font-size':13,style:`fill:${net>0?'var(--pos)':net<0?'var(--neg)':'var(--mut)'}`},fM(net,1)));
-  const hit=el('rect',{x:0,y:y-rowH/2,width:W,height:rowH,style:'fill:transparent;cursor:pointer'});hit.onclick=()=>tierInfo(i);s.appendChild(hit)});
- const y=top+T.length*rowH+22,tb=tot(cur,G[0])/1000,tw=tot(cur,G[1])/1000;
- s.appendChild(el('text',{x:0,y,'font-size':15,'font-style':'italic','font-family':'Georgia,serif'},'Total'));
- s.appendChild(el('text',{x:mid-8,y,'text-anchor':'end','font-size':14,'font-weight':600,style:'fill:var(--b)'},fM(tb)));s.appendChild(el('text',{x:mid+8,y,'font-size':14,'font-weight':600,style:'fill:var(--w)'},fM(tw)));
- s.appendChild(el('text',{x:W,y,'text-anchor':'end','font-size':14,'font-weight':700,style:`fill:${tb>=tw?'var(--pos)':'var(--neg)'}`},fM(tb-tw,1)));
- box.appendChild(s);$('info1').innerHTML='<i>Tap a tier row to see who is in it.</i>'}
-const MARK={up:' <span class="up">▲</span>',down:' <span class="dn">▼</span>',new:' <i>(new)</i>',same:''};
-function tierInfo(i){const f=g=>byTier(g)[i].map(o=>`${o.p[0]}${MARK[o.st]} <i>#${o.p[1]}</i>`).join(', ')||'<i>none</i>';
- $('info1').innerHTML=`<b>${T[i]}k tier, ${lbl(cur)}</b><br><span class="k1">RoyalBunny:</span> ${f(G[0])}<br><span class="k2">Greywolf:</span> ${f(G[1])}`}
-let sw=null;
-function buildSwarm(){const box=$('swarm');box.innerHTML='';const W=box.clientWidth||340,H=440,L=12,R=W-12,mid=222,rad=W<480?4.5:6,s=svg(W,H);
- const lo=2,hi=Math.log10(26000),X=v=>L+(Math.log10(Math.max(v,100))-lo)/(hi-lo)*(R-L);
- [100,300,1000,3000,10000].forEach(v=>{s.appendChild(el('line',{x1:X(v),x2:X(v),y1:H-30,y2:H-24,style:'stroke:var(--mut)'}));s.appendChild(el('text',{x:X(v),y:H-8,'text-anchor':'middle','font-size':11,style:'fill:var(--mut)'},fmtB(v)))});
- const cuts=T.map((t,i)=>{const g=el('g',{class:'cut'});g.appendChild(el('line',{x1:0,x2:0,y1:44,y2:H-32,style:'stroke:var(--line);stroke-dasharray:3 4'}));g.appendChild(el('text',{x:0,y:12+(i%3)*12,'text-anchor':'middle','font-size':10,'font-style':'italic',style:'fill:var(--mut)'},t+'k'));g.style.transform=`translate(${X(D.cuts[cur][i])}px,0px)`;s.appendChild(g);return g});
- s.appendChild(el('line',{x1:L,x2:R,y1:mid,y2:mid,style:'stroke:var(--mut)'}));
- s.appendChild(el('text',{x:L,y:62,'font-size':13,style:'fill:var(--b)'},'RoyalBunny'));s.appendChild(el('text',{x:L,y:H-40,'font-size':13,style:'fill:var(--w)'},'Greywolf'));
- const gDots=el('g'),gLab=el('g',{style:'pointer-events:none'});s.appendChild(gDots);s.appendChild(gLab);box.appendChild(s);
- sw={W,H,L,R,mid,rad,X,cuts,gDots,gLab,nodes:{},sel:sw?sw.sel:null}}
-function dotStyle(g,st){const c=CV[g];return st==='ghost'?`fill:var(--bg);stroke:${c};stroke-width:1.5;stroke-dasharray:2 2`:st==='down'?'fill:var(--bg);stroke:var(--neg);stroke-width:2':st==='up'?`fill:${c};stroke:var(--pos);stroke-width:2`:st==='new'?`fill:${c};stroke:var(--fg);stroke-width:2`:`fill:${c};stroke:var(--bg);stroke-width:1.2`}
-function drawSwarm(){const box=$('swarm');if(!sw||sw.W!==(box.clientWidth||340))buildSwarm();const {X,mid,rad,L,R}=sw,seen={};
- sw.cuts.forEach((g,i)=>g.style.transform=`translate(${X(D.cuts[cur][i])}px,0px)`);sw.gLab.innerHTML='';
- G.forEach((g,gi)=>{const dir=gi?1:-1,placed=[];
-  const items=D.p[cur][g].map(p=>({k:g+'|'+p[0],g,p,ghost:false})).concat(D.ex[cur][g].map(p=>({k:g+'|'+p[0],g,p,ghost:true})));
-  items.sort((a,b)=>a.p[2]-b.p[2]);let far=0;
-  items.forEach(it=>{const x=X(it.p[2]);let k=0,y;for(;;k++){y=mid+dir*(11+k*rad*1.9);if(!placed.some(q=>Math.hypot(q[0]-x,q[1]-y)<rad*2.05))break}placed.push([x,y]);it.x=x;it.y=y;far=Math.max(far,Math.abs(y-mid));
-   it.st=it.ghost?'ghost':status(g,it.p,cur);let n=sw.nodes[it.k];
-   if(!n){n=el('g',{class:'dot'});n._c=el('circle',{r:rad});n._r=el('circle',{r:rad+3.5,style:'fill:none;stroke:var(--fg);stroke-width:2;display:none'});const hit=el('circle',{r:14,style:'fill:transparent;cursor:pointer'});
-    n.appendChild(n._c);n.appendChild(n._r);n.appendChild(hit);n.style.opacity=0;n.style.transform=`translate(${x}px,${y}px)`;hit.onclick=()=>pick(n);sw.gDots.appendChild(n);sw.nodes[it.k]=n}
-   n._it=it;seen[it.k]=1;n._c.setAttribute('style',dotStyle(g,it.st));n.style.pointerEvents='auto';n._r.style.display=sw.sel===it.k?'':'none';
-   requestAnimationFrame(()=>{n.style.transform=`translate(${x}px,${y}px)`;n.style.opacity=1})});
-  const labs=items.filter(it=>it.st==='new'||it.st==='ghost').sort((a,b)=>a.x-b.x);
-  labs.forEach((it,j)=>{const t=it.ghost?`${it.p[0]} → ${it.p[3]}`:`${it.p[0]} (new)`,hw=t.length*3.1,ly=mid+dir*(far+22+j*15),tx=Math.min(R-hw,Math.max(L+hw,it.x));
-   const gg=el('g',{class:'fade'});gg.appendChild(el('line',{x1:it.x,x2:it.x,y1:it.y+dir*(rad+3),y2:ly-dir*(dir>0?10:2),style:'stroke:var(--mut);stroke-width:1'}));gg.appendChild(el('text',{x:tx,y:ly+(dir>0?0:0),'text-anchor':'middle','font-size':11},t));sw.gLab.appendChild(gg)})});
- for(const k in sw.nodes)if(!seen[k]){const n=sw.nodes[k];n.style.opacity=0;n.style.pointerEvents='none';n._r.style.display='none'}
- const sn=sw.sel&&seen[sw.sel]?sw.nodes[sw.sel]:null;if(sn)showInfo(sn._it);else{sw.sel=null;$('info2').innerHTML='<i>Tap a dot for the name, rank and what changed.</i>'}}
-function pick(n){for(const k in sw.nodes)sw.nodes[k]._r.style.display='none';sw.sel=n._it.k;n._r.style.display='';showInfo(n._it)}
-function showInfo(it){const p=it.p,b=base[it.g][p[0]];let h=`<b class="${KC[it.g]}">${p[0]}</b> <i>${it.ghost?'left '+it.g+' for '+p[3]:it.g}</i><br>#${p[1]} · ${fmtB(p[2])} · ${pts(p[1])}k tier`;
- if(cur&&b){const gr=Math.round((p[2]/b[2]-1)*100),d=pts(p[1])-pts(b[1]);h+=`<br><i>${lbl(0)}: #${b[1]}, ${fmtB(b[2])}.</i> Grew ${gr}%`+(it.ghost?'':d>0?`, <span class="up">up a tier (${pts(b[1])}k → ${pts(p[1])}k)</span>`:d<0?`, <span class="dn">down a tier (${pts(b[1])}k → ${pts(p[1])}k)</span>`:', same tier')}
- else if(cur&&!b)h+=`<br><i>Joined after ${lbl(0)}.</i>`;$('info2').innerHTML=h}
-function draw(){drawLead();drawWf();drawLedger();drawSwarm()}
-function stop(){if(timer){clearInterval(timer);timer=null;$('play').innerHTML='&#9654; Play the five weeks'}}
-$('play').onclick=()=>{if(timer){stop();return}$('play').innerHTML='&#9632; Stop';setWeek(0);timer=setInterval(()=>{if(cur>=D.weeks.length-1){stop();return}setWeek(cur+1)},1700)};
-let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(draw,150)});
-draw();
+const mk=(box,W,H)=>{const s=el('svg',{viewBox:`0 0 ${W} ${H}`,height:H,role:'img'});box.innerHTML='';box.appendChild(s);return s};
+const N=Object.keys(D.h),H=n=>D.h[n];
+const roster=(g,w)=>N.filter(n=>H(n)[w]&&H(n)[w][2]===g).sort((a,b)=>H(a)[w][0]-H(b)[w][0]);
+const tot=(g,w)=>roster(g,w).reduce((a,n)=>a+pts(H(n)[w][0]),0),lead=w=>tot(B,w)-tot(GW,w);
+const med=a=>{a=[...a].sort((x,y)=>x-y);const m=a.length>>1;return a.length?(a.length%2?a[m]:(a[m-1]+a[m])/2):0};
+const growth=(n,a,b)=>H(n)[a]&&H(n)[b]?(H(n)[b][1]/H(n)[a][1]-1)*100:null;
+const list=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' and '+a[a.length-1];
+function split(g){const then=roster(g,0),now=roster(g,L),stay=now.filter(n=>then.includes(n)),d=n=>pts(H(n)[L][0])-pts(H(n)[0][0]);
+ const lastIn=n=>{let w=0;for(let i=0;i<=L;i++)if(H(n)[i]&&H(n)[i][2]===g)w=i;return w};
+ return {stay,up:stay.filter(n=>d(n)>0),down:stay.filter(n=>d(n)<0),same:stay.filter(n=>d(n)===0),join:now.filter(n=>!then.includes(n)),leave:then.filter(n=>!now.includes(n)),d,lastIn,
+  stayPts:stay.reduce((a,n)=>a+d(n),0),joinPts:now.filter(n=>!then.includes(n)).reduce((a,n)=>a+pts(H(n)[L][0]),0),leavePts:then.filter(n=>!now.includes(n)).reduce((a,n)=>a+pts(H(n)[0][0]),0)}}
+const SB=split(B),SG=split(GW);
+function fig1(){const box=$('f1'),W=box.clientWidth||340,Hh=210,pl=6,pr=118,pt=18,pb=52,s=mk(box,W,Hh);
+ const vals=[B,GW].map(g=>D.weeks.map((_,i)=>tot(g,i))),lo=Math.min(...vals.flat())-120,hi=Math.max(...vals.flat())+80;
+ const X=i=>pl+20+i*(W-pl-pr-20)/L,Y=v=>pt+(hi-v)/(hi-lo)*(Hh-pt-pb);
+ let area='M'+D.weeks.map((_,i)=>`${X(i)},${Y(vals[0][i])}`).join('L')+'L'+D.weeks.map((_,i)=>`${X(L-i)},${Y(vals[1][L-i])}`).join('L')+'Z';
+ s.appendChild(el('path',{d:area,style:'fill:var(--faint)'}));
+ [B,GW].forEach((g,k)=>{const c=k?'var(--w)':'var(--b)';s.appendChild(el('path',{d:'M'+vals[k].map((v,i)=>`${X(i)},${Y(v)}`).join('L'),style:`fill:none;stroke:${c};stroke-width:2;stroke-linejoin:round`}));
+  vals[k].forEach((v,i)=>s.appendChild(el('circle',{cx:X(i),cy:Y(v),r:i===L||i===0?3.5:2.5,style:`fill:${c};stroke:var(--bg);stroke-width:1.5`})));
+  s.appendChild(el('text',{x:X(L)+9,y:Y(vals[k][L])-1,'font-size':13},g));s.appendChild(el('text',{x:X(L)+9,y:Y(vals[k][L])+14,'font-size':13,class:'num',style:'fill:var(--mut)'},fM(vals[k][L])));
+  s.appendChild(el('text',{x:X(0),y:Y(vals[k][0])+(k?18:-9),'text-anchor':'middle','font-size':12,class:'num',style:'fill:var(--mut)'},fM(vals[k][0])))});
+ D.weeks.forEach((_,i)=>{s.appendChild(el('text',{x:X(i),y:Hh-30,'text-anchor':'middle','font-size':12,style:'fill:var(--mut)'},lbl(i)));
+  s.appendChild(el('text',{x:X(i),y:Hh-12,'text-anchor':'middle','font-size':13,class:'num','font-weight':i===L||i===0?700:400},fM(lead(i),1)));
+  s.appendChild(el('line',{x1:X(i),x2:X(i),y1:Y(vals[0][i])+5,y2:Y(vals[1][i])-5,style:'stroke:var(--mut);stroke-width:.75;stroke-dasharray:2 3'}))});
+ s.appendChild(el('text',{x:X(L)+9,y:Hh-12,'font-size':12,'font-style':'italic',style:'fill:var(--mut)'},'Bunny’s lead'));
+ const worst=D.weeks.map((_,i)=>lead(i)).indexOf(Math.min(...D.weeks.map((_,i)=>lead(i))));
+ $('p1').innerHTML=`On ${lbl(0)} RoyalBunny led Greywolf by <b>${fM(lead(0))}</b> tier points. On ${lbl(L)} the lead is <b>${fM(lead(L))}</b>. Bunny is still ahead in every week, but the gap fell as low as ${fM(lead(worst))} on ${lbl(worst)} before last week’s recovery.`;
+ const ev=[];for(let i=1;i<=L;i++)[B,GW].forEach(g=>{const a=roster(g,i-1),b=roster(g,i),out=a.filter(n=>!b.includes(n)),inn=b.filter(n=>!a.includes(n));if(out.length||inn.length)ev.push(`<b>${lbl(i)}</b> ${g}: ${out.length?list(out)+' out':''}${out.length&&inn.length?', ':''}${inn.length?list(inn)+' in':''}`)});
+ $('c1').innerHTML='Roster changes first seen on each board. '+ev.join('. ')+'.'}
+function fig2(){const box=$('f2'),W=box.clientWidth||340;const br=SB.joinPts-SB.leavePts,gr=SG.joinPts-SG.leavePts;
+ const steps=[['Lead on '+lbl(0),lead(0),0],[`Bunny loses ${list(SB.leave)}, adds ${list(SB.join)}`,br,1],[`Bunny’s ${SB.stay.length} who stayed: ${SB.up.length} climbed a tier, ${SB.down.length} dropped`,SB.stayPts,1],
+  [`Greywolf loses ${list(SG.leave)}, adds ${list(SG.join)}`,-gr,1],[`Greywolf’s ${SG.stay.length} who stayed: ${SG.up.length} climbed, ${SG.down.length} dropped`,-SG.stayPts,1],['Lead on '+lbl(L),lead(L),0]];
+ const rh=40,Hh=steps.length*rh,s=mk(box,W,Hh);let run=0,hi=0;steps.forEach(t=>{run=t[2]?run+t[1]:t[1];hi=Math.max(hi,run)});const X=v=>v/hi*(W-70);run=0;
+ steps.forEach((t,i)=>{const y=i*rh,a=t[2]?run:0,b=t[2]?run+t[1]:t[1];run=b;const x1=X(Math.min(a,b)),x2=X(Math.max(a,b)),c=!t[2]?'var(--ink)':t[1]<0?'var(--neg)':'var(--pos)';
+  s.appendChild(el('text',{x:0,y:y+13,'font-size':W<420?11.5:13,'font-weight':t[2]?400:700},t[0]));
+  s.appendChild(el('rect',{x:x1,y:y+20,width:Math.max(1.5,x2-x1),height:t[2]?5:3,style:`fill:${c}`}));
+  if(t[2])s.appendChild(el('line',{x1:X(a),x2:X(a),y1:y-rh+23,y2:y+25,style:'stroke:var(--rule);stroke-width:1'}));
+  s.appendChild(el('text',{x:x2+6,y:y+27,'font-size':13,class:'num','font-weight':t[2]?400:700},t[2]?fM(t[1],1):fM(t[1]))) });
+ $('p2').innerHTML=`The lead moved by ${fM(lead(L)-lead(0),1)}. None of that came from effort. The ${SB.stay.length} Bunny members who were there throughout <span class="pos">gained ${fK(SB.stayPts)}</span> between them while Greywolf’s ${SG.stay.length} <span class="neg">lost ${fK(-SG.stayPts)}</span>. The whole loss, and more, is roster: Bunny’s swaps cost <span class="neg">${fK(br)}</span>, Greywolf’s earned <span class="pos">${fK(gr,1)}</span>.`}
+function fig3(){const box=$('f3'),W=box.clientWidth||340,Hh=232,pl=4,pr=14,s=mk(box,W,Hh),lo=Math.log(4),hi=Math.log(320),X=r=>pl+(Math.log(r)-lo)/(hi-lo)*(W-pl-pr);
+ const edges=[4,...RK];T.forEach((t,i)=>{const a=X(edges[i]),b=X(RK[i]);if(i%2===0)s.appendChild(el('rect',{x:a,y:16,width:b-a,height:Hh-36,style:'fill:var(--faint)'}));
+  s.appendChild(el('text',{x:(a+b)/2,y:11,'text-anchor':'middle','font-size':10,'font-style':'italic',style:'fill:var(--mut)'},t+'k'));
+  s.appendChild(el('text',{x:b,y:Hh-6,'text-anchor':'middle','font-size':10,class:'num',style:'fill:var(--mut)'},'#'+RK[i]))});
+ [[B,SB,62,'var(--b)'],[GW,SG,160,'var(--w)']].forEach(([g,S,y,c])=>{s.appendChild(el('line',{x1:pl,x2:W-pr,y1:y,y2:y,style:'stroke:var(--rule)'}));s.appendChild(el('text',{x:pl,y:y-34,'font-size':12,'font-style':'italic'},g));
+  const put=(arr,dir,solid)=>{let prev=[];arr.map(n=>({n,r:solid?H(n)[L][0]:H(n)[S.lastIn(n)][0]})).sort((a,b)=>a.r-b.r).forEach(o=>{const x=X(o.r),t=`${o.n} #${o.r}`,hw=t.length*3;let lv=0;while(prev.some(p=>p.lv===lv&&Math.abs(p.x-x)<p.hw+hw+4))lv++;prev.push({x,hw,lv});
+    const ty=y+dir*(15+lv*13)+(dir>0?8:0),tx=Math.min(W-pr-hw,Math.max(pl+hw,x));
+    s.appendChild(el('line',{x1:x,x2:x,y1:y+dir*6,y2:ty-(dir>0?10:-3),style:'stroke:var(--mut);stroke-width:.6'}));
+    s.appendChild(el('circle',{cx:x,cy:y,r:5,style:solid?`fill:${c};stroke:var(--bg);stroke-width:1.5`:`fill:var(--bg);stroke:${c};stroke-width:2`}));
+    s.appendChild(el('text',{x:tx,y:ty,'text-anchor':'middle','font-size':11.5},t))})};
+  put(S.leave,-1,false);put(S.join,1,true)});
+ const r=(n,S)=>H(n)[S.lastIn(n)][0];
+ $('p3').innerHTML=`Bunny lost ${SB.leave.map(n=>`${n} (#${r(n,SB)})`).join(' and ')} to Hyrox and replaced them with ${SB.join.map(n=>`${n} (#${H(n)[L][0]})`).join(' and ')}: two seats moved ${Math.round(med(SB.join.map(n=>H(n)[L][0]))-med(SB.leave.map(n=>r(n,SB))))} ranks down the board. Greywolf did the opposite, letting ${SG.leave.map(n=>`${n} (#${r(n,SG)})`).join(' and ')} go and bringing in ${SG.join.map(n=>`${n} (#${H(n)[L][0]})`).join(' and ')}.`}
+function spark(n,g){const w=58,h=16,v=H(n).map(x=>x?x[0]:null),ok=v.filter(x=>x!=null),lo=Math.log(Math.min(...ok)),hi=Math.log(Math.max(...ok)),X=i=>2+i*(w-6)/L,Y=r=>hi===lo?h/2:2+(Math.log(r)-lo)/(hi-lo)*(h-4);
+ let d='',pen=0;v.forEach((r,i)=>{if(r==null){pen=0;return}d+=(pen?'L':'M')+X(i).toFixed(1)+','+Y(r).toFixed(1);pen=1});
+ const inG=H(n)[L]&&H(n)[L][2]===g;return `<svg viewBox="0 0 ${w} ${h}" style="width:${w}px;height:${h}px;display:inline-block;vertical-align:middle"><path d="${d}" style="fill:none;stroke:var(--mut);stroke-width:1.2"/>${v[L]!=null?`<circle cx="${X(L)}" cy="${Y(v[L])}" r="2.2" style="fill:${inG?'var(--ink)':'var(--bg)'};stroke:var(--ink);stroke-width:1"/>`:''}</svg>`}
+function gbar(v){const w=64,cap=260,X=x=>Math.min(x,cap)/cap*w;return `<svg viewBox="0 0 ${w} 12" style="width:${w}px;height:12px;display:inline-block;vertical-align:middle"><rect x="0" y="4.5" width="${Math.max(1,X(v))}" height="3" style="fill:var(--ink)"/><line x1="${X(D.srvSince)}" x2="${X(D.srvSince)}" y1="0" y2="12" style="stroke:var(--neg);stroke-width:1"/></svg>`}
+function fig4(){const row=(n,note)=>{const a=H(n)[0],b=H(n)[L],g=growth(n,0,L),lw=growth(n,L-1,L),inG=b&&b[2]===B,d=inG&&a&&a[2]===B?pts(b[0])-pts(a[0]):null;
+  return `<tr><td>${n}${note?` <span class="mut">${note}</span>`:''}</td><td>${spark(n,B)}</td><td>${a?a[0]:'–'} → ${b?b[0]:'–'}</td><td style="text-align:left">${g!=null?gbar(g):''}</td><td>${g!=null?pc(g):''}</td><td class="${lw!=null&&lw<D.srvWeek[L-1]/2?'neg':''}">${lw!=null?pc(lw):''}</td><td class="${d>0?'pos':d<0?'neg':'mut'}">${d==null?'':d?fK(d,1):'·'}</td></tr>`};
+ const byG=a=>[...a].sort((x,y)=>(growth(y,0,L)||0)-(growth(x,0,L)||0)),grp=(t,sub)=>`<tr class="grp"><td colspan="7"><b>${t}</b> ${sub}</td></tr>`;
+ let h=`<table><thead><tr><th>Member</th><th>rank</th><th>11 Oct → 8 Nov</th><th style="text-align:left">growth</th><th></th><th>last wk</th><th>tier</th></tr></thead><tbody>`;
+ h+=grp(`Climbed a tier (${SB.up.length})`,`<span class="pos">${fK(SB.up.reduce((a,n)=>a+SB.d(n),0),1)}</span>`)+byG(SB.up).map(n=>row(n)).join('');
+ h+=grp(`Held (${SB.same.length})`,'no change')+byG(SB.same).map(n=>row(n)).join('');
+ h+=grp(`Dropped a tier (${SB.down.length})`,`<span class="neg">${fK(SB.down.reduce((a,n)=>a+SB.d(n),0),1)}</span>`)+byG(SB.down).map(n=>row(n)).join('');
+ h+=grp(`Arrived (${SB.join.length})`,`worth ${fK(SB.joinPts)} now`)+SB.join.map(n=>row(n,'from '+H(n)[0][2])).join('');
+ h+=grp(`Left (${SB.leave.length})`,`<span class="neg">worth ${fK(SB.leavePts)} on ${lbl(0)}</span>`)+SB.leave.map(n=>row(n,'→ '+H(n)[L][2])).join('');
+ $('f4').innerHTML=h+'</tbody></table>';
+ const slow=SB.down.filter(n=>growth(n,0,L)<D.srvSince),stal=roster(B,L).filter(n=>{const g=growth(n,L-1,L);return g!=null&&g<1});
+ $('p4').innerHTML=`${SB.up.length} members climbed a tier and ${SB.down.length} dropped one. The droppers did not shrink; they grew slower than the board around them. ${list(slow)} all grew less than the server median of ${pc(D.srvSince)} and were overtaken. ${stal.length?list(stal)+' posted no growth at all last week, in a week when the median player grew '+pc(D.srvWeek[L-1])+'.':''}`}
+function fig5(){const box=$('f5'),W=box.clientWidth||340,Hh=150,pl=4,pr=12,cap=260,s=mk(box,W,Hh),X=v=>pl+Math.min(v,cap)/cap*(W-pl-pr);
+ [0,50,100,150,200,250].forEach(v=>{s.appendChild(el('text',{x:X(v),y:Hh-4,'text-anchor':v?'middle':'start','font-size':11,class:'num',style:'fill:var(--mut)'},v+'%'));s.appendChild(el('line',{x1:X(v),x2:X(v),y1:Hh-22,y2:Hh-18,style:'stroke:var(--mut)'}))});
+ s.appendChild(el('line',{x1:X(D.srvSince),x2:X(D.srvSince),y1:14,y2:Hh-22,style:'stroke:var(--neg);stroke-width:1'}));s.appendChild(el('text',{x:X(D.srvSince)+4,y:11,'font-size':11,'font-style':'italic',style:'fill:var(--mut)'},'server median '+pc(D.srvSince)));
+ const out={};[[B,SB,48,'var(--b)'],[GW,SG,100,'var(--w)']].forEach(([g,S,y,c])=>{const v=S.stay.map(n=>[n,growth(n,0,L)]).sort((a,b)=>a[1]-b[1]),m=med(v.map(x=>x[1]));out[g]=m;
+  s.appendChild(el('text',{x:pl,y:y-16,'font-size':12,'font-style':'italic'},g));s.appendChild(el('line',{x1:pl,x2:W-pr,y1:y,y2:y,style:'stroke:var(--rule)'}));
+  s.appendChild(el('line',{x1:X(m),x2:X(m),y1:y-9,y2:y+9,style:'stroke:var(--ink);stroke-width:2'}));s.appendChild(el('text',{x:X(m),y:y+22,'text-anchor':'middle','font-size':11,class:'num'},'median '+pc(m)));
+  v.forEach(([n,gv])=>{s.appendChild(el('circle',{cx:X(gv),cy:y,r:4.5,style:`fill:${c};fill-opacity:.55;stroke:var(--bg);stroke-width:1`}));const hit=el('circle',{cx:X(gv),cy:y,r:13,style:'fill:transparent;cursor:pointer'});hit.onclick=()=>{$('t5').innerHTML=`<b style="color:var(--ink)">${n}</b>, ${g}: grew ${pc(gv)} since ${lbl(0)}, #${H(n)[0][0]} → #${H(n)[L][0]}`};s.appendChild(hit)});
+  const top=v[v.length-1];s.appendChild(el('text',{x:X(top[1]),y:y-10,'text-anchor':'end','font-size':11.5},`${top[0]} ${pc(top[1])}`))});
+ const above=g=>(g===B?SB:SG).stay.filter(n=>growth(n,0,L)>100).length;
+ $('p5').innerHTML=`Neither guild is dragging. The median stayer grew ${pc(out[B])} at Bunny and ${pc(out[GW])} at Greywolf, both well ahead of the server’s ${pc(D.srvSince)}. The difference is the tail: ${above(B)} Bunny members more than doubled their score, against ${above(GW)} at Greywolf.`;
+ let h='<table style="max-width:420px"><thead><tr><th>Week to</th><th>RoyalBunny</th><th>Greywolf</th><th>Server</th></tr></thead><tbody>';
+ for(let i=1;i<=L;i++){const m=g=>med(roster(g,i).map(n=>growth(n,i-1,i)).filter(x=>x!=null));h+=`<tr><td>${lbl(i)}</td><td>${m(B).toFixed(1)}%</td><td>${m(GW).toFixed(1)}%</td><td class="mut">${D.srvWeek[i-1].toFixed(1)}%</td></tr>`}
+ $('f6').innerHTML=h+'</tbody></table>'}
+function fig7(){const cnt=(g,w)=>T.map((_,i)=>roster(g,w).filter(n=>ti(H(n)[w][0])===i).length),a=cnt(B,0),b=cnt(B,L),c=cnt(GW,0),d=cnt(GW,L),sq=(n,k)=>`<span class="sq ${k}"></span>`.repeat(n)||'<span class="mut">·</span>';
+ let h=`<table><thead><tr><th>Tier</th><th style="text-align:left">Bunny ${lbl(0)}</th><th style="text-align:left">Bunny ${lbl(L)}</th><th style="text-align:left">Greywolf ${lbl(0)}</th><th style="text-align:left">Greywolf ${lbl(L)}</th></tr></thead><tbody>`;
+ T.forEach((t,i)=>{h+=`<tr><td><i>${t}k</i></td><td style="text-align:left">${sq(a[i],'sqb')}</td><td style="text-align:left">${sq(b[i],'sqb')}</td><td style="text-align:left">${sq(c[i],'sqw')}</td><td style="text-align:left">${sq(d[i],'sqw')}</td></tr>`});
+ h+=`<tr><td style="border-top:1px solid var(--rule)"><i>Total</i></td>${[tot(B,0),tot(B,L),tot(GW,0),tot(GW,L)].map(v=>`<td style="text-align:left;border-top:1px solid var(--rule)">${fM(v)}</td>`).join('')}</tr>`;
+ $('f7').innerHTML=h+'</tbody></table>';
+ const top=(x)=>x[0]+x[1];$('p7').innerHTML=`One square is one member. Bunny’s top two tiers went from ${top(a)} members to ${top(b)}, and the 300k row filled from ${a[4]} to ${b[4]}: the guild is heavier in the middle than it was. Greywolf’s shape barely moved, with ${c[2]} then ${d[2]} members parked at 400k.`}
+function outlook(g){const tg=D.targets;return roster(g,L).map(n=>{const r=H(n)[L][0],s=H(n)[L][1],i=ti(r),up=i>0?tg[i-1]:null,dn=i<tg.length?tg[i]:null,lw=growth(n,L-1,L);
+ const needUp=up?(up[2]/s-1)*100:null,needHold=dn?(dn[2]/s-1)*100:null,v=lw==null?'':needHold!=null&&lw<needHold?'risk':needUp!=null&&lw>=needUp?'climb':'';
+ return {n,r,i,lw,needUp,needHold,v,gapUp:up?(up[1]/s-1)*100:null}})}
+function fig8(){const O=outlook(B),OG=outlook(GW),box=$('f8'),W=box.clientWidth||340,rh=19,top=30,Hh=top+O.length*rh+22,nameW=92,vW=58,s=mk(box,W,Hh),cap=60,X=v=>nameW+Math.max(0,Math.min(v,cap))/cap*(W-nameW-vW);
+ [0,20,40,60].forEach(v=>{s.appendChild(el('line',{x1:X(v),x2:X(v),y1:top-6,y2:Hh-20,style:'stroke:var(--faint)'}));s.appendChild(el('text',{x:X(v),y:Hh-5,'text-anchor':'middle','font-size':11,class:'num',style:'fill:var(--mut)'},v+(v===60?'%+':'%')))});
+ s.appendChild(el('text',{x:nameW,y:12,'font-size':11,'font-style':'italic',style:'fill:var(--mut)'},'growth needed next week, and what they did last week'));
+ O.forEach((o,k)=>{const y=top+k*rh+rh/2,c=o.v==='risk'?'var(--neg)':o.v==='climb'?'var(--pos)':'var(--ink)';
+  s.appendChild(el('text',{x:0,y:y+4,'font-size':12,'font-weight':o.v?700:400},o.n));
+  s.appendChild(el('line',{x1:X(0),x2:X(cap),y1:y,y2:y,style:'stroke:var(--rule);stroke-width:.6'}));
+  if(o.needHold!=null&&o.needHold>0){s.appendChild(el('rect',{x:X(0),y:y-1.5,width:X(o.needHold)-X(0),height:3,style:'fill:var(--neg);fill-opacity:.35'}));s.appendChild(el('line',{x1:X(o.needHold),x2:X(o.needHold),y1:y-6,y2:y+6,style:'stroke:var(--neg);stroke-width:1.5'}))}
+  if(o.needUp!=null&&o.needUp<=cap)s.appendChild(el('line',{x1:X(o.needUp),x2:X(o.needUp),y1:y-6,y2:y+6,style:'stroke:var(--pos);stroke-width:1.5'}));
+  if(o.lw!=null)s.appendChild(el('circle',{cx:X(o.lw),cy:y,r:4,style:`fill:${c};stroke:var(--bg);stroke-width:1.5`}));
+  s.appendChild(el('text',{x:W,y:y+4,'text-anchor':'end','font-size':11,'font-style':'italic',style:`fill:${c}`},o.v==='risk'?'at risk':o.v==='climb'?'on pace up':''))});
+ $('c8').innerHTML=`<span class="key" style="background:var(--ink);margin-left:0"></span>last week’s growth <span style="color:var(--neg);font-weight:700;margin-left:10px">|</span> growth needed to hold the tier <span style="color:var(--pos);font-weight:700;margin-left:10px">|</span> growth needed to climb one. Members by rank. A dot left of the red tick drops a tier at last week’s pace; a dot right of the green tick climbs.`;
+ const proj=o=>o.reduce((a,x)=>a+(x.v==='climb'?T[x.i-1]-pts(x.r):x.v==='risk'?(x.i+1<T.length?T[x.i+1]:175)-pts(x.r):0),0),pb=proj(O),pg=proj(OG);
+ const risk=O.filter(o=>o.v==='risk'),climb=O.filter(o=>o.v==='climb'),near=O.filter(o=>!o.v&&o.gapUp!=null&&o.gapUp<10),zero=O.filter(o=>o.lw!=null&&o.lw<1),thin=O.filter(o=>!o.v&&o.needHold!=null&&o.lw!=null&&o.lw-o.needHold<5&&o.needHold>0),nm=a=>list(a.map(o=>o.n));
+ const gRisk=OG.filter(o=>o.v==='risk'),gClimb=OG.filter(o=>o.v==='climb');
+ $('p8').innerHTML=`If every member of both guilds repeats last week’s growth and the cutoffs rise as forecast, Bunny moves <b>${fK(pb,1)}</b> and Greywolf <b>${fK(pg,1)}</b>, which would put the lead near <b>${fM(lead(L)+pb-pg)}</b>. The chart shows where that comes from, one member per line.`;
+ const R=[];
+ if(risk.length)R.push(`<b>Defend first: ${nm(risk)}.</b> Each sits just above a cutoff and grew less last week than the cutoff is forecast to rise. Together that is ${fK(-risk.reduce((a,x)=>a+((x.i+1<T.length?T[x.i+1]:175)-pts(x.r)),0))} that leaves without anyone doing anything wrong.`);
+ if(zero.length)R.push(`<b>Find out about ${nm(zero)}.</b> No growth last week. They are ${zero.map(o=>'#'+o.r).join(' and ')}, a few percent under the top-10 line, so the same conversation decides whether Bunny gets ${fK(50*zero.length)} back or starts losing its second tier.`);
+ if(climb.length)R.push(`<b>Bank the climbs: ${nm(climb)}.</b> At last week’s pace each clears the next cutoff. Nothing to fix; make sure they play their runs.`);
+ if(near.length)R.push(`<b>Closest without being on pace: ${nm(near.filter(o=>!zero.includes(o)))}.</b> Within 10% of the next line today, but the line is forecast to move faster than they did.`);
+ if(thin.length)R.push(`<b>Thin cushions: ${nm(thin)}.</b> On pace to hold, with less than five points of growth to spare.`);
+ R.push(`<b>Recruit for rank, not headcount.</b> The two seats that changed hands cost ${fK(SB.leavePts-SB.joinPts)}. One recruit inside the top 50 is worth 400k or more; one at #130 is worth 250k. The lead is ${fM(lead(L))}, so a single top-30 departure without a like-for-like replacement erases a third of it.`);
+ R.push(`<b>Watch Greywolf’s middle.</b> ${gClimb.length?nm(gClimb)+' are on pace to climb':'Nobody is on pace to climb'}; ${gRisk.length?nm(gRisk)+' are at risk of dropping':'nobody is at risk'}. Their recruit KingsCross went from #${H('KingsCross')[0][0]} to #${H('KingsCross')[L][0]} in four weeks.`);
+ $('recs').innerHTML=R.map(x=>`<li>${x}</li>`).join('');
+ $('cav').innerHTML=`How the forecast works: each cutoff is assumed to rise as fast as its tier grew last week (${D.targets.map(t=>'#'+t[0]+' '+pc(t[3],1)).join(', ')}). Last week was a patch week, so these are probably high; if growth cools, more members hold than shown. It also treats each member alone, though two members cannot both take the same rank.`}
+function draw(){fig1();fig2();fig3();fig4();fig5();fig7();fig8()}
+let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(draw,150)});draw();
 </script></body></html>
