@@ -6,7 +6,7 @@ body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.4 system-ui,Arial
 .wrap{max-width:760px;margin:0 auto;padding:20px 16px 48px}
 h1{margin:0 0 4px;font:600 24px Georgia,serif}h2{font:italic 400 21px Georgia,serif;margin:34px 0 6px}
 .sub,.cap{color:var(--mut);font-size:13px;margin:0 0 12px}.cap{color:var(--fg);font-size:14px}
-.big{font:600 30px Georgia,serif;margin:14px 0 0}.big small{font:400 14px system-ui,Arial,sans-serif;color:var(--mut);margin-left:8px}
+.big{font:600 30px Georgia,serif;margin:14px 0 0}.big small{display:block;font:400 14px system-ui,Arial,sans-serif;color:var(--mut);margin-top:2px}
 button.play{min-height:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;background:none;color:var(--fg);border:1px solid var(--line);border-radius:22px;padding:8px 18px;font:inherit;cursor:pointer;margin-top:8px}
 svg{width:100%;display:block;touch-action:manipulation;-webkit-tap-highlight-color:transparent;overflow:visible}
 text{fill:var(--fg);font-family:system-ui,Arial,sans-serif}
@@ -109,7 +109,7 @@ function buildSwarm(){const box=$('swarm');box.innerHTML='';const W=box.clientWi
  const cuts=T.map((t,i)=>{const g=el('g',{class:'cut'});g.appendChild(el('line',{x1:0,x2:0,y1:44,y2:H-32,style:'stroke:var(--line);stroke-dasharray:3 4'}));g.appendChild(el('text',{x:0,y:12+(i%3)*12,'text-anchor':'middle','font-size':10,'font-style':'italic',style:'fill:var(--mut)'},t+'k'));g.style.transform=`translate(${X(D.cuts[cur][i])}px,0px)`;s.appendChild(g);return g});
  s.appendChild(el('line',{x1:L,x2:R,y1:mid,y2:mid,style:'stroke:var(--mut)'}));
  s.appendChild(el('text',{x:L,y:62,'font-size':13,style:'fill:var(--b)'},'RoyalBunny'));s.appendChild(el('text',{x:L,y:H-40,'font-size':13,style:'fill:var(--w)'},'Greywolf'));
- const gDots=el('g'),gLab=el('g');s.appendChild(gDots);s.appendChild(gLab);box.appendChild(s);
+ const gDots=el('g'),gLab=el('g',{style:'pointer-events:none'});s.appendChild(gDots);s.appendChild(gLab);box.appendChild(s);
  sw={W,H,L,R,mid,rad,X,cuts,gDots,gLab,nodes:{},sel:sw?sw.sel:null}}
 function dotStyle(g,st){const c=CV[g];return st==='ghost'?`fill:var(--bg);stroke:${c};stroke-width:1.5;stroke-dasharray:2 2`:st==='down'?'fill:var(--bg);stroke:var(--neg);stroke-width:2':st==='up'?`fill:${c};stroke:var(--pos);stroke-width:2`:st==='new'?`fill:${c};stroke:var(--fg);stroke-width:2`:`fill:${c};stroke:var(--bg);stroke-width:1.2`}
 function drawSwarm(){const box=$('swarm');if(!sw||sw.W!==(box.clientWidth||340))buildSwarm();const {X,mid,rad,L,R}=sw,seen={};
