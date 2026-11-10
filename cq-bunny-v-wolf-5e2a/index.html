@@ -44,10 +44,6 @@ tr.grp td{padding-top:14px;font-style:italic;border-bottom:1px solid var(--rule)
 <div class="fig" id="f5"></div><div class="tip" id="t5">Tap a dot for the name.</div>
 <div class="fig" id="f6"></div><p class="capn">Median weekly score growth. 8 Nov was the patch week.</p>
 
-<h2>The ledger, then and now</h2>
-<p id="p7"></p>
-<div class="fig" id="f7"></div>
-
 <div class="sowhat"><h2>So what: the week after 8 Nov</h2>
 <p id="p8"></p>
 <p class="capn" id="c8"></p><div class="fig" id="f8"></div>
@@ -111,11 +107,13 @@ function fig3(){const box=$('f3'),W=box.clientWidth||340,Hh=232,pl=4,pr=14,s=mk(
   s.appendChild(el('text',{x:(a+b)/2,y:11,'text-anchor':'middle','font-size':10,'font-style':'italic',style:'fill:var(--mut)'},t+'k'));
   s.appendChild(el('text',{x:b,y:Hh-6,'text-anchor':'middle','font-size':10,class:'num',style:'fill:var(--mut)'},'#'+RK[i]))});
  [[B,SB,62,'var(--b)'],[GW,SG,160,'var(--w)']].forEach(([g,S,y,c])=>{s.appendChild(el('line',{x1:pl,x2:W-pr,y1:y,y2:y,style:'stroke:var(--rule)'}));s.appendChild(el('text',{x:pl,y:y-34,'font-size':12,'font-style':'italic'},g));
-  const put=(arr,dir,solid)=>{let prev=[];arr.map(n=>({n,r:solid?H(n)[L][0]:H(n)[S.lastIn(n)][0]})).sort((a,b)=>a.r-b.r).forEach(o=>{const x=X(o.r),t=`${o.n} #${o.r}`,hw=t.length*3;let lv=0;while(prev.some(p=>p.lv===lv&&Math.abs(p.x-x)<p.hw+hw+4))lv++;prev.push({x,hw,lv});
-    const ty=y+dir*(20+lv*13)+(dir>0?8:0),tx=Math.min(W-pr-hw,Math.max(pl+hw,x));
-    s.appendChild(el('line',{x1:x,x2:x,y1:y+dir*6,y2:ty-(dir>0?10:-3),style:'stroke:var(--mut);stroke-width:.6'}));
-    s.appendChild(el('circle',{cx:x,cy:y,r:5,style:solid?`fill:${c};stroke:var(--bg);stroke-width:1.5`:`fill:var(--bg);stroke:${c};stroke-width:2`}));
-    s.appendChild(el('text',{x:tx,y:ty,'text-anchor':'middle','font-size':11.5},t))})};
+  const put=(arr,dir,solid)=>{const it=arr.map(n=>({n,r:solid?H(n)[L][0]:H(n)[S.lastIn(n)][0]})).sort((a,b)=>a.r-b.r).map(o=>({...o,x:X(o.r),t:`${o.n} #${o.r}`}));
+   it.forEach((o,i)=>{const hw=o.t.length*3.1,nx=it[i+1];let an='middle',tx=Math.min(W-pr-hw,Math.max(pl+hw,o.x));
+    if(o.pr!=null){an='start';tx=o.pr}else if(nx&&nx.x-o.x<hw+nx.t.length*3.1+6){const m=(o.x+nx.x)/2;an='end';tx=Math.max(pl+hw*2,m-4);nx.pr=tx+8}
+    const ty=y+dir*18+(dir>0?8:0);
+    s.appendChild(el('line',{x1:o.x,x2:o.x,y1:y+dir*7,y2:y+dir*12,style:'stroke:var(--mut);stroke-width:.6'}));
+    s.appendChild(el('circle',{cx:o.x,cy:y,r:5,style:solid?`fill:${c};stroke:var(--bg);stroke-width:1.5`:`fill:var(--bg);stroke:${c};stroke-width:2`}));
+    s.appendChild(el('text',{x:tx,y:ty,'text-anchor':an,'font-size':11.5},o.t))})};
   put(S.leave,-1,false);put(S.join,1,true)});
  const r=(n,S)=>H(n)[S.lastIn(n)][0];
  $('p3').innerHTML=`Bunny lost ${SB.leave.map(n=>n+' (#'+r(n,SB)+')').join(' and ')} to Hyrox and added ${SB.join.map(n=>n+' (#'+H(n)[L][0]+')').join(' and ')}. Greywolf dropped ${SG.leave.map(n=>n+' (#'+r(n,SG)+')').join(' and ')} for ${SG.join.map(n=>n+' (#'+H(n)[L][0]+')').join(' and ')}.`}
@@ -157,19 +155,19 @@ function fig7(){const cnt=(g,w)=>T.map((_,i)=>roster(g,w).filter(n=>ti(H(n)[w][0
 function outlook(g){const tg=D.targets;return roster(g,L).map(n=>{const r=H(n)[L][0],s=H(n)[L][1],i=ti(r),up=i>0?tg[i-1]:null,dn=i<tg.length?tg[i]:null,lw=growth(n,L-1,L);
  const needUp=up?(up[2]/s-1)*100:null,needHold=dn?(dn[2]/s-1)*100:null,v=lw==null?'':needHold!=null&&lw<needHold?'risk':needUp!=null&&lw>=needUp?'climb':'';
  return {n,r,i,lw,needUp,needHold,v,gapUp:up?(up[1]/s-1)*100:null}})}
-function fig8(){const O=outlook(B),OG=outlook(GW),box=$('f8'),W=box.clientWidth||340,rh=19,top=12,Hh=top+O.length*rh+22,nameW=92,vW=58,s=mk(box,W,Hh),cap=60,X=v=>nameW+Math.max(0,Math.min(v,cap))/cap*(W-nameW-vW);
+function fig8(){const O=outlook(B),OG=outlook(GW),box=$('f8'),W=box.clientWidth||340,rh=21,top=12;O.forEach(o=>{o.zero=o.lw!=null&&o.lw<1;o.near=!o.v&&o.gapUp!=null&&o.gapUp<10;o.thin=!o.v&&o.needHold!=null&&o.lw!=null&&o.needHold>0&&o.lw-o.needHold<5});const S=O.filter(o=>o.v||o.zero||o.near||o.thin),rest=O.filter(o=>!S.includes(o));const Hh=top+S.length*rh+22,nameW=92,vW=58,s=mk(box,W,Hh),cap=60,X=v=>nameW+Math.max(0,Math.min(v,cap))/cap*(W-nameW-vW);
  [0,20,40,60].forEach(v=>{s.appendChild(el('line',{x1:X(v),x2:X(v),y1:top-6,y2:Hh-20,style:'stroke:var(--faint)'}));s.appendChild(el('text',{x:X(v),y:Hh-5,'text-anchor':'middle','font-size':11,class:'num',style:'fill:var(--mut)'},v+(v===60?'%+':'%')))});
 
- O.forEach((o,k)=>{const y=top+k*rh+rh/2,c=o.v==='risk'?'var(--neg)':o.v==='climb'?'var(--pos)':'var(--ink)';
+ S.forEach((o,k)=>{const y=top+k*rh+rh/2,c=o.v==='risk'?'var(--neg)':o.v==='climb'?'var(--pos)':'var(--ink)';
   s.appendChild(el('text',{x:0,y:y+4,'font-size':12,'font-weight':o.v?700:400},o.n));
   s.appendChild(el('line',{x1:X(0),x2:X(cap),y1:y,y2:y,style:'stroke:var(--rule);stroke-width:.6'}));
   if(o.needHold!=null&&o.needHold>0){s.appendChild(el('rect',{x:X(0),y:y-1.5,width:X(o.needHold)-X(0),height:3,style:'fill:var(--neg);fill-opacity:.35'}));s.appendChild(el('line',{x1:X(o.needHold),x2:X(o.needHold),y1:y-6,y2:y+6,style:'stroke:var(--neg);stroke-width:1.5'}))}
   if(o.needUp!=null&&o.needUp<=cap)s.appendChild(el('line',{x1:X(o.needUp),x2:X(o.needUp),y1:y-6,y2:y+6,style:'stroke:var(--pos);stroke-width:1.5'}));
   if(o.lw!=null)s.appendChild(el('circle',{cx:X(o.lw),cy:y,r:4,style:`fill:${c};stroke:var(--bg);stroke-width:1.5`}));
   s.appendChild(el('text',{x:W,y:y+4,'text-anchor':'end','font-size':11,'font-style':'italic',style:`fill:${c}`},o.v==='risk'?'at risk':o.v==='climb'?'on pace up':''))});
- $('c8').innerHTML=`<span class="key" style="background:var(--ink);margin-left:0"></span>last week’s growth <span style="color:var(--neg);font-weight:700;margin-left:10px">|</span> needed to hold the tier <span style="color:var(--pos);font-weight:700;margin-left:10px">|</span> needed to climb. Dot left of red: drops. Dot right of green: climbs.`;
+ $('c8').innerHTML=`<span class="key" style="background:var(--ink);margin-left:0"></span>last week’s growth <span style="color:var(--neg);font-weight:700;margin-left:10px">|</span> needed to hold the tier <span style="color:var(--pos);font-weight:700;margin-left:10px">|</span> needed to climb. Dot left of red: drops. Dot right of green: climbs. The other ${rest.length} members hold with room to spare.`;
  const proj=o=>o.reduce((a,x)=>a+(x.v==='climb'?T[x.i-1]-pts(x.r):x.v==='risk'?(x.i+1<T.length?T[x.i+1]:175)-pts(x.r):0),0),pb=proj(O),pg=proj(OG);
- const risk=O.filter(o=>o.v==='risk'),climb=O.filter(o=>o.v==='climb'),near=O.filter(o=>!o.v&&o.gapUp!=null&&o.gapUp<10),zero=O.filter(o=>o.lw!=null&&o.lw<1),thin=O.filter(o=>!o.v&&o.needHold!=null&&o.lw!=null&&o.lw-o.needHold<5&&o.needHold>0),nm=a=>list(a.map(o=>o.n));
+ const risk=O.filter(o=>o.v==='risk'),climb=O.filter(o=>o.v==='climb'),near=O.filter(o=>o.near),zero=O.filter(o=>o.zero),thin=O.filter(o=>o.thin),nm=a=>list(a.map(o=>o.n));
  const gRisk=OG.filter(o=>o.v==='risk'),gClimb=OG.filter(o=>o.v==='climb');
  $('p8').innerHTML=`If everyone repeats last week’s growth and cutoffs rise as forecast: Bunny <b>${fK(pb,1)}</b>, Greywolf <b>${fK(pg,1)}</b>, lead near <b>${fM(lead(L)+pb-pg)}</b>.`;
  const R=[];
@@ -182,6 +180,6 @@ function fig8(){const O=outlook(B),OG=outlook(GW),box=$('f8'),W=box.clientWidth|
  R.push(`<b>Greywolf.</b> On pace to climb: ${gClimb.length?nm(gClimb):'nobody'}. At risk: ${gRisk.length?nm(gRisk):'nobody'}. KingsCross went #${H('KingsCross')[0][0]} → #${H('KingsCross')[L][0]} in four weeks.`);
  $('recs').innerHTML=R.map(x=>`<li>${x}</li>`).join('');
  $('cav').innerHTML=`Forecast: each cutoff rises as fast as its tier grew last week (${D.targets.map(t=>'#'+t[0]+' '+pc(t[3],1)).join(', ')}). That was a patch week, so this is probably high. Each member is treated alone.`}
-function draw(){fig1();fig2();fig3();fig4();fig5();fig7();fig8()}
+function draw(){fig1();fig2();fig3();fig4();fig5();fig8()}
 let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(draw,150)});draw();
 </script></body></html>
