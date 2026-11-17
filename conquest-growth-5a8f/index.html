@@ -1,0 +1,182 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Luna 1 Conquest Growth</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column; charts as small multiples in a wrapping grid; tables scroll inside their own box */
+:root{
+  --bg:#f6f7fb; --panel:#ffffff; --fg:#1b1d2a; --muted:#5d6177; --line:#dfe2ec; --ghost:#c9cddd;
+  --accent:#4b55d6; --update:#d9822b; --good:#2f8a5b;
+  --heat0:#eef0fb; --heat1:#4b55d6;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#13141c; --panel:#1b1d28; --fg:#e8e9f2; --muted:#9a9db3; --line:#2c2f3e; --ghost:#3a3d50;
+  --accent:#8f97ff; --update:#f0a24f; --good:#5cc08b; --heat0:#1f2130; --heat1:#8f97ff; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#13141c; --panel:#1b1d28; --fg:#e8e9f2; --muted:#9a9db3; --line:#2c2f3e; --ghost:#3a3d50;
+  --accent:#8f97ff; --update:#f0a24f; --good:#5cc08b; --heat0:#1f2130; --heat1:#8f97ff; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:40px}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1}
+h2{font-size:22px}
+p{margin:0;max-width:68ch}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+.lede{color:var(--muted)}
+.find{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.find div{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.find b{font-family:var(--mono);font-size:22px;font-weight:500}
+.find span{color:var(--muted);font-size:13.5px}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.cell{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 10px 4px;min-width:0}
+.cell h3{margin:0 0 2px 4px;font-size:13px;font-weight:600;font-family:var(--mono)}
+.cell h3 small{color:var(--update);font-weight:500;margin-left:6px}
+svg text{font-family:var(--mono);font-size:10px;fill:var(--muted)}
+.scroll{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums;font-size:13.5px}
+th,td{padding:8px 10px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--line)}
+th{font-weight:600;color:var(--muted);font-size:12px}
+th:first-child,td:first-child{text-align:left}
+tr:last-child td{border-bottom:none}
+td.num{font-family:var(--mono)}
+.upd-h{color:var(--update)}
+.best td{font-weight:600}
+.pill{display:inline-block;font-family:var(--mono);font-size:11px;padding:1px 7px;border-radius:99px;border:1px solid var(--good);color:var(--good);margin-left:6px}
+.bars{display:flex;flex-direction:column;gap:8px}
+.bar{display:grid;grid-template-columns:minmax(0,15em) 1fr 3.5em;gap:10px;align-items:center;font-size:13.5px}
+.bar .t{height:12px;border-radius:3px;background:var(--line);position:relative;overflow:hidden}
+.bar .t span{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:3px}
+.bar .t span.cur{background:var(--muted)}
+.bar .v{font-family:var(--mono);text-align:right}
+.note{font-size:13.5px;color:var(--muted)}
+.note a{color:var(--accent)}
+ul{margin:0;padding-left:20px;max-width:68ch;display:flex;flex-direction:column;gap:6px}
+@media (max-width:520px){.bar{grid-template-columns:1fr 3.5em}.bar .t{grid-column:1/-1;order:3}}
+</style>
+<style>body{margin:0}code{font-family:var(--mono);font-size:.92em}</style></head><body>
+<div class="wrap">
+<header style="display:flex;flex-direction:column;gap:10px">
+  <span class="eyebrow" id="eyebrow">Luna 1 · Guild Conquest</span>
+  <h1>Luna 1 Conquest Growth</h1>
+  <p class="lede">How fast each rank's score grew every week, how well different methods would have predicted the cutoffs, and what to expect next week.</p>
+</header>
+
+<section><div class="find" id="find"></div></section>
+
+<section>
+  <span class="eyebrow">Side by side</span>
+  <h2>Growth by rank, each week</h2>
+  <p class="lede">Each panel is one week. The line is how much the score at each rank grew, smoothed over neighbouring ranks. Grey lines are the other weeks, for comparison.</p>
+  <div class="legend"><span><i style="background:var(--accent)"></i>this week</span><span><i style="background:var(--update)"></i>week with a game update</span><span><i style="background:var(--ghost)"></i>other weeks</span></div>
+  <div class="grid" id="mult"></div>
+</section>
+
+<section>
+  <span class="eyebrow">Cutoff growth</span>
+  <h2>How much each cutoff rose, week by week</h2>
+  <p class="lede">Smoothed % rise of the score at each tier's bottom rank. Darker means faster.</p>
+  <div class="scroll"><table id="heat"></table></div>
+</section>
+
+<section>
+  <span class="eyebrow">Back-test</span>
+  <h2>Which prediction method works best</h2>
+  <p class="lede" id="btlede"></p>
+  <div class="bars" id="bars"></div>
+  <div class="scroll"><table id="bt"></table></div>
+  <ul class="note">
+    <li><b>Long averages beat last week's number.</b> Week-to-week growth is noisy, so averaging many weeks usually wins. It should get better as weeks are added.</li>
+    <li><b>Smoothing across ranks helps.</b> The growth at one exact rank jumps around depending on who sits there. Using the median of nearby ranks removes most of that.</li>
+    <li><b>Updates can't be predicted from the scores.</b> No method sees an update coming. Knowing one is due is the only way to plan for it, which is why the forecast has an "if another update" column.</li>
+    <li><b>Players are harder to predict than cutoffs.</b> A player's growth one week barely predicts their next week, so forecasts work at the cutoff level, not per player.</li>
+  </ul>
+</section>
+
+<section>
+  <span class="eyebrow" id="fceyebrow">Forecast</span>
+  <h2>Expected cutoffs next week</h2>
+  <p class="lede">Billions. "Likely range" covers 8 of 10 normal weeks in the back-test. To be safe, aim for the top of the range. "Old method" is what the site used before (last week's tier average).</p>
+  <div class="scroll"><table id="fc"></table></div>
+</section>
+
+<section>
+  <span class="eyebrow">Notes</span>
+  <ul class="note" id="notes"></ul>
+</section>
+</div>
+<script>
+const D={"W":["2026-09-27","2026-10-04","2026-10-11","2026-10-18","2026-10-25","2026-11-01","2026-11-08","2026-11-15"],"TR":["09-27 \u2192 10-04","10-04 \u2192 10-11","10-11 \u2192 10-18","10-18 \u2192 10-25","10-25 \u2192 11-01","11-01 \u2192 11-08","11-08 \u2192 11-15"],"ranks":[5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175,180,185,190,195,200,205,210,215,220,225,230,235,240,245,250,255,260,265,270,275,280,285,290,295,300],"curves":[[9.2,17.69,6.34,7.76,13.12,16.19,16.35,12.56,12.05,12.38,12.8,13.81,13.14,13.81,14.11,13.34,13.08,12.74,12.63,12.52,12.28,12.51,12.51,12.51,12.51,12.68,13.17,12.68,12.68,12.79,12.99,12.79,12.49,12.08,11.72,11.22,10.45,10.32,10.19,10.03,9.79,9.32,9.22,9.12,9.1,9.12,9.15,9.23,9.3,9.23,9.12,9.03,9.03,8.97,8.97,9.03,9.12,9.15,9.25,9.33],[7.18,6.05,4.4,3.38,9.76,8.41,15.22,16.1,16.53,17.12,16.53,15.56,13.55,12.79,12.79,12.65,12.44,12.37,12.03,11.34,11.29,11.34,12.03,12.21,12.46,12.57,12.49,12.48,12.21,11.31,10.82,10.82,10.19,8.57,8.25,8.16,8.08,8.05,7.65,7.14,6.73,6.63,6.56,6.45,6.18,6.32,6.35,6.35,6.28,6.28,6.35,6.56,6.63,6.65,6.67,6.64,6.66,6.67,6.67,6.74],[4.39,6.24,10.18,13.11,3.93,5.23,10.98,9.37,9.26,9.58,10.26,14.98,18.04,19.03,18.64,18.04,17.24,16.46,15.12,13.01,11.95,10.3,9.28,9.28,9.03,8.87,8.58,8.6,8.87,8.6,8.58,7.82,7.68,8.22,9.32,9.32,8.83,8.38,7.99,7.99,7.99,7.98,7.96,7.94,7.35,6.89,5.69,5.41,5.32,5.27,5.16,5.03,5.02,5.01,4.92,4.91,4.89,4.81,4.7,4.61],[12.89,0.57,2.24,5.55,5.79,4.28,5.98,7.58,7.99,8.16,10.64,8.16,6.48,6.48,6.46,7.55,8.45,9.05,9.05,9.77,9.94,9.89,10.16,10.32,10.64,10.33,10.05,9.49,9.49,7.89,7.68,7.65,6.79,6.64,6.29,6.29,6.51,7.35,7.44,7.56,8.03,8.04,8.16,8.21,8.3,8.33,8.3,8.24,8.2,8.14,8.03,7.85,7.75,7.75,7.56,7.55,7.44,7.09,6.71,6.56],[3.14,9.72,9.01,5.89,4.31,4.84,4.84,8.02,11.29,10.98,9.93,10.84,13.01,12.74,13.99,13.01,12.49,14.06,13.47,11.88,10.55,9.81,8.95,6.98,6.26,6.79,6.8,6.05,5.28,5.28,5.28,5.26,5.49,6.21,6.44,6.68,6.68,6.88,7.25,7.25,7.25,7.25,7.21,7.17,6.92,6.56,5.96,5.72,5.66,5.66,5.45,5.24,5.07,5.06,5.02,4.89,4.8,4.6,4.39,4.29],[11.16,19.66,19.98,12.51,11.37,12.95,11.4,11.71,14.55,24.54,24.73,24.74,23.95,23.59,23.53,21.79,17.86,18.36,18.81,19.93,20.13,20.0,19.93,18.92,16.46,15.84,15.84,15.86,15.64,15.33,15.25,15.23,14.48,13.61,12.33,11.65,11.57,11.39,11.39,11.13,11.13,11.09,11.1,11.2,11.35,11.39,11.4,11.36,11.36,11.18,10.9,10.74,10.74,10.85,10.9,10.95,10.49,9.9,9.72,9.53],[22.99,7.57,6.93,17.64,13.35,12.73,13.14,12.14,11.68,10.81,11.43,12.39,13.69,14.09,15.39,14.85,13.47,12.5,12.06,12.14,12.39,12.5,15.04,18.92,18.92,18.89,18.88,15.74,14.5,12.91,13.04,14.02,14.02,14.92,15.48,15.53,15.92,16.14,16.25,16.4,16.48,16.5,16.44,16.22,16.14,15.57,15.46,15.46,15.81,15.81,15.46,15.17,15.0,14.94,14.89,14.79,14.25,14.83,14.91,14.94]],"heat":[[17.7,6.0,6.2,0.6,9.7,19.7,7.6],[16.2,8.4,5.2,4.3,4.8,13.0,12.7],[12.4,17.1,9.6,8.2,11.0,24.5,10.8],[13.8,12.8,19.0,6.5,12.7,23.6,14.1],[12.5,11.3,13.0,9.8,11.9,19.9,12.1],[12.8,11.3,8.6,7.9,5.3,15.3,12.9],[10.0,7.1,8.0,7.6,7.3,11.1,16.4],[9.3,6.7,4.6,6.6,4.3,9.5,14.9]],"cuts":[10,30,50,70,100,150,200,300],"bt":[{"key":"avg_all","m":"Average of all weeks, smoothed","mape":4.29,"normal":3.59,"upd":7.1,"last":2.86,"bias":-0.16},{"key":"avg_all_noupd","m":"Same, leaving out update weeks","mape":4.32,"normal":3.62,"upd":7.1,"last":3.0,"bias":-0.41},{"key":"ewm_noupd","m":"Recent weeks weighted more, no update weeks","mape":4.61,"normal":3.73,"upd":8.14,"last":3.79,"bias":-1.39},{"key":"ewm","m":"Recent weeks weighted more","mape":4.66,"normal":3.8,"upd":8.14,"last":4.04,"bias":-0.53},{"key":"trend4","m":"Trend line, last 4 weeks","mape":4.75,"normal":3.86,"upd":8.32,"last":2.84,"bias":-0.71},{"key":"avg3","m":"Average of last 3 weeks, smoothed","mape":4.76,"normal":3.86,"upd":8.35,"last":3.35,"bias":-0.64},{"key":"last_smooth","m":"Last week only, smoothed","mape":5.2,"normal":4.52,"upd":7.93,"last":6.61,"bias":-0.33},{"key":"last_cut","m":"Last week, cutoff rank only","mape":5.23,"normal":4.8,"upd":6.95,"last":6.1,"bias":-0.25},{"key":"current","m":"Old site method (tier average, last week)","mape":5.24,"normal":4.45,"upd":8.37,"last":5.94,"bias":-0.03}],"fc":[{"rank":10,"now":2601.49,"g":9.64,"pred":2852.34,"lo":2672.23,"hi":2956.89,"old":2939.95,"pace":2798.49,"upd":3112.92},{"rank":30,"now":1510.12,"g":9.23,"pred":1649.53,"lo":1545.37,"hi":1709.99,"old":1693.35,"pace":1702.33,"upd":1705.7},{"rank":50,"now":1168.47,"g":13.37,"pred":1324.66,"lo":1241.01,"hi":1373.21,"old":1317.68,"pace":1294.74,"upd":1455.17},{"rank":70,"now":1019.11,"g":14.65,"pred":1168.39,"lo":1094.61,"hi":1211.22,"old":1145.61,"pace":1162.69,"upd":1259.51},{"rank":100,"now":711.14,"g":12.94,"pred":803.16,"lo":752.45,"hi":832.6,"old":812.76,"pace":797.44,"upd":852.86},{"rank":150,"now":448.45,"g":10.59,"pred":495.93,"lo":464.61,"hi":514.1,"old":522.19,"pace":506.35,"upd":517.19},{"rank":200,"now":312.58,"g":9.64,"pred":342.72,"lo":321.08,"hi":355.29,"old":357.34,"pace":363.84,"upd":347.37}],"upd":[5],"updNames":{"5":"1st Anniversary update"},"updates":[{"date":"2026-11-05","name":"1st Anniversary update","what":"Dawn Warrior and Blaze Wizard classes, class switching, Monster Park Extreme EXP dungeon, 1st Anniversary Salon event (to 16 Dec)","source":"https://forum.nexon.com/maplestoryidle/board_view?board=6675&thread=3572662"}],"allmean":[11.7,9.8,9.4,8.0,7.8,16.1,14.9],"normalMean":10.3,"updRatio":1.9,"testFrom":"2026-10-18","nTest":5,"built":"2026-11-17"};
+const isU=k=>D.upd.includes(k);
+const NS="http://www.w3.org/2000/svg";
+const fmtW=t=>{const m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];return t.split(" → ").map(s=>{const[a,b]=s.split("-");return (+b)+" "+m[+a-1]}).join(" → ")};
+const el=(n,a={},p)=>{const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+// small multiples
+(function(){
+  const host=document.getElementById("mult");
+  const W=300,H=170,L=30,R=8,T=10,B=22;
+  let ymax=0;D.curves.forEach(c=>c.forEach(v=>ymax=Math.max(ymax,v)));ymax=Math.ceil(ymax/10)*10;
+  const x=r=>L+(r-1)/(299)*(W-L-R), y=v=>T+(1-Math.max(0,v)/ymax)*(H-T-B);
+  const path=c=>c.map((v,i)=>(i?"L":"M")+x(D.ranks[i]).toFixed(1)+","+y(v).toFixed(1)).join("");
+  D.TR.forEach((tr,k)=>{
+    const cell=document.createElement("div");cell.className="cell";
+    const h=document.createElement("h3");h.textContent=fmtW(tr);
+    if(isU(k)){const s=document.createElement("small");s.textContent=D.updNames[k];h.appendChild(s)}
+    cell.appendChild(h);
+    const svg=el("svg",{viewBox:`0 0 ${W} ${H}`,width:"100%",role:"img","aria-label":"Growth by rank, "+fmtW(tr)},cell);
+    for(let v=0;v<=ymax;v+=10){el("line",{x1:L,x2:W-R,y1:y(v),y2:y(v),stroke:"var(--line)","stroke-width":1},svg);el("text",{x:L-5,y:y(v)+3,"text-anchor":"end"},svg).textContent=v+"%"}
+    [1,50,100,150,200,250,300].forEach(r=>{el("text",{x:x(r),y:H-6,"text-anchor":r===1?"start":r===300?"end":"middle"},svg).textContent="#"+r});
+    D.curves.forEach((c,j)=>{if(j!==k)el("path",{d:path(c),fill:"none",stroke:"var(--ghost)","stroke-width":1.2},svg)});
+    el("path",{d:path(D.curves[k]),fill:"none",stroke:isU(k)?"var(--update)":"var(--accent)","stroke-width":2.4,"stroke-linejoin":"round"},svg);
+    host.appendChild(cell);
+  });
+})();
+// heat table
+(function(){
+  const t=document.getElementById("heat");let mx=0;D.heat.forEach(r=>r.forEach(v=>mx=Math.max(mx,v)));
+  let h="<thead><tr><th>Cutoff rank</th>"+D.TR.map((tr,k)=>`<th class="${isU(k)?"upd-h":""}">${fmtW(tr)}</th>`).join("")+"<th>Average</th></tr></thead><tbody>";
+  D.heat.forEach((row,i)=>{
+    const avg=row.reduce((a,b)=>a+b,0)/row.length;
+    h+=`<tr><td>#${D.cuts[i]}</td>`+row.map(v=>{const p=Math.round(Math.max(0,v)/mx*100);return `<td class="num" style="background:color-mix(in srgb,var(--heat1) ${p}%,var(--heat0));color:${p>55?"var(--bg)":"var(--fg)"}">${v.toFixed(1)}%</td>`}).join("")+`<td class="num"><b>${avg.toFixed(1)}%</b></td></tr>`;
+  });
+  t.innerHTML=h+"</tbody>";
+})();
+// backtest
+(function(){
+  const host=document.getElementById("bars");const mx=Math.max(...D.bt.map(b=>b.mape));
+  D.bt.forEach((b,i)=>{const cur=b.key==="current";
+    host.insertAdjacentHTML("beforeend",`<div class="bar"><div>${b.m}${i===0?'<span class="pill">best</span>':""}</div><div class="t"><span class="${cur?"cur":""}" style="width:${(b.mape/mx*100).toFixed(1)}%"></span></div><div class="v">${b.mape.toFixed(1)}%</div></div>`)});
+  const p=v=>v==null?'—':v.toFixed(1)+'%';document.getElementById("bt").innerHTML="<thead><tr><th>Method</th><th>Avg miss</th><th>Normal weeks</th><th class='upd-h'>Update weeks</th><th>Last week</th></tr></thead><tbody>"+
+   D.bt.map((b,i)=>`<tr class="${i===0?"best":""}"><td>${b.m}</td><td class="num">${p(b.mape)}</td><td class="num">${p(b.normal)}</td><td class="num">${p(b.upd)}</td><td class="num">${p(b.last)}</td></tr>`).join("")+"</tbody>";
+})();
+// forecast
+(function(){
+  const f=v=>Math.round(v).toLocaleString("en-US");
+  document.getElementById("fc").innerHTML="<thead><tr><th>Cutoff</th><th>Now</th><th>Expected</th><th>Likely range</th><th>Old method</th><th>Pace holds</th>"+(D.upd.length?"<th class='upd-h'>If another update</th>":"")+"</tr></thead><tbody>"+
+   D.fc.map(r=>`<tr><td>#${r.rank}</td><td class="num">${f(r.now)}</td><td class="num"><b>${f(r.pred)}</b></td><td class="num">${f(r.lo)}–${f(r.hi)}</td><td class="num">${f(r.old)}</td><td class="num">${f(r.pace)}</td>${r.upd!=null?`<td class="num">${f(r.upd)}</td>`:""}</tr>`).join("")+"</tbody>";
+})();
+
+(function(){
+  const m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const dd=s=>{const[y,a,b]=s.split("-");return (+b)+" "+m[+a-1]};
+  const nxt=new Date(D.W[D.W.length-1]+"T00:00:00Z");nxt.setUTCDate(nxt.getUTCDate()+7);
+  document.getElementById("eyebrow").textContent=`Luna 1 · Guild Conquest · ${D.W.length} weekly boards, ${dd(D.W[0])} – ${dd(D.W[D.W.length-1])}`;
+  document.getElementById("fceyebrow").textContent="Forecast · week of "+dd(nxt.toISOString().slice(0,10));
+  document.getElementById("btlede").textContent=`Each method predicted the rank 10–200 cutoffs one week ahead, for the ${D.nTest} weeks from ${dd(D.testFrom)} to ${dd(D.W[D.W.length-1])}, using only the data it would have had at the time. Shorter bars are better.`;
+  const best=D.bt[0],old=D.bt.find(b=>b.key==="current");
+  const cards=[[best.mape.toFixed(1)+"%",`Average miss of the best method ("${best.m.toLowerCase()}") when predicting the cutoffs a week ahead.`+(old&&old.key!==best.key?` The old site method missed by ${old.mape.toFixed(1)}%.`:"")]];
+  if(D.updRatio)cards.push([D.updRatio.toFixed(1)+"×",`Update weeks grew about ${D.updRatio.toFixed(1)}× as fast as a normal week at the cutoff ranks.`+(best.upd!=null?` The best method missed those weeks by ${best.upd.toFixed(1)}%.`:"")]);
+  const lm=D.allmean[D.allmean.length-1];
+  cards.push([lm.toFixed(1)+"%",`Average player growth in the latest week (${fmtW(D.TR[D.TR.length-1])}).`+(D.normalMean!=null?` Normal weeks average ${D.normalMean.toFixed(1)}%.`:"")]);
+  document.getElementById("find").innerHTML=cards.map(c=>`<div><b>${c[0]}</b><span>${c[1]}</span></div>`).join("");
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  document.getElementById("notes").innerHTML=`<li>Data: the weekly top-300 Conquest boards in <code>luna1-data/conquest</code>. Scores are best-ever Conquest scores. Page built ${dd(D.built)}.</li>`+
+    D.updates.map(u=>`<li>${esc(u.name)}, live ${dd(u.date)}: ${esc(u.what)}. <a href="${esc(u.source)}">Source</a>.</li>`).join("")+
+    `<li>Game updates are listed in <code>analysis/updates.json</code>. Add new ones there so update weeks are marked.</li>`;
+})();
+</script>
+</body></html>
