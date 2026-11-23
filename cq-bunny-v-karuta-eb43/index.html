@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bunny vs Karuta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet">
+<style>
+:root{--display:"Newsreader",Georgia,serif;--ui:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+--bg:#17151c;--surface:#1e1b25;--fg:#ece8f2;--muted:#a39cae;--faint:#7a7385;--rule:#302b39;
+--rb:#a17ff7;--rb-txt:#a98af7;--op:#2bb596;--op-txt:#3cc6a6;--good:#6fcf97;--bad:#ef8a8a}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#faf9fc;--surface:#fff;--fg:#1d1a23;--muted:#5f586a;--faint:#8a8394;--rule:#e2dee8;
+--rb:#7c4fe0;--rb-txt:#6a3fd0;--op:#1a8f76;--op-txt:#147a64;--good:#1e7f4a;--bad:#c0392b}}
+:root[data-theme="light"]{--bg:#faf9fc;--surface:#fff;--fg:#1d1a23;--muted:#5f586a;--faint:#8a8394;--rule:#e2dee8;
+--rb:#7c4fe0;--rb-txt:#6a3fd0;--op:#1a8f76;--op-txt:#147a64;--good:#1e7f4a;--bad:#c0392b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--display);font-size:18px;line-height:1.5;padding:32px 16px 64px}
+main{max-width:760px;margin:0 auto}
+h1{font-weight:500;font-size:30px;line-height:1.15;margin:0;text-wrap:balance}
+.dek{color:var(--muted);font-style:italic;margin:8px 0 0}
+.stat{display:flex;flex-wrap:wrap;gap:6px 24px;font-family:var(--ui);font-size:14px;color:var(--muted);margin-top:20px}
+.stat b{color:var(--fg);font-size:16px;font-weight:600}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--ui);font-size:14px;margin-top:22px}
+.tabs .lbl{color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-size:12px;margin-right:4px}
+.tabs button{font:inherit;color:var(--fg);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:4px 12px;cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+button:focus-visible{outline:2px solid var(--rb);outline-offset:2px}
+.ledger{display:grid;grid-template-columns:64px minmax(0,1fr) minmax(0,1fr) 70px;row-gap:10px;align-items:center;font-family:var(--ui);font-size:14px;padding-top:26px;font-variant-numeric:tabular-nums}
+.ledger .hd{font-size:13px;padding-bottom:2px}.ledger .hd.l{text-align:right;padding-right:10px}.ledger .hd.r{padding-left:10px}
+.ledger .t{font-family:var(--display);font-style:italic;font-size:16px}
+.ledger .sq{display:flex;flex-wrap:wrap;gap:4px;min-height:18px}.ledger .sq.l{justify-content:flex-end;padding-right:10px;border-right:1px solid var(--rule)}.ledger .sq.r{padding-left:10px}
+.ledger .sq i{display:block;width:16px;height:16px;border-radius:2px;background:var(--rb)}.ledger .sq.r i{background:var(--op)}
+.ledger .sq i:hover{outline:2px solid var(--muted);outline-offset:1px}
+.ledger .n{text-align:right}.ledger .tot{border-top:1px solid var(--rule);padding-top:8px;font-weight:600}
+.pos{color:var(--good)}.neg{color:var(--bad)}.dim{color:var(--faint)}
+.note{font-family:var(--ui);font-size:13px;color:var(--muted);border-left:2px solid var(--rule);padding-left:12px;margin-top:28px;line-height:1.5}
+table{font-family:var(--ui);font-size:13px;border-collapse:collapse;margin-top:10px;width:100%;max-width:520px;font-variant-numeric:tabular-nums}
+th,td{padding:4px 8px;text-align:right;border-bottom:1px solid var(--rule)}th{color:var(--muted);font-weight:400}th:first-child,td:first-child{text-align:left}
+h2{font-weight:500;font-size:20px;margin:36px 0 0}
+#tip{position:fixed;pointer-events:none;background:var(--surface);color:var(--fg);border:1px solid var(--rule);border-radius:6px;padding:6px 9px;font-family:var(--ui);font-size:13px;line-height:1.35;display:none;z-index:5;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+@media (max-width:520px){.ledger{grid-template-columns:48px minmax(0,1fr) minmax(0,1fr) 58px}.ledger .sq i{width:10px;height:10px}h1{font-size:25px}}
+</style></head><body><main>
+<h1 id="h"></h1>
+<p class="dek" id="dek"></p>
+<div class="stat" id="stat"></div>
+<div class="tabs" role="group" aria-label="Cutoffs for Karuta"><span class="lbl">Karuta scored at</span>
+<button type="button" data-k="own" aria-pressed="true">Luna 2 cutoffs (its server)</button><button type="button" data-k="l1" aria-pressed="false">Luna 1 cutoffs</button></div>
+<div id="ledger"></div>
+<p class="note" id="note"></p>
+<h2>Cutoffs used</h2>
+<table id="cuts"></table>
+</main><div id="tip" role="tooltip"></div>
+<script>
+const D={"week":"2026-11-15","cuts":{"luna-1":[2601.49,1510.12,1168.47,1019.11,711.14,448.45,312.58,232.22,168.25,119.15],"luna-2":[5088.72,1906.69,1272.96,1092.58,841.69,500.88,331.08,266.62,164.62,115.41]},"bunny":[{"n":"Haval","j":"Buccaneer","s":11179.9066799867,"d":"2026-11-15"},{"n":"Macies","j":"Hero","s":6327.460334882469,"d":"2026-11-15"},{"n":"Qiro","j":"Ice/Lightning Mage","s":3242.7799511329,"d":"2026-11-15"},{"n":"3EaglE3","j":"Night Lord","s":2441.47393384456,"d":"2026-11-15"},{"n":"Sossie04","j":"Shadower","s":2587.84123938218,"d":"2026-11-08"},{"n":"Empty","j":"Dawn Warrior","s":2400.00793563366,"d":"2026-11-15"},{"n":"TaikaPappi","j":"Bishop","s":1547.5405241434098,"d":"2026-11-15"},{"n":"whhatever","j":"Marksman","s":1217.0178834943001,"d":"2026-11-15"},{"n":"Ruru","j":"Dawn Warrior","s":769.241922277352,"d":"2026-11-15"},{"n":"Matseefut","j":"Hero","s":1561.48548481064,"d":"2026-11-15"},{"n":"D3M0NBAN3","j":"Shadower","s":646.795378678907,"d":"2026-11-15"},{"n":"Loved","j":"Bowmaster","s":665.060033730187,"d":"2026-11-08"},{"n":"roll12","j":"Marksman","s":1100.19549546948,"d":"2026-11-15"},{"n":"Fius","j":"Bowmaster","s":904.527153695542,"d":"2026-11-15"},{"n":"Gabimaru","j":"Dark Knight","s":770.469379080516,"d":"2026-11-15"},{"n":"SurelyNotBot","j":"Ice/Lightning Mage","s":744.706416496705,"d":"2026-11-15"},{"n":"WindSpirit","j":"Shadower","s":786.864993665337,"d":"2026-11-15"},{"n":"Ettery","j":"Bishop","s":1004.2211009971601,"d":"2026-11-15"},{"n":"MrJackie","j":"Marksman","s":1101.09589790852,"d":"2026-11-15"},{"n":"Immaturity","j":"Night Lord","s":1019.1116379143101,"d":"2026-11-15"},{"n":"Lillis","j":"Marksman","s":899.799583425832,"d":"2026-11-15"},{"n":"Eunbi","j":"Night Lord","s":1078.4195814384,"d":"2026-11-15"},{"n":"swings","j":"Bishop","s":480.014599240966,"d":"2026-11-15"},{"n":"piffles","j":"Hero","s":1069.38525367404,"d":"2026-11-15"},{"n":"Jimpling","j":"Marksman","s":698.9355048907271,"d":"2026-11-15"},{"n":"Xaurest","j":"Bishop","s":737.274139924921,"d":"2026-11-15"},{"n":"AlanGor","j":"Bishop","s":571.765589213444,"d":"2026-11-15"},{"n":"CHOKO","j":"Marksman","s":717.288634659496,"d":"2026-11-15"},{"n":"Futro","j":"Shadower","s":480.528454736692,"d":"2026-11-15"},{"n":"cindae","j":"Bishop","s":450.142995761768,"d":"2026-11-15"}],"karuta":[{"n":"ArfFather","j":"Night Walker","s":13934.7336310466,"d":"2026-11-15"},{"n":"25thBaam","j":"Bishop","s":9902.0266472261,"d":"2026-11-15"},{"n":"blasil","j":"Night Lord","s":5170.92383694143,"d":"2026-11-08"},{"n":"Chihaya","j":"Bishop","s":3155.8791268678597,"d":"2026-11-15"},{"n":"Broke","j":"Blaze Wizard","s":1906.69452440488,"d":"2026-11-15"},{"n":"Soupy","j":"Corsair","s":1592.57137168927,"d":"2026-11-15"},{"n":"Ragu","j":"Bishop","s":1648.8207815032,"d":"2026-11-15"},{"n":"destnee","j":"Fire/Poison Mage","s":1124.78262340962,"d":"2026-11-08"},{"n":"Amateras","j":"Bishop","s":1307.02441453775,"d":"2026-11-15"},{"n":"Sandcastles","j":"Dark Knight","s":1007.83646926801,"d":"2026-11-15"},{"n":"Drown","j":"Bowmaster","s":1132.09535967251,"d":"2026-11-15"},{"n":"Fraud","j":"Bowmaster","s":1104.25212816696,"d":"2026-11-15"},{"n":"Nitesh","j":"Bowmaster","s":484.468816744403,"d":"2026-11-15"},{"n":"Azileek","j":"Bishop","s":337.705390971263,"d":"2026-11-15"},{"n":"Huarong","j":"Bishop","s":473.759941409833,"d":"2026-11-15"},{"n":"Teal","j":"Bishop","s":700.431524870466,"d":"2026-11-15"},{"n":"Replay","j":"Marksman","s":641.190126647926,"d":"2026-11-15"},{"n":"Health","j":"Bishop","s":337.213149323481,"d":"2026-11-15"},{"n":"aaatd","j":"Fire/Poison Mage","s":382.896101229566,"d":"2026-11-15"},{"n":"Chocolate","j":"Bishop","s":306.55880646269395,"d":"2026-11-15"},{"n":"Blshop","j":"Bishop","s":518.723539006249,"d":"2026-11-15"},{"n":"xZoldyck","j":"Buccaneer","s":335.52743296302697,"d":"2026-11-08"},{"n":"MakiRoll","j":"Night Lord","s":433.270199397897,"d":"2026-11-15"},{"n":"Crumpzz","j":"Bishop","s":208.31747736868,"d":"2026-11-15"},{"n":"Lapis","j":"Hero","s":331.081506725108,"d":"2026-11-15"},{"n":"Gwendolyn","j":"Bishop","s":260.184805547685,"d":"2026-11-15"},{"n":"Beckii","j":"Bishop","s":189.903202306511,"d":"2026-11-15"},{"n":"Fold","j":"Marksman","s":118.324831311951,"d":"2026-11-15"},{"n":"Milliie","j":"Bishop","s":115.205139208638,"d":"2026-11-01"},{"n":"Carms","j":"Marksman","s":98.74375384692,"d":"2026-11-08"}],"note":"Pulled from mapleidle.gg on 21 Nov 2026. Each member counts once at the tier their best recorded Conquest score clears on their own server's board (week of 15 Nov); a date in a tooltip means that best is from an earlier week. Karuta is a Luna 2 guild, so by default it is scored on Luna 2's cutoffs. Any score below #500 counts 125k (a placeholder, as on Guild Watch); no score counts 0."};
+const TIERS=[500e3,450e3,400e3,350e3,300e3,250e3,225e3,200e3,175e3,150e3],RANKS=[10,30,50,70,100,150,200,250,350,500],BELOW=125e3;
+const TPTS=TIERS.concat([BELOW,0]);
+const tlab=t=>t===0?"No score":t/1e3+"k";
+const fB=v=>v>=1000?(v/1000).toFixed(2)+"T":v.toFixed(0)+"B";
+const Mf=x=>`${x>0?"+":x<0?"−":""}${(Math.abs(x)/1e6).toFixed(2)}M`;
+const sgn=x=>x>0?"pos":x<0?"neg":"dim";
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const tierOf=(v,cuts)=>{if(!(v>0))return 0;for(let i=0;i<TIERS.length;i++)if(v>=cuts[i]*0.9995)return TIERS[i];return BELOW;};
+let mode="own";
+function render(){
+  const cA=D.cuts["luna-1"], cB=mode==="own"?D.cuts["luna-2"]:D.cuts["luna-1"];
+  const A=D.bunny.map(p=>({...p,t:tierOf(p.s,cA)})), B=D.karuta.map(p=>({...p,t:tierOf(p.s,cB)}));
+  let ta=0,tb=0,h=`<div class="ledger"><span></span><span class="hd l" style="color:var(--rb-txt)">Royal Bunny</span><span class="hd r" style="color:var(--op-txt)">Karuta</span><span class="hd n dim">Net</span>`;
+  const sq=p=>`<i tabindex="0" data-tip="${esc(p.n)} · ${esc(p.j)}<br>Best Conquest ${fB(p.s)}${p.d&&p.d<D.week?` <span style='color:var(--faint)'>(${p.d.slice(5)})</span>`:""}"></i>`;
+  const rows=[];
+  TPTS.forEach(t=>{const a=A.filter(p=>p.t===t).sort((x,y)=>y.s-x.s),b=B.filter(p=>p.t===t).sort((x,y)=>y.s-x.s);ta+=a.length*t;tb+=b.length*t;const net=(a.length-b.length)*t;rows.push({t,net});
+    h+=`<span class="t">${tlab(t)}</span><span class="sq l">${a.map(sq).join("")}</span><span class="sq r">${b.map(sq).join("")}</span><span class="n ${sgn(net)}">${Mf(net)}</span>`;});
+  const net=ta-tb;
+  h+=`<span class="t tot">Total</span><span class="tot" style="text-align:right;padding-right:10px">${(ta/1e6).toFixed(2)}M</span><span class="tot" style="padding-left:10px">${(tb/1e6).toFixed(2)}M</span><span class="n tot ${sgn(net)}">${Mf(net)}</span></div>`;
+  document.getElementById("ledger").innerHTML=h;
+  const best=rows.slice().sort((a,b)=>b.net-a.net)[0],worst=rows.slice().sort((a,b)=>a.net-b.net)[0];
+  document.getElementById("h").textContent=`Royal Bunny ${net>=0?"leads":"trails"} Karuta by ${(Math.abs(net)/1e6).toFixed(2)}M on Conquest tiers`;
+  document.getElementById("dek").innerHTML=`${best.net>0?`Gains most at ${tlab(best.t)} (+${(best.net/1e6).toFixed(2)}M)`:""}${best.net>0&&worst.net<0?"; ":""}${worst.net<0?`loses most at ${tlab(worst.t)} (−${(-worst.net/1e6).toFixed(2)}M)`:""}. One square, one member.`;
+  const top=m=>m.filter(p=>p.t>=300e3).length;
+  document.getElementById("stat").innerHTML=`<span>Total <b>${(ta/1e6).toFixed(2)}M</b> to <b>${(tb/1e6).toFixed(2)}M</b></span><span>Top 100 <b>${top(A)}</b> to <b>${top(B)}</b></span><span>Members scored <b>${A.filter(p=>p.s>0).length}</b> to <b>${B.filter(p=>p.s>0).length}</b></span>`;
+}
+document.getElementById("note").innerHTML=D.note;
+document.getElementById("cuts").innerHTML=`<thead><tr><th>Tier</th><th>Rank</th><th>Luna 1</th><th>Luna 2</th></tr></thead><tbody>`+TIERS.map((t,i)=>`<tr><td>${tlab(t)}</td><td>#${RANKS[i]}</td><td>${fB(D.cuts["luna-1"][i])}</td><td>${fB(D.cuts["luna-2"][i])}</td></tr>`).join("")+`<tr><td>125k</td><td>below #500</td><td class="dim">any score</td><td class="dim">any score</td></tr></tbody>`;
+document.querySelectorAll(".tabs button").forEach(b=>b.onclick=()=>{mode=b.dataset.k;document.querySelectorAll(".tabs button").forEach(x=>x.setAttribute("aria-pressed",x===b));render();});
+const tip=document.getElementById("tip");
+const show=(el,x,y)=>{tip.innerHTML=el.dataset.tip;tip.style.display="block";const r=tip.getBoundingClientRect();tip.style.left=Math.max(8,Math.min(innerWidth-r.width-8,x+12))+"px";tip.style.top=Math.max(8,y-r.height-10)+"px";};
+document.addEventListener("pointermove",e=>{const el=e.target.closest("[data-tip]");el?show(el,e.clientX,e.clientY):tip.style.display="none";});
+document.addEventListener("focusin",e=>{const el=e.target.closest("[data-tip]");if(el){const r=el.getBoundingClientRect();show(el,r.left,r.top);}});
+document.addEventListener("focusout",()=>tip.style.display="none");
+render();
+</script></body></html>
